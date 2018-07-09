@@ -1,0 +1,12 @@
+<%- include('layouts/header') %>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <% if (typeof user === 'undefined') { %>
+      <a href="/login"> Login</a>
+    <% } else {%>
+      <a href="/user">View Profile</a> <br>
+      <a href="/logout">Logout</a>
+    <% } %>
+
+<%- include('layouts/footer') %>

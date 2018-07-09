@@ -1,49 +1,28 @@
 {
-  "name": "v-6",
-  "description": "",
+  "name": "v6",
   "version": "0.0.0",
-  "homepage": "",
-  "main": "src",
-  "keywords": [
-    "feathers"
-  ],
-  "author": {
-    "name": "criticalthewizard",
-    "email": "burroughszeb@me.com"
-  },
-  "contributors": [],
-  "bugs": {},
-  "directories": {
-    "lib": "src",
-    "test": "test/"
-  },
-  "engines": {
-    "node": "^10.0.0",
-    "npm": ">= 3.0.0"
-  },
+  "private": true,
   "scripts": {
-    "test": "npm run eslint && npm run mocha",
-    "eslint": "eslint src/. test/. --config .eslintrc.json",
-    "start": "node src/",
-    "mocha": "mocha test/ --recursive --exit"
+    "start": "nodemon ./bin/www",
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
-    "@feathersjs/configuration": "^1.0.2",
-    "@feathersjs/errors": "^3.3.0",
-    "@feathersjs/express": "^1.2.3",
-    "@feathersjs/feathers": "^3.1.7",
-    "@feathersjs/socketio": "^3.2.2",
-    "compression": "^1.7.2",
-    "cors": "^2.8.4",
-    "helmet": "^3.12.1",
-    "mongoose": "^5.2.1",
-    "serve-favicon": "^2.5.0",
-    "winston": "^3.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^5.0.1",
-    "mocha": "^5.2.0",
-    "request": "^2.87.0",
-    "request-promise": "^4.2.2"
+    "body-parser": "^1.18.3",
+    "config": "^1.30.0",
+    "cookie-parser": "^1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "http-errors": "~1.6.2",
+    "laravel-mix": "^2.1.11",
+    "mongoose": "^5.2.2",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4",
+    "secure-password": "^3.0.0"
   }
 }
