@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var app = express();
-var config = require('config');
+var config = require('./config');
+
+
 var passport = require('passport')
 const { User } = require('./models')
 

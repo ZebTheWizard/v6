@@ -1,4 +1,4 @@
-{
+module.exports = {
   "twitter": {
     "key": "",
     "secret": ""
