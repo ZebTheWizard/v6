@@ -4,7 +4,7 @@ module.exports = function () {
   const app = this;
 
   mongoose.connect(app.get('mongodb'), {
-    useMongoClient: true
+    useNewUrlParser: true
   });
   mongoose.Promise = global.Promise;
 
