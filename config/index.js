@@ -1,9 +1,21 @@
 const env = process.env.NODE_ENV
 
+try {
+  var development = require('./default')
+} catch (e) {
+  var development = {}
+}
+
+try {
+  var production = require('./production')
+} catch (e) {
+  var production = {}
+}
+
 module.exports = {
   _config: {
-    development: require('./default') || {},
-    production: require('./production') || {},
+    development
+    production
   },
   get (prop) {
     var index = this._config[env]
