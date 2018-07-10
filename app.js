@@ -3,10 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session)
 
 var app = express();
 var config = require('./config');
-
 
 var passport = require('passport')
 const { User } = require('./models')
@@ -26,7 +27,12 @@ app.use(logger('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'string that needs to be changed', resave: true, saveUninitialized: true}))
+app.use(session({
+  secret: 'string that needs to be changed',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,8 +43,6 @@ app.use(function(req, res, next) {
   req.config = config
   next()
 });
-
-passport.use(require('./auth/setup/twitter'))
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);

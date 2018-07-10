@@ -19,6 +19,9 @@ module.exports = new Schema({
   "twitterID": {
     type: 'string',
   },
+  "githubID": {
+    type: 'string',
+  },
   "created_at": {
     type: Date,
     default: Date.now
