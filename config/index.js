@@ -14,7 +14,7 @@ try {
 
 module.exports = {
   _config: {
-    development
+    development,
     production
   },
   get (prop) {
