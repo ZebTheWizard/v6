@@ -11,10 +11,13 @@ module.exports = new Strategy({
     if (user) return done(null, user)
 
     var user = new User;
-    user.twitterID = profile.id
-    user.username = profile.username
-    user.displayName = profile.displayName
-    user.avatar = profile._json.profile_image_url_https
+    user.twitter = {
+      id: profile.id,
+      avatar: profile._json.profile_image_url_https,
+      username: profile.username,
+      displayName: profile.displayName
+    }
+    user.incompleteSignup = true
     user.save(err => {
       done(err, user)
     })

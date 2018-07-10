@@ -1,0 +1,20 @@
+<%- include('layouts/header') %>
+
+    <% if (typeof finishingSignup !== 'undefined') { %>
+      <h1>Finish Signup</h1>
+    <% } else { %>
+      <h1>Login</h1>
+    <% } %>
+
+    <form action="/auth/local" method="POST">
+      <input type="hidden" name="id" value="user._id">
+      <input type="text" name="username" placeholder="username" value="<%= (typeof nouser !== 'undefined') ? username : ''%>">
+      <input type="password" name="password" placeholder="password" value="<%= (typeof nouser !== 'undefined') ? password : ''%>">
+
+      <% if (typeof finishingSignup !== 'undefined') { %>
+        <input type="password" name="confirm-password" placeholder="confirm password">
+      <% } %>
+      <button type="submit"> Continue </button>
+    </form>
+
+<%- include('layouts/footer') %>

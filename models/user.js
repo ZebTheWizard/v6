@@ -1,26 +1,24 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-  "username": {
-    type: String,
+  "username": String,
+  "password": String,
+  "avatar": String,
+  "incompleteSignup": {
+    type: Boolean,
     required: true
   },
-  "displayName": {
-    type: String,
-    required: true
+  "twitter": {
+    "id": String,
+    "avatar": String,
+    "username": String,
+    "displayName": String,
   },
-  "password": {
-    type: String,
-  },
-  "avatar": {
-    type: String,
-    required: true
-  },
-  "twitterID": {
-    type: 'string',
-  },
-  "githubID": {
-    type: 'string',
+  "github": {
+    "id": String,
+    "avatar": String,
+    "username": String,
+    "displayName": String,
   },
   "created_at": {
     type: Date,
