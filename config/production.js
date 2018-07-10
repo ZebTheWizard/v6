@@ -10,6 +10,6 @@ module.exports = {
     "secret": process.env.GITHUB_SECRET,
     "callback": process.env.GITHUB_CALLBACK
   },
-  "MONGODB_URI": process.env.MONGODB_URI,
+  "MONGODB_URI": process.env.MONGO_URL,
   "title": process.env.APP_TITLE || "IOS Haven"
 }
