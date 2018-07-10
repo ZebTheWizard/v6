@@ -5,7 +5,7 @@ const { User } = require('../../models')
 module.exports = new Strategy({
   consumerKey: config.get('twitter.key'),
   consumerSecret: config.get('twitter.secret'),
-  callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
+  callbackURL: '/login/twitter/return'
 }, async function (token, secret, profile, done) {
   User.findOne({ twitterID: profile.id }, (err, user) => {
     if (user) return done(null, user)
@@ -19,8 +19,4 @@ module.exports = new Strategy({
       done(err, user)
     })
   })
-
-
-  // console.log(user);
-  return cb(null, profile)
 })
