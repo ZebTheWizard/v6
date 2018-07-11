@@ -11,10 +11,13 @@ module.exports = new Strategy({
     if (user) return done(null, user)
 
     var user = new User;
-    user.githubID = profile.id
-    user.username = profile.username
-    user.displayName = profile.displayName
-    user.avatar = profile._json.avatar_url
+    user.github = {
+      id: profile.id,
+      avatar: profile._json.avatar_url,
+      username: profile.username,
+      displayName: profile.displayName
+    }
+    user.incompleteSignup = true
     user.save(err => {
       done(err, user)
     })

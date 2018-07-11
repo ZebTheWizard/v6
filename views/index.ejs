@@ -1,12 +1,25 @@
-<%- include('layouts/header') %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<?- include('layouts/page-top') ?>
+<!-- <h1><?= title ?></h1>
+<p>Welcome to <?= title ?></p>
 
-    <% if (typeof user === 'undefined') { %>
-      <a href="/login"> Login</a>
-    <% } else {%>
-      <a href="/user">View Profile</a> <br>
-      <a href="/logout">Logout</a>
-    <% } %>
+<? if (typeof user === 'undefined') { ?>
+  <a href="/login"> Login</a>
+<? } else {?>
+  <a href="/user">View Profile</a> <br>
+  <a href="/logout">Logout</a>
+<? } ?> -->
+  <div class="row">
+      <!-- Each "cell" has col-[width in percents] class -->
+      <? for(i=0; i<5; i++) { ?>
+        <div class="col-100 tablet-50">
+          <div class="card">
+            <div class="card-content card-content-padding">
+              Possible News Article
+            </div>
+          </div>
+        </div>
+      <? } ?>
 
-<%- include('layouts/footer') %>
+  </div>
+
+<?- include('layouts/page-bot') ?>

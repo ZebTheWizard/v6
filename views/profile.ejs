@@ -1,8 +1,16 @@
-<%- include('layouts/header') %>
-    <h1>Profile</h1>
-
-    <img src="<%= user.avatar %>" alt="profile-image" width="40">
-    <p>Welcome, <%= user.username %></p>
-
-    <a href="/">Home</a>
-<%- include('layouts/footer') %>
+<?- include('layouts/page-top') ?>
+      <div class="list mt-0">
+        <ul>
+          <li class="item-content">
+            <div class="item-inner">
+              <h3><?= user.username ?></h3>
+              <!-- <div data-background="<?= user.avatar ?>"></div> -->
+              <img src="<?= user.avatar ?>" alt="profile-image" width="50" class="lazy">
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="list row">
+        <a href="/logout" class="button col-70 m-auto button-fill color-red link external">Logout</a>
+      </div>
+<?- include('layouts/page-bot') ?>

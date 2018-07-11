@@ -1,0 +1,53 @@
+<?- include('header') ?>
+
+    <?- include('../login') ?>
+    <div id="app">
+      <div class="statusbar"></div>
+
+      <div class="view screen-main">
+        <!-- Toolbar -->
+        <div class="toolbar tabbar tabbar-labels">
+          <div class="toolbar-inner">
+            <!-- Links -->
+            <!-- <a href="/" class="link">Index</a>
+            <a href="/about" class="link">About</a>
+            <a href="/login" class="open-login-screen">Login</a> -->
+            <a href="/" class="tab-link">
+              <i class="fas fa-bolt fa-md icon"></i>
+              <span class="tabbar-label">Feed</span>
+            </a>
+            <a href="/about" class="tab-link">
+              <i class="fas fa-info-circle fa-md icon"></i>
+              <span class="tabbar-label">About</span>
+            </a>
+            <? if (typeof user === 'undefined') { ?>
+              <a href="/login" class="tab-link">
+                <i class="fas fa-sign-in fa-md icon"></i>
+                <span class="tabbar-label">Login</span>
+              </a>
+            <? } else { ?>
+              <a href="/user" class="tab-link">
+                <i class="fas fa-user fa-md icon"></i>
+                <span class="tabbar-label">Profile</span>
+              </a>
+            <? } ?>
+          </div>
+        </div>
+
+        <div class="page" data-name="home">
+
+          <!-- Top Navbar -->
+          <div class="navbar">
+            <div class="navbar-inner">
+              <!-- <div class="left">
+                  <a href="#" class="link">
+                      <i class="icon icon-back"></i>
+                      <span>Back</span>
+                  </a>
+              </div> -->
+              <div class="title"><?= title || 'IOS Haven'?></div>
+            </div>
+          </div>
+
+          <!-- Scrollable page content -->
+          <div class="page-content">

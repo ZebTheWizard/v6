@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session')
 var MongoStore = require('connect-mongo')(session)
+var ejs = require('ejs')
 
 var app = express();
 var config = require('./config');
@@ -21,7 +22,9 @@ app.locals = {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+ejs.delimiter = '?'
 app.set('view engine', 'ejs');
+
 
 app.use(logger('combined'));
 app.use(express.json());

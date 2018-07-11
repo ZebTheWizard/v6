@@ -1,20 +1,84 @@
-<%- include('layouts/header') %>
+<?- include('layouts/header') ?>
 
-    <% if (typeof finishingSignup !== 'undefined') { %>
+    <!-- <? if (typeof finishingSignup !== 'undefined') { ?>
       <h1>Finish Signup</h1>
-    <% } else { %>
+    <? } else { ?>
       <h1>Login</h1>
-    <% } %>
+    <? } ?>
 
     <form action="/auth/local" method="POST">
       <input type="hidden" name="id" value="user._id">
-      <input type="text" name="username" placeholder="username" value="<%= (typeof nouser !== 'undefined') ? username : ''%>">
-      <input type="password" name="password" placeholder="password" value="<%= (typeof nouser !== 'undefined') ? password : ''%>">
+      <input type="text" name="username" placeholder="username" value="<?= (typeof nouser !== 'undefined') ? username : ''?>">
+      <input type="password" name="password" placeholder="password" value="<?= (typeof nouser !== 'undefined') ? password : ''?>">
 
-      <% if (typeof finishingSignup !== 'undefined') { %>
+      <? if (typeof finishingSignup !== 'undefined') { ?>
         <input type="password" name="confirm-password" placeholder="confirm password">
-      <% } %>
+      <? } ?>
       <button type="submit"> Continue </button>
-    </form>
+    </form> -->
 
-<%- include('layouts/footer') %>
+    <div data-page="login-screen" class="page no-navbar no-toolbar">
+      <div class="page-content login-screen-content">
+        <? if (typeof finishingSignup !== 'undefined') { ?>
+          <div class="login-screen-title">Finish Signup</div>
+        <? } else { ?>
+          <div class="login-screen-title">Login</div>
+        <? } ?>
+        <form action="/auth/local" method="POST">
+          <div class="list">
+            <ul>
+              <li class="item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Username</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="username" placeholder="Username" value="<?= (typeof nouser !== 'undefined') ? username : ''?>">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <li class="item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Password</div>
+                  <div class="item-input-wrap">
+                    <input type="password" name="password" placeholder="Password" value="<?= (typeof nouser !== 'undefined') ? password : ''?>">
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              <? if (typeof finishingSignup !== 'undefined') { ?>
+                <li class="item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Password</div>
+                    <div class="item-input-wrap">
+                      <input type="password" name="confirm-password" placeholder="Confirm Password">
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+              <? } ?>
+
+            </ul>
+          </div>
+          <div class="list">
+            <ul>
+              <li>
+                <button type="submit" class="button button-round"> Continue</button>
+              </li>
+            </ul>
+            <div class="block-footer">
+              <p>Or authenticate with services you already use.</p>
+              <div>
+                <a href="/auth/twitter" class="link icon external">
+                  <i class="fab fa-twitter fa-2x"></i>
+                </a>
+                <a href="/auth/github" class="link icon external">
+                  <i class="fab fa-github fa-2x"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+<?- include('layouts/footer') ?>

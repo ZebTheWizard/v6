@@ -7,6 +7,10 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/about', function(req, res, next) {
+  res.render('about', {title: 'About'});
+});
+
 router.get('/logout', function(req, res, next) {
   req.logout();
   res.redirect('/');

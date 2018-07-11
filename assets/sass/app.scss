@@ -1,0 +1,11 @@
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "utilities";
+
+.icon {
+  min-width: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
