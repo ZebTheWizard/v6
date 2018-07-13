@@ -4190,7 +4190,8 @@ class Modal extends __WEBPACK_IMPORTED_MODULE_3__utils_class__["a" /* default */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(16);
-module.exports = __webpack_require__(47);
+__webpack_require__(47);
+module.exports = __webpack_require__(48);
 
 
 /***/ }),
@@ -10945,6 +10946,12 @@ class CustomModal extends __WEBPACK_IMPORTED_MODULE_2__modal_class__["a" /* defa
 
 /***/ }),
 /* 47 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
