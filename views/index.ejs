@@ -1,15 +1,5 @@
 <?- include('layouts/page-top') ?>
-<!-- <h1><?= title ?></h1>
-<p>Welcome to <?= title ?></p>
 
-<? if (typeof user === 'undefined') { ?>
-  <a href="/login"> Login</a>
-<? } else {?>
-  <a href="/user">View Profile</a> <br>
-  <a href="/logout">Logout</a>
-<? } ?> -->
-  <!-- <div class="row"> -->
-      <!-- Each "cell" has col-[width in percents] class -->
       <div class="section-title">
         New Apps We Love
         <a href="#">See All</a>
@@ -17,7 +7,7 @@
       <div class="item-slider">
         <? for(i=0; i<20; i++) { ?>
           <? if (i % 3 == 0) { ?>
-            <div class="item-grouping col-11 col-md-8 col-lg-5">
+            <div class="item-grouping col-11 col-md-8 col-lg-4 px-1">
             <!-- <div class="item-grouping col-12 col-md-6 col-lg-4"> -->
           <? } ?>
           <div class="item">
@@ -27,7 +17,7 @@
               <div class="item-content-subtitle">Tweaked Instagram</div>
             </div>
             <div class="item-actions">
-              <a href="#" class="btn btn-secondary btn-link-color">Get</a>
+              <a href="#" class="app-link apple">Get</a>
             </div>
           </div>
           <? if (i % 3 == 2) { ?>
@@ -40,6 +30,5 @@
       </div>
 
 
-  <!-- </div> -->
 
 <?- include('layouts/page-bot') ?>

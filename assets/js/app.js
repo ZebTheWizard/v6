@@ -1,30 +1,16 @@
-// require('./bootstrap')
+require('./bootstrap')
 
-import Framework7 from 'framework7'
-import { Dom7 } from 'framework7/'
+$(window).scroll(function (e) {
+  console.log($(window).scrollTop());
+  if ($(window).scrollTop() > 45) {
+    $('.page-title-fixed').addClass('visible')
+  } else {
+    $('.page-title-fixed').removeClass('visible')
+  }
 
-var $$ = Dom7
-
-var app = new Framework7({
-  root: '#app',
-  name: 'My App',
-  id: 'co.ioshaven.v5',
-  theme: 'ios',
-  panel: {
-    swipe: 'left'
-  },
-  routes: [
-    { name: 'Index', path: '/', url: '/' },
-    { name: 'About', path: '/about', url: '/about' },
-    { name: 'Login', path: '/login', url: '/login' },
-    { name: 'Profile', path: '/user', url: '/user' }
-  ]
+  if ($(window).scrollTop() > 59) {
+    $('.page-title-fixed').addClass('has-border')
+  } else {
+    $('.page-title-fixed').removeClass('has-border')
+  }
 })
-
-var mainView = app.views.create('.screen-main')
-
-// app.onPageInit('login-screen', function(page) {
-//   var pageContainer = $$(page.container)
-//   page
-// })
-// var mainView = app.loginScreen.create('.screen-login')

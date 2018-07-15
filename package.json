@@ -21,15 +21,19 @@
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
-    "framework7": "^3.0.1",
     "http-errors": "~1.6.2",
+    "jquery": "^3.3.1",
     "laravel-mix": "^2.1.11",
+    "lodash": "^4.17.10",
     "mongoose": "^5.2.2",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "secure-password": "^3.0.0"
+    "popper.js": "^1.14.3",
+    "secure-password": "^3.0.0",
+    "sniddl-ajax": "^1.0.9",
+    "sniddl-spa": "^1.0.2"
   }
 }
