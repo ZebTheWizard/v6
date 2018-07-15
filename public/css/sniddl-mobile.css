@@ -52,6 +52,7 @@ a:hover {
       -ms-flex-pack: center;
           justify-content: center;
   border-bottom: 0;
+  z-index: 100;
 }
 
 .page-title-fixed span {
@@ -179,15 +180,16 @@ a:hover {
   overflow-y: hidden;
   padding-bottom: 250px;
   margin-bottom: -250px;
+  -ms-scroll-snap-type: mandatory;
+      scroll-snap-type: mandatory;
+  -ms-scroll-snap-destination: 0% 100%;
+      scroll-snap-destination: 0% 100%;
+  -ms-scroll-snap-points-x: repeat(100%);
+      scroll-snap-points-x: repeat(100%);
 }
 
 .item-slider .item-grouping {
   display: inline-block;
-  width: 33%;
-}
-
-.item-slider .item-grouping .item {
-  max-width: 100%;
-  min-width: 200px;
+  scroll-snap-align: start;
 }
 

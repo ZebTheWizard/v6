@@ -54,6 +54,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   border-bottom: 0;
+  z-index: 100;
   span {
     opacity: 0;
     transition: all 0.2s;
@@ -175,12 +176,11 @@ a:hover {
   overflow-y: hidden;
   padding-bottom: 250px;
   margin-bottom: -250px;
+  scroll-snap-type: mandatory;
+  scroll-snap-destination: 0% 100%;
+  scroll-snap-points-x: repeat(100%);
   .item-grouping {
     display: inline-block;
-    width: 33%;
-    .item {
-      max-width: 100%;
-      min-width: 200px;
-    }
+    scroll-snap-align: start;
   }
 }
