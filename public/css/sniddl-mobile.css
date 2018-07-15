@@ -177,13 +177,12 @@ a:hover {
   display: -ms-flexbox;
   display: flex;
   overflow-x: scroll;
+  overflow-x: -moz-scrollbars-none;
   overflow-y: hidden;
   padding-bottom: 250px;
   margin-bottom: -250px;
   -ms-scroll-snap-type: mandatory;
       scroll-snap-type: mandatory;
-  -ms-scroll-snap-destination: 0% 100%;
-      scroll-snap-destination: 0% 100%;
   -ms-scroll-snap-points-x: repeat(100%);
       scroll-snap-points-x: repeat(100%);
 }
