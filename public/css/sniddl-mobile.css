@@ -177,6 +177,7 @@ a:hover {
   display: -ms-flexbox;
   display: flex;
   overflow-x: scroll;
+  overflow: hidden;
   overflow-x: -moz-scrollbars-none;
   overflow-y: hidden;
   -ms-scroll-snap-type: mandatory;

@@ -9,5 +9,15 @@ try {
 } catch (e) {}
 
 $(document).ready(function () {
-  scrollSnapPolyfill()
+  $('.carousel').carousel({
+    interval: false
+  })
+
+  $('.carousel').bind('wheel', function (e) {
+    if (e.originalEvent.deltaX > 0) {
+      $(this).carousel('next')
+    } else if (e.originalEvent.deltaX < 0) {
+      $(this).carousel('prev')
+    }
+  })
 })

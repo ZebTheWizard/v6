@@ -173,6 +173,7 @@ a:hover {
 .item-slider {
   display: flex;
   overflow-x: scroll;
+  overflow: hidden;
   overflow-x: -moz-scrollbars-none;
   overflow-y: hidden;
   scroll-snap-type: mandatory;
