@@ -179,10 +179,9 @@ a:hover {
   overflow-x: scroll;
   overflow-x: -moz-scrollbars-none;
   overflow-y: hidden;
-  padding-bottom: 250px;
-  margin-bottom: -250px;
   -ms-scroll-snap-type: mandatory;
       scroll-snap-type: mandatory;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   -ms-scroll-snap-points-x: repeat(100%);
       scroll-snap-points-x: repeat(100%);
 }
@@ -190,5 +189,9 @@ a:hover {
 .item-slider .item-grouping {
   display: inline-block;
   scroll-snap-align: start;
+}
+
+.item-slider::-webkit-scrollbar {
+  display: none;
 }
 
