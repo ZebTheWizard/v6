@@ -173,13 +173,24 @@ a:hover {
 .item-slider {
   display: flex;
   overflow-x: scroll;
-  overflow: hidden;
   overflow-x: -moz-scrollbars-none;
   overflow-y: hidden;
-  scroll-snap-type: mandatory;
+  -webkit-overflow-scrolling:touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  scroll-snap-points-x: repeat(100%);
+  -webkit-scroll-snap-type: mandatory;
+      -ms-scroll-snap-type: mandatory;
+          scroll-snap-type: mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+      -ms-scroll-snap-points-x: repeat(100%);
+          scroll-snap-points-x: repeat(100%);
+  -webkit-scroll-snap-destination: 50% 50%;
+      -ms-scroll-snap-destination: 50% 50%;
+          scroll-snap-destination: 50% 50%;
   .item-grouping {
+    scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 50% 50%;
+        -ms-scroll-snap-coordinate: 50% 50%;
+            scroll-snap-coordinate: 50% 50%;
     display: inline-block;
     scroll-snap-align: start;
   }
