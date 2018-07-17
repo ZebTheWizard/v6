@@ -38,5 +38,8 @@
     "secure-password": "^3.0.0",
     "sniddl-ajax": "^1.0.9",
     "sniddl-spa": "^1.0.2"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.1.0"
   }
 }

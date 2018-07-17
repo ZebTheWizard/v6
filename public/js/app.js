@@ -81,27 +81,6 @@ module.exports = __webpack_require__(48);
 "use strict";
 __webpack_require__(54);
 
-$('*').on('touchstart', function (e) {
-  var el = e.currentTarget;
-  el.swipe = { up: false, down: false, left: false, right: false };
-  el.tsY = e.originalEvent.touches[0].clientY;
-  el.tsX = e.originalEvent.touches[0].clientX;
-});
-$('*').on('touchmove', function (e) {
-  var el = e.currentTarget;
-  el.teY = e.originalEvent.touches[0].clientY;
-  el.teX = e.originalEvent.touches[0].clientX;
-
-  el.swipe.left = el.tsX > el.teX ? true : false;
-  el.swipe.right = el.tsX < el.teX ? true : false;
-  // el.swipe.down = (el.tsY > el.teY) ? true : false
-  // el.swipe.up = (el.tsY < el.teY) ? true : false
-
-  if (el.tsX > el.teX) el.swipeDirection = 'left';else if (el.tsX < el.teX) el.swipeDirection = 'right';
-  // else if (el.tsY > el.teY) el.swipeDirection = 'down'
-  // else if (el.tsY < el.teY) el.swipeDirection = 'up'
-});
-
 $(window).scroll(function (e) {
   if ($(window).scrollTop() > 45) {
     $('.page-title-fixed').addClass('visible');
@@ -118,55 +97,10 @@ $(window).scroll(function (e) {
   window.scrolling = true;
 });
 
-// $('.item-slider').on('wheel', function (e) {
-//   if (e.currentTarget.isScrolling) return
-//   let scrollAmount = 0
-//   if (e.originalEvent.deltaX > 0) {
-//     scrollAmount = '+=' + $(e.currentTarget).width()
-//   } else if (e.originalEvent.deltaX < 0) {
-//     scrollAmount = '-=' + $(e.currentTarget).width()
-//   }
-//   e.currentTarget.isScrolling = true
-//   $(this).animate({
-//     scrollLeft: scrollAmount
-//   }, 400, 'swing', function () {
-//     e.currentTarget.isScrolling = false
-//   })
-// })
-
-// $('.item-slider').swipe({
-//   swipe (e, direction) {
-//     let el = $(this).get()[0]
-//     if (el.isScrolling) return
-//     let scrollAmount = 0
-//     if (direction === 'right') scrollAmount = '-=' + $(this).width()
-//     else if (direction === 'left') scrollAmount = '+=' + $(this).width()
-//     el.isScrolling = true
-//     $(this).animate({
-//       scrollLeft: scrollAmount
-//     }, 400, 'swing', function () {
-//       el.isScrolling = false
-//     })
-//   }
-// })
-
-// $('.item-slider').on('touchmove', function (e) {
-//       let el = e.currentTarget
-//       // if(el.swipe.down || el.swipe.up) return
-//       if (el.isScrolling) return
-//       e.preventDefault()
-//       let scrollAmount = 0
-//       // if (el.swipe.left || el.swipe.right) e.preventDefault()
-//
-//       if (el.swipe.right) scrollAmount = '-=' + $(el).width()
-//       else if (el.swipe.left) scrollAmount = '+=' + $(el).width()
-//       el.isScrolling = true
-//       $(el).animate({
-//         scrollLeft: scrollAmount
-//       }, 400, 'swing', function () {
-//         el.isScrolling = false
-//       })
-// })
+$('.toolbar-bottom .item').click(function () {
+  $('.toolbar-bottom .item').removeClass('active');
+  $(this).addClass('active');
+});
 
 /***/ }),
 
@@ -223,12 +157,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 window._ = __webpack_require__(57);
 window.Popper = __webpack_require__(59).default;
+window.Sniddl = __webpack_require__(68);
+__webpack_require__(67);
+
+Sniddl.init('.linkable', {
+  addCss: true,
+  headers: {},
+  params: {}
+});
+// window.fa = require('@fortawesome/fontawesome-pro')
 
 try {
   window.$ = window.jQuery = __webpack_require__(55);
   __webpack_require__(56);
   __webpack_require__(65);
 } catch (e) {}
+
+function setDates() {
+  var d = new Date();
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  console.log(days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate());
+  $('.today').html(days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate());
+}
 
 $(document).ready(function () {
   __WEBPACK_IMPORTED_MODULE_0_css_scroll_snap_polyfill___default()();
@@ -244,6 +195,16 @@ $(document).ready(function () {
       $(this).carousel('prev');
     }
   });
+});
+
+$(window).on('hashchange', function () {
+  // setDates()
+  setTimeout(function () {
+    $('.today').each(function () {
+      $(this).get()[0].innerHTML = 'asdf';
+      // console.log($(this).get(), $(this).html());
+    });
+  }, 100);
 });
 
 /***/ }),
@@ -34283,6 +34244,386 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):factory("undefined"!=typeof module&&module.exports?__webpack_require__(55):jQuery)}(function($){"use strict";function init(options){return!options||void 0!==options.allowPageScroll||void 0===options.swipe&&void 0===options.swipeStatus||(options.allowPageScroll=NONE),void 0!==options.click&&void 0===options.tap&&(options.tap=options.click),options||(options={}),options=$.extend({},$.fn.swipe.defaults,options),this.each(function(){var $this=$(this),plugin=$this.data(PLUGIN_NS);plugin||(plugin=new TouchSwipe(this,options),$this.data(PLUGIN_NS,plugin))})}function TouchSwipe(element,options){function touchStart(jqEvent){if(!(getTouchInProgress()||$(jqEvent.target).closest(options.excludedElements,$element).length>0)){var event=jqEvent.originalEvent?jqEvent.originalEvent:jqEvent;if(!event.pointerType||"mouse"!=event.pointerType||0!=options.fallbackToMouseEvents){var ret,touches=event.touches,evt=touches?touches[0]:event;return phase=PHASE_START,touches?fingerCount=touches.length:options.preventDefaultEvents!==!1&&jqEvent.preventDefault(),distance=0,direction=null,currentDirection=null,pinchDirection=null,duration=0,startTouchesDistance=0,endTouchesDistance=0,pinchZoom=1,pinchDistance=0,maximumsMap=createMaximumsData(),cancelMultiFingerRelease(),createFingerData(0,evt),!touches||fingerCount===options.fingers||options.fingers===ALL_FINGERS||hasPinches()?(startTime=getTimeStamp(),2==fingerCount&&(createFingerData(1,touches[1]),startTouchesDistance=endTouchesDistance=calculateTouchesDistance(fingerData[0].start,fingerData[1].start)),(options.swipeStatus||options.pinchStatus)&&(ret=triggerHandler(event,phase))):ret=!1,ret===!1?(phase=PHASE_CANCEL,triggerHandler(event,phase),ret):(options.hold&&(holdTimeout=setTimeout($.proxy(function(){$element.trigger("hold",[event.target]),options.hold&&(ret=options.hold.call($element,event,event.target))},this),options.longTapThreshold)),setTouchInProgress(!0),null)}}}function touchMove(jqEvent){var event=jqEvent.originalEvent?jqEvent.originalEvent:jqEvent;if(phase!==PHASE_END&&phase!==PHASE_CANCEL&&!inMultiFingerRelease()){var ret,touches=event.touches,evt=touches?touches[0]:event,currentFinger=updateFingerData(evt);if(endTime=getTimeStamp(),touches&&(fingerCount=touches.length),options.hold&&clearTimeout(holdTimeout),phase=PHASE_MOVE,2==fingerCount&&(0==startTouchesDistance?(createFingerData(1,touches[1]),startTouchesDistance=endTouchesDistance=calculateTouchesDistance(fingerData[0].start,fingerData[1].start)):(updateFingerData(touches[1]),endTouchesDistance=calculateTouchesDistance(fingerData[0].end,fingerData[1].end),pinchDirection=calculatePinchDirection(fingerData[0].end,fingerData[1].end)),pinchZoom=calculatePinchZoom(startTouchesDistance,endTouchesDistance),pinchDistance=Math.abs(startTouchesDistance-endTouchesDistance)),fingerCount===options.fingers||options.fingers===ALL_FINGERS||!touches||hasPinches()){if(direction=calculateDirection(currentFinger.start,currentFinger.end),currentDirection=calculateDirection(currentFinger.last,currentFinger.end),validateDefaultEvent(jqEvent,currentDirection),distance=calculateDistance(currentFinger.start,currentFinger.end),duration=calculateDuration(),setMaxDistance(direction,distance),ret=triggerHandler(event,phase),!options.triggerOnTouchEnd||options.triggerOnTouchLeave){var inBounds=!0;if(options.triggerOnTouchLeave){var bounds=getbounds(this);inBounds=isInBounds(currentFinger.end,bounds)}!options.triggerOnTouchEnd&&inBounds?phase=getNextPhase(PHASE_MOVE):options.triggerOnTouchLeave&&!inBounds&&(phase=getNextPhase(PHASE_END)),phase!=PHASE_CANCEL&&phase!=PHASE_END||triggerHandler(event,phase)}}else phase=PHASE_CANCEL,triggerHandler(event,phase);ret===!1&&(phase=PHASE_CANCEL,triggerHandler(event,phase))}}function touchEnd(jqEvent){var event=jqEvent.originalEvent?jqEvent.originalEvent:jqEvent,touches=event.touches;if(touches){if(touches.length&&!inMultiFingerRelease())return startMultiFingerRelease(event),!0;if(touches.length&&inMultiFingerRelease())return!0}return inMultiFingerRelease()&&(fingerCount=fingerCountAtRelease),endTime=getTimeStamp(),duration=calculateDuration(),didSwipeBackToCancel()||!validateSwipeDistance()?(phase=PHASE_CANCEL,triggerHandler(event,phase)):options.triggerOnTouchEnd||options.triggerOnTouchEnd===!1&&phase===PHASE_MOVE?(options.preventDefaultEvents!==!1&&jqEvent.cancelable!==!1&&jqEvent.preventDefault(),phase=PHASE_END,triggerHandler(event,phase)):!options.triggerOnTouchEnd&&hasTap()?(phase=PHASE_END,triggerHandlerForGesture(event,phase,TAP)):phase===PHASE_MOVE&&(phase=PHASE_CANCEL,triggerHandler(event,phase)),setTouchInProgress(!1),null}function touchCancel(){fingerCount=0,endTime=0,startTime=0,startTouchesDistance=0,endTouchesDistance=0,pinchZoom=1,cancelMultiFingerRelease(),setTouchInProgress(!1)}function touchLeave(jqEvent){var event=jqEvent.originalEvent?jqEvent.originalEvent:jqEvent;options.triggerOnTouchLeave&&(phase=getNextPhase(PHASE_END),triggerHandler(event,phase))}function removeListeners(){$element.unbind(START_EV,touchStart),$element.unbind(CANCEL_EV,touchCancel),$element.unbind(MOVE_EV,touchMove),$element.unbind(END_EV,touchEnd),LEAVE_EV&&$element.unbind(LEAVE_EV,touchLeave),setTouchInProgress(!1)}function getNextPhase(currentPhase){var nextPhase=currentPhase,validTime=validateSwipeTime(),validDistance=validateSwipeDistance(),didCancel=didSwipeBackToCancel();return!validTime||didCancel?nextPhase=PHASE_CANCEL:!validDistance||currentPhase!=PHASE_MOVE||options.triggerOnTouchEnd&&!options.triggerOnTouchLeave?!validDistance&&currentPhase==PHASE_END&&options.triggerOnTouchLeave&&(nextPhase=PHASE_CANCEL):nextPhase=PHASE_END,nextPhase}function triggerHandler(event,phase){var ret,touches=event.touches;return(didSwipe()||hasSwipes())&&(ret=triggerHandlerForGesture(event,phase,SWIPE)),(didPinch()||hasPinches())&&ret!==!1&&(ret=triggerHandlerForGesture(event,phase,PINCH)),didDoubleTap()&&ret!==!1?ret=triggerHandlerForGesture(event,phase,DOUBLE_TAP):didLongTap()&&ret!==!1?ret=triggerHandlerForGesture(event,phase,LONG_TAP):didTap()&&ret!==!1&&(ret=triggerHandlerForGesture(event,phase,TAP)),phase===PHASE_CANCEL&&touchCancel(event),phase===PHASE_END&&(touches?touches.length||touchCancel(event):touchCancel(event)),ret}function triggerHandlerForGesture(event,phase,gesture){var ret;if(gesture==SWIPE){if($element.trigger("swipeStatus",[phase,direction||null,distance||0,duration||0,fingerCount,fingerData,currentDirection]),options.swipeStatus&&(ret=options.swipeStatus.call($element,event,phase,direction||null,distance||0,duration||0,fingerCount,fingerData,currentDirection),ret===!1))return!1;if(phase==PHASE_END&&validateSwipe()){if(clearTimeout(singleTapTimeout),clearTimeout(holdTimeout),$element.trigger("swipe",[direction,distance,duration,fingerCount,fingerData,currentDirection]),options.swipe&&(ret=options.swipe.call($element,event,direction,distance,duration,fingerCount,fingerData,currentDirection),ret===!1))return!1;switch(direction){case LEFT:$element.trigger("swipeLeft",[direction,distance,duration,fingerCount,fingerData,currentDirection]),options.swipeLeft&&(ret=options.swipeLeft.call($element,event,direction,distance,duration,fingerCount,fingerData,currentDirection));break;case RIGHT:$element.trigger("swipeRight",[direction,distance,duration,fingerCount,fingerData,currentDirection]),options.swipeRight&&(ret=options.swipeRight.call($element,event,direction,distance,duration,fingerCount,fingerData,currentDirection));break;case UP:$element.trigger("swipeUp",[direction,distance,duration,fingerCount,fingerData,currentDirection]),options.swipeUp&&(ret=options.swipeUp.call($element,event,direction,distance,duration,fingerCount,fingerData,currentDirection));break;case DOWN:$element.trigger("swipeDown",[direction,distance,duration,fingerCount,fingerData,currentDirection]),options.swipeDown&&(ret=options.swipeDown.call($element,event,direction,distance,duration,fingerCount,fingerData,currentDirection))}}}if(gesture==PINCH){if($element.trigger("pinchStatus",[phase,pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData]),options.pinchStatus&&(ret=options.pinchStatus.call($element,event,phase,pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData),ret===!1))return!1;if(phase==PHASE_END&&validatePinch())switch(pinchDirection){case IN:$element.trigger("pinchIn",[pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData]),options.pinchIn&&(ret=options.pinchIn.call($element,event,pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData));break;case OUT:$element.trigger("pinchOut",[pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData]),options.pinchOut&&(ret=options.pinchOut.call($element,event,pinchDirection||null,pinchDistance||0,duration||0,fingerCount,pinchZoom,fingerData))}}return gesture==TAP?phase!==PHASE_CANCEL&&phase!==PHASE_END||(clearTimeout(singleTapTimeout),clearTimeout(holdTimeout),hasDoubleTap()&&!inDoubleTap()?(doubleTapStartTime=getTimeStamp(),singleTapTimeout=setTimeout($.proxy(function(){doubleTapStartTime=null,$element.trigger("tap",[event.target]),options.tap&&(ret=options.tap.call($element,event,event.target))},this),options.doubleTapThreshold)):(doubleTapStartTime=null,$element.trigger("tap",[event.target]),options.tap&&(ret=options.tap.call($element,event,event.target)))):gesture==DOUBLE_TAP?phase!==PHASE_CANCEL&&phase!==PHASE_END||(clearTimeout(singleTapTimeout),clearTimeout(holdTimeout),doubleTapStartTime=null,$element.trigger("doubletap",[event.target]),options.doubleTap&&(ret=options.doubleTap.call($element,event,event.target))):gesture==LONG_TAP&&(phase!==PHASE_CANCEL&&phase!==PHASE_END||(clearTimeout(singleTapTimeout),doubleTapStartTime=null,$element.trigger("longtap",[event.target]),options.longTap&&(ret=options.longTap.call($element,event,event.target)))),ret}function validateSwipeDistance(){var valid=!0;return null!==options.threshold&&(valid=distance>=options.threshold),valid}function didSwipeBackToCancel(){var cancelled=!1;return null!==options.cancelThreshold&&null!==direction&&(cancelled=getMaxDistance(direction)-distance>=options.cancelThreshold),cancelled}function validatePinchDistance(){return null===options.pinchThreshold||pinchDistance>=options.pinchThreshold}function validateSwipeTime(){var result;return result=!options.maxTimeThreshold||!(duration>=options.maxTimeThreshold)}function validateDefaultEvent(jqEvent,direction){if(options.preventDefaultEvents!==!1)if(options.allowPageScroll===NONE)jqEvent.preventDefault();else{var auto=options.allowPageScroll===AUTO;switch(direction){case LEFT:(options.swipeLeft&&auto||!auto&&options.allowPageScroll!=HORIZONTAL)&&jqEvent.preventDefault();break;case RIGHT:(options.swipeRight&&auto||!auto&&options.allowPageScroll!=HORIZONTAL)&&jqEvent.preventDefault();break;case UP:(options.swipeUp&&auto||!auto&&options.allowPageScroll!=VERTICAL)&&jqEvent.preventDefault();break;case DOWN:(options.swipeDown&&auto||!auto&&options.allowPageScroll!=VERTICAL)&&jqEvent.preventDefault();break;case NONE:}}}function validatePinch(){var hasCorrectFingerCount=validateFingers(),hasEndPoint=validateEndPoint(),hasCorrectDistance=validatePinchDistance();return hasCorrectFingerCount&&hasEndPoint&&hasCorrectDistance}function hasPinches(){return!!(options.pinchStatus||options.pinchIn||options.pinchOut)}function didPinch(){return!(!validatePinch()||!hasPinches())}function validateSwipe(){var hasValidTime=validateSwipeTime(),hasValidDistance=validateSwipeDistance(),hasCorrectFingerCount=validateFingers(),hasEndPoint=validateEndPoint(),didCancel=didSwipeBackToCancel(),valid=!didCancel&&hasEndPoint&&hasCorrectFingerCount&&hasValidDistance&&hasValidTime;return valid}function hasSwipes(){return!!(options.swipe||options.swipeStatus||options.swipeLeft||options.swipeRight||options.swipeUp||options.swipeDown)}function didSwipe(){return!(!validateSwipe()||!hasSwipes())}function validateFingers(){return fingerCount===options.fingers||options.fingers===ALL_FINGERS||!SUPPORTS_TOUCH}function validateEndPoint(){return 0!==fingerData[0].end.x}function hasTap(){return!!options.tap}function hasDoubleTap(){return!!options.doubleTap}function hasLongTap(){return!!options.longTap}function validateDoubleTap(){if(null==doubleTapStartTime)return!1;var now=getTimeStamp();return hasDoubleTap()&&now-doubleTapStartTime<=options.doubleTapThreshold}function inDoubleTap(){return validateDoubleTap()}function validateTap(){return(1===fingerCount||!SUPPORTS_TOUCH)&&(isNaN(distance)||distance<options.threshold)}function validateLongTap(){return duration>options.longTapThreshold&&distance<DOUBLE_TAP_THRESHOLD}function didTap(){return!(!validateTap()||!hasTap())}function didDoubleTap(){return!(!validateDoubleTap()||!hasDoubleTap())}function didLongTap(){return!(!validateLongTap()||!hasLongTap())}function startMultiFingerRelease(event){previousTouchEndTime=getTimeStamp(),fingerCountAtRelease=event.touches.length+1}function cancelMultiFingerRelease(){previousTouchEndTime=0,fingerCountAtRelease=0}function inMultiFingerRelease(){var withinThreshold=!1;if(previousTouchEndTime){var diff=getTimeStamp()-previousTouchEndTime;diff<=options.fingerReleaseThreshold&&(withinThreshold=!0)}return withinThreshold}function getTouchInProgress(){return!($element.data(PLUGIN_NS+"_intouch")!==!0)}function setTouchInProgress(val){$element&&(val===!0?($element.bind(MOVE_EV,touchMove),$element.bind(END_EV,touchEnd),LEAVE_EV&&$element.bind(LEAVE_EV,touchLeave)):($element.unbind(MOVE_EV,touchMove,!1),$element.unbind(END_EV,touchEnd,!1),LEAVE_EV&&$element.unbind(LEAVE_EV,touchLeave,!1)),$element.data(PLUGIN_NS+"_intouch",val===!0))}function createFingerData(id,evt){var f={start:{x:0,y:0},last:{x:0,y:0},end:{x:0,y:0}};return f.start.x=f.last.x=f.end.x=evt.pageX||evt.clientX,f.start.y=f.last.y=f.end.y=evt.pageY||evt.clientY,fingerData[id]=f,f}function updateFingerData(evt){var id=void 0!==evt.identifier?evt.identifier:0,f=getFingerData(id);return null===f&&(f=createFingerData(id,evt)),f.last.x=f.end.x,f.last.y=f.end.y,f.end.x=evt.pageX||evt.clientX,f.end.y=evt.pageY||evt.clientY,f}function getFingerData(id){return fingerData[id]||null}function setMaxDistance(direction,distance){direction!=NONE&&(distance=Math.max(distance,getMaxDistance(direction)),maximumsMap[direction].distance=distance)}function getMaxDistance(direction){if(maximumsMap[direction])return maximumsMap[direction].distance}function createMaximumsData(){var maxData={};return maxData[LEFT]=createMaximumVO(LEFT),maxData[RIGHT]=createMaximumVO(RIGHT),maxData[UP]=createMaximumVO(UP),maxData[DOWN]=createMaximumVO(DOWN),maxData}function createMaximumVO(dir){return{direction:dir,distance:0}}function calculateDuration(){return endTime-startTime}function calculateTouchesDistance(startPoint,endPoint){var diffX=Math.abs(startPoint.x-endPoint.x),diffY=Math.abs(startPoint.y-endPoint.y);return Math.round(Math.sqrt(diffX*diffX+diffY*diffY))}function calculatePinchZoom(startDistance,endDistance){var percent=endDistance/startDistance*1;return percent.toFixed(2)}function calculatePinchDirection(){return pinchZoom<1?OUT:IN}function calculateDistance(startPoint,endPoint){return Math.round(Math.sqrt(Math.pow(endPoint.x-startPoint.x,2)+Math.pow(endPoint.y-startPoint.y,2)))}function calculateAngle(startPoint,endPoint){var x=startPoint.x-endPoint.x,y=endPoint.y-startPoint.y,r=Math.atan2(y,x),angle=Math.round(180*r/Math.PI);return angle<0&&(angle=360-Math.abs(angle)),angle}function calculateDirection(startPoint,endPoint){if(comparePoints(startPoint,endPoint))return NONE;var angle=calculateAngle(startPoint,endPoint);return angle<=45&&angle>=0?LEFT:angle<=360&&angle>=315?LEFT:angle>=135&&angle<=225?RIGHT:angle>45&&angle<135?DOWN:UP}function getTimeStamp(){var now=new Date;return now.getTime()}function getbounds(el){el=$(el);var offset=el.offset(),bounds={left:offset.left,right:offset.left+el.outerWidth(),top:offset.top,bottom:offset.top+el.outerHeight()};return bounds}function isInBounds(point,bounds){return point.x>bounds.left&&point.x<bounds.right&&point.y>bounds.top&&point.y<bounds.bottom}function comparePoints(pointA,pointB){return pointA.x==pointB.x&&pointA.y==pointB.y}var options=$.extend({},options),useTouchEvents=SUPPORTS_TOUCH||SUPPORTS_POINTER||!options.fallbackToMouseEvents,START_EV=useTouchEvents?SUPPORTS_POINTER?SUPPORTS_POINTER_IE10?"MSPointerDown":"pointerdown":"touchstart":"mousedown",MOVE_EV=useTouchEvents?SUPPORTS_POINTER?SUPPORTS_POINTER_IE10?"MSPointerMove":"pointermove":"touchmove":"mousemove",END_EV=useTouchEvents?SUPPORTS_POINTER?SUPPORTS_POINTER_IE10?"MSPointerUp":"pointerup":"touchend":"mouseup",LEAVE_EV=useTouchEvents?SUPPORTS_POINTER?"mouseleave":null:"mouseleave",CANCEL_EV=SUPPORTS_POINTER?SUPPORTS_POINTER_IE10?"MSPointerCancel":"pointercancel":"touchcancel",distance=0,direction=null,currentDirection=null,duration=0,startTouchesDistance=0,endTouchesDistance=0,pinchZoom=1,pinchDistance=0,pinchDirection=0,maximumsMap=null,$element=$(element),phase="start",fingerCount=0,fingerData={},startTime=0,endTime=0,previousTouchEndTime=0,fingerCountAtRelease=0,doubleTapStartTime=0,singleTapTimeout=null,holdTimeout=null;try{$element.bind(START_EV,touchStart),$element.bind(CANCEL_EV,touchCancel)}catch(e){$.error("events not supported "+START_EV+","+CANCEL_EV+" on jQuery.swipe")}this.enable=function(){return this.disable(),$element.bind(START_EV,touchStart),$element.bind(CANCEL_EV,touchCancel),$element},this.disable=function(){return removeListeners(),$element},this.destroy=function(){removeListeners(),$element.data(PLUGIN_NS,null),$element=null},this.option=function(property,value){if("object"==typeof property)options=$.extend(options,property);else if(void 0!==options[property]){if(void 0===value)return options[property];options[property]=value}else{if(!property)return options;$.error("Option "+property+" does not exist on jQuery.swipe.options")}return null}}var VERSION="1.6.18",LEFT="left",RIGHT="right",UP="up",DOWN="down",IN="in",OUT="out",NONE="none",AUTO="auto",SWIPE="swipe",PINCH="pinch",TAP="tap",DOUBLE_TAP="doubletap",LONG_TAP="longtap",HORIZONTAL="horizontal",VERTICAL="vertical",ALL_FINGERS="all",DOUBLE_TAP_THRESHOLD=10,PHASE_START="start",PHASE_MOVE="move",PHASE_END="end",PHASE_CANCEL="cancel",SUPPORTS_TOUCH="ontouchstart"in window,SUPPORTS_POINTER_IE10=window.navigator.msPointerEnabled&&!window.navigator.pointerEnabled&&!SUPPORTS_TOUCH,SUPPORTS_POINTER=(window.navigator.pointerEnabled||window.navigator.msPointerEnabled)&&!SUPPORTS_TOUCH,PLUGIN_NS="TouchSwipe",defaults={fingers:1,threshold:75,cancelThreshold:null,pinchThreshold:20,maxTimeThreshold:null,fingerReleaseThreshold:250,longTapThreshold:500,doubleTapThreshold:200,swipe:null,swipeLeft:null,swipeRight:null,swipeUp:null,swipeDown:null,swipeStatus:null,pinchIn:null,pinchOut:null,pinchStatus:null,click:null,tap:null,doubleTap:null,longTap:null,hold:null,triggerOnTouchEnd:!0,triggerOnTouchLeave:!1,allowPageScroll:"auto",fallbackToMouseEvents:!0,excludedElements:".noSwipe",preventDefaultEvents:!0};$.fn.swipe=function(method){var $this=$(this),plugin=$this.data(PLUGIN_NS);if(plugin&&"string"==typeof method){if(plugin[method])return plugin[method].apply(plugin,Array.prototype.slice.call(arguments,1));$.error("Method "+method+" does not exist on jQuery.swipe")}else if(plugin&&"object"==typeof method)plugin.option.apply(plugin,arguments);else if(!(plugin||"object"!=typeof method&&method))return init.apply(this,arguments);return $this},$.fn.swipe.version=VERSION,$.fn.swipe.defaults=defaults,$.fn.swipe.phases={PHASE_START:PHASE_START,PHASE_MOVE:PHASE_MOVE,PHASE_END:PHASE_END,PHASE_CANCEL:PHASE_CANCEL},$.fn.swipe.directions={LEFT:LEFT,RIGHT:RIGHT,UP:UP,DOWN:DOWN,IN:IN,OUT:OUT},$.fn.swipe.pageScroll={NONE:NONE,HORIZONTAL:HORIZONTAL,VERTICAL:VERTICAL,AUTO:AUTO},$.fn.swipe.fingers={ONE:1,TWO:2,THREE:3,FOUR:4,FIVE:5,ALL:ALL_FINGERS}});
+
+/***/ }),
+
+/***/ 67:
+/***/ (function(module, exports) {
+
+
+function readyToLoadPages(fn) {
+  if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
+function fetchPage(url, fn) {
+  var res = null;
+  var r = new XMLHttpRequest();
+  r.open('GET', url, true);
+  r.onreadystatechange = function () {
+    if (this.readyState !== 4) return;
+    if (this.status >= 200 && this.status < 400) {
+      fn(this.responseText);
+    } else console.error('Could not fetch page: ' + url);
+  };
+  r.send();
+  r = null;
+}
+
+// function createNeededElements() {
+//   SniddlCreateEl({
+//     parent: '#app',
+//     attr: { id: 'pages' }
+//   });
+//   SniddlCreateEl({
+//     type: 'style',
+//     parent: 'head',
+//     attr: { id: 'sniddl-css' },
+//     html: '#app {display: flex;flex-direction: column;height: 100vh;}#pages {position: relative;flex-grow: 1}[id^="page-"] {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}.page-hidden {opacity: 0;}.page-visible {opacity: 1;}'
+//   });
+// }
+
+function getPageMetaByName(name) {
+  return document.querySelectorAll('meta[property="sniddl:page"][name="' + name + '"]')[0];
+}
+
+function getMetaByProperty(property) {
+  return document.querySelectorAll('meta[property="' + property + '"]')[0];
+}
+
+function SniddlCreateEl(o) {
+  o.type = o.type || 'div';
+  o.attr = o.attr || {};
+  o.html = o.html;
+  var child = document.createElement(o.type);
+  var parents = document.querySelectorAll(o.parent);
+  var exists = false;
+  Object.keys(o.attr).forEach(function (key) {
+    var val = o.attr[key];
+    if (key === 'id') {
+      if (document.getElementById(val)) exists = true;
+      child = document.getElementById(val) || child;
+    }
+    child.setAttribute(key, val);
+  });
+  if (!exists) parents.forEach(function (parent) {
+    return parent.append(child);
+  });
+  if (o.html) child.innerHTML = o.html;
+
+  return child;
+}
+
+function createNeededElements() {
+  SniddlCreateEl({
+    type: 'style',
+    parent: 'head',
+    attr: { id: 'sniddl-css' },
+    html: '#app {overflow-x: hidden;}.page-hidden {display: none;}'
+  });
+  SniddlCreateEl({
+    parent: '#app',
+    attr: { id: 'pages' }
+  });
+  if (getPageMetaByName('404')) {
+    loadPageIntoDOM('404');
+  } else {
+    SniddlCreateEl({
+      parent: '#pages',
+      attr: { id: 'page-404', class: 'page-hidden' },
+      html: '<h1>404 - Not found</h1>'
+    });
+  }
+}
+
+function loadPageIntoDOM(name) {
+  var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+
+  var meta = getPageMetaByName(name);
+  if (!meta) return fn(name, '404');
+  var div = SniddlCreateEl({
+    parent: '#pages',
+    attr: { id: 'page-' + name }
+  });
+  if (div.classList.contains('page-visible')) return fn(name, 'already-visible');
+  div.classList.add('page-hidden');
+  window.$pages[name] = div;
+  fetchPage(meta.getAttribute('content'), function (res) {
+    div.innerHTML = res;
+    fn(name);
+  });
+}
+
+function showPage(name) {
+  if (window.$page !== undefined) var old = Object.assign({}, window.$page);
+  window.$page = {
+    el: document.getElementById('page-' + name),
+    name: name
+  };
+  if ($page.el) {
+    if (old.el) {
+      old.el.classList.add('page-hidden');
+      old.el.classList.remove('page-visible');
+    }
+    $page.el.classList.remove('page-hidden');
+    $page.el.classList.add('page-visible');
+  }
+}
+
+function getLandingPage() {
+  var split = location.hash.split('/');
+  var arr = split.slice(1, split.length);
+  window.$page.name = arr[0] || 'index';
+  window.$params = arr.slice(1, arr.length);
+  loadPageIntoDOM(window.$page.name, function (name, err) {
+    if (err === '404') showPage('404');else showPage(name);
+  });
+}
+
+window.reloadPagesFromMeta = function () {
+  var fn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+  readyToLoadPages(function () {
+    window.$pages = {};
+    window.$page = {};
+    createNeededElements();
+    getLandingPage();
+    var pages = document.querySelectorAll('meta[property="sniddl:page"]');
+    var found = 0;
+    setTimeout(function () {
+      fn = window.onPagesReloaded || fn;
+      pages.forEach(function (page) {
+        return loadPageIntoDOM(page.name, function (name, err) {
+          found++;
+          if (found === pages.length) fn();
+        });
+      });
+    }, 500);
+
+    window.addEventListener("hashchange", function () {
+      getLandingPage();
+      window.scroll(0, 0);
+    });
+  });
+};
+
+reloadPagesFromMeta();
+
+
+/***/ }),
+
+/***/ 68:
+/***/ (function(module, exports) {
+
+function Sniddl(query) {
+  var elements = document.querySelectorAll(query);
+  var list = [];
+  for (var i = 0; i < elements.length; i++) {
+    if (elements[i]["__sniddl__"]) list.push(elements[i])
+  }
+  return list;
+}
+
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation);
+  });
+});
+
+Sniddl.set = function(query, key, value, init=false) {
+  var elements = document.querySelectorAll(query);
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    el.$sniddl.$data = el.$sniddl.$data || {}
+    var old = el.$sniddl.$data;
+    el.$sniddl.$data[key] = value
+    if (el.$sniddl.onmount && init) window[el.$sniddl.onmount](el.$sniddl, el.$sniddl.$data, old)
+    else if (el.$sniddl.onbind && !init) window[el.$sniddl.onbind](el.$sniddl, el.$sniddl.$data, old)
+  }
+}
+
+Sniddl.init = function(query, options={}) {
+  if (options.addCss) Sniddl.addCss(query);
+  // document.addEventListener('DOMContentLoaded', function () {
+  var elements = document.querySelectorAll(query);
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    if (el.$sniddl) continue
+    Object.defineProperty(el, '$sniddl', {
+      get () {
+        return this.__sniddl__.make()
+      },
+      set (val) {
+        return this.__sniddl__ = val
+      }
+    })
+    el["$sniddl"] = new SniddlComponent(el, options);
+  }
+  var binds = document.querySelectorAll('[bind]');
+  for (var i = 0; i < binds.length; i++) {
+    var el = binds[i];
+    Sniddl.set(query, 'value', el.value, true)
+    el.addEventListener('input', function(e) {
+      var query = e.target.getAttribute('bind');
+      Sniddl.set(query, 'value', e.target.value)
+    })
+
+    // el["__binds__"] = new SniddlComponent(el, options);
+  }
+  // })
+}
+
+Sniddl.addCss = function(query) {
+  var css = query + ':hover{cursor: pointer;}';
+  var style = document.createElement('style');
+  if (style.styleSheet) style.styleSheet.cssText = css;
+  else style.appendChild(document.createTextNode(css));
+  document.getElementsByTagName('head')[0].appendChild(style);
+}
+
+// Sniddl.watch = function (el) {
+//   console.log('watchingg...', el);
+//   var ob = new MutationObserver(function (mutations) {
+//     for(var mutation in mutations) {
+//       console.log(mutation.type, mutation);
+//     }
+//   })
+//   ob.observe(el, { attributes: true, childList: true, characterData: true, subtree: true })
+// }
+
+SniddlComponent.prototype.eval = function (str) {
+  if (!this.el.hasAttribute(':' + str)) {
+    if (!this.$watch) return false
+    if (!this.$watch[str]) return false
+    if (this.$data[str]) {
+      return this.$data[str]
+    } else {
+      return eval(this.$watch[str]);
+    }
+  }
+  // console.log('evaling', eval(this.el.getAttribute(str)), this);
+
+  this.$watch = this.$watch || {}
+  this.$watch[str] = this.el.getAttribute(':' + str)
+  this.el.removeAttribute(':' + str);
+  if (this.$data[str]) {
+    return this.$data[str]
+  } else {
+    return eval(this.$watch[str]);
+  }
+}
+
+SniddlComponent.prototype.change = function(key, val) {
+  if (this.$watch[key]) this.$data[key] = val;
+  else this[key] = val
+}
+
+SniddlComponent.prototype.getAttr = function (str) {
+  if (!this.el.hasAttribute(str)) return this[str]
+  return this.el.getAttribute(str);
+}
+
+SniddlComponent.prototype.hasAttr = function (str) {
+  if (!this.el.hasAttribute(str)) return this[str]
+  return this.el.hasAttribute(str);
+}
+
+function SniddlComponent(el, options) {
+  this.el = el;
+  this.$data = {}
+  this.data = options.params;
+  this.headers = options.headers;
+  this.make()
+  this.removeAttributes('url data-url params data-params method data-method onerror data-onerror onsuccess data-onsuccess redirect data-redirect blank data-blank');
+  if (this.params) this.params = JSON.parse(this.params);
+  this.params = Object.assign(this.params || {}, this.data);
+  this.el.onclick = this.click;
+}
+
+SniddlComponent.prototype.make = function() {
+  var a = this.getAttr.bind(this);
+  var h = this.hasAttr.bind(this);
+  var e = this.eval.bind(this);
+  this.url = e('url') || a('url') || a('data-url');
+  this.params =  a('params') || a('data-params');
+  this.method =  a('method') || a('data-method');
+  this.onerror =  a('onerror') || a('data-onerror') || console.error;
+  this.onsuccess = a('onsuccess') || a('data-onsuccess');
+  this.onbind = a('onbind') || a('data-onbind');
+  this.redirect = h('redirect') || h('data-redirect');
+  this.blank = h('blank') || h('data-blank');
+  return this
+
+}
+
+SniddlComponent.prototype.removeAttributes = function(str) {
+  var attrs = str.split(' ')
+  for (var i = 0; i < attrs.length; i++) {
+    this.el.removeAttribute(attrs[i])
+  }
+}
+
+SniddlComponent.prototype.click = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if(e.target.href) return e.target.target ? window.open(e.target.href, e.target.target) : window.location.href = e.target.href;
+  var s = this.$sniddl;
+  if (!s.method) return s.blank ? window.open(s.url, '_blank') : window.location.href = s.url;
+  else if (s.redirect) s.formRequest()
+  else return s.xmlRequest()
+}
+
+SniddlComponent.prototype.formRequest = function(data) {
+  var form = document.createElement('form');
+  form.setAttribute('method', this.method);
+  form.setAttribute('action', this.url);
+  form.style.display = 'none';
+  document.body.appendChild(form);
+  for (var key in this.params) {
+    var input = document.createElement('input');
+    input.setAttribute('name', key);
+    input.setAttribute('value', this.params[key]);
+    input.setAttribute('type', 'hidden');
+    form.appendChild(input)
+  }
+  form.submit()
+}
+
+
+SniddlComponent.prototype.xmlRequest = function() {
+  var data = this.make()
+  console.log(data.url);
+  var x = new XMLHttpRequest();
+  x.open(data.method, data.url);
+  if (data.headers) {
+    for (var key in data.headers) {
+      x.setRequestHeader(key, data.headers[key]);
+    }
+  }
+  x.onload = function () {
+    var res = JSON.parse(x.responseText);
+    if (x.status >= 200 && x.status < 300 && data.onsuccess) {
+      window[data.onsuccess](data, res)
+    } else if (x.status < 200 || x.status >= 300) {
+      if (data.onerror === console.error) console.error('Sniddl Ajax Response Error:', res);
+      else window[data.onerror](data, res)
+    }
+  }.bind(data)
+  x.send(JSON.stringify(data.params))
+}
+
+SniddlComponent.prototype.constructor = SniddlComponent;
+
+try {
+  module.exports = Sniddl
+} catch (e) {
+
+}
+
 
 /***/ })
 

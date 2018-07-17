@@ -1,46 +1,26 @@
 <?- include('header') ?>
 
-<div class="page container px-1">
-  <div class="page-title-fixed"><span><?= title || 'IOS Haven' ?></span></div>
-  <div class="page-title"><?= title || 'IOS Haven' ?></div>
-  <div class="mt-3" style="height: 200px; background: grey; width: 100%;"></div>
-
-  <!-- <div class="section-title">
-    New Games We Love
-    <a href="#">See All</a>
-  </div> -->
-
-  <!-- <div class="item">
-    <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/0fKs7bHvjcFilZhavta63yItSgALa3Cu2z0ah8bh.png" alt=""></div>
-    <div class="item-content">
-      <div class="item-content-title">Instagram Rocket</div>
-      <div class="item-content-subtitle">Tweaked Instagram</div>
+<div id="app" class="container px-2 has-toolbar">
+  <div class="toolbar-bottom">
+    <div class="item linkable active" url="#/">
+      <i class="icon-today"></i>
+      <div class="label">Today</div>
     </div>
-    <div class="item-actions">
-      <a href="#" class="btn btn-secondary btn-link-color">Get</a>
+    <div class="item linkable" url="#/games">
+      <i class="icon-games"></i>
+      <div class="label">Games</div>
     </div>
-  </div>
-  <div class="item">
-    <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/TZwRsJ6gYYkT5zLKVh41lV9q5sOSEDTdfFh9vLo8.png" alt=""></div>
-    <div class="item-content">
-      <div class="item-content-title">Clash of Clans</div>
-      <div class="item-content-title">Hack</div>
-      <div class="item-content-subtitle">Hacked Clash of Clans</div>
-
+    <div class="item linkable" url="#/apps">
+      <i class="icon-apps"></i>
+      <div class="label">Apps</div>
     </div>
-    <div class="item-actions">
-      <a href="#" class="btn btn-secondary btn-link-color">GET</a>
+    <div class="item linkable" url="#/updates">
+      <i class="icon-updates"></i>
+      <div class="label">Updates</div>
+    </div>
+    <div class="item linkable" url="#/search">
+      <i class="icon-search"></i>
+      <div class="label">Search</div>
     </div>
   </div>
-  <div class="item">
-    <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/NZcExbJtszdCdzDkwEAkmFYwS7syrvFkILSsoTSL.png" alt=""></div>
-    <div class="item-content">
-      <div class="item-content-title">Bobby Movie</div>
-      <div class="item-content-subtitle">Watch Free Movies</div>
-      <div class="item-content-subtitle">TV Shows</div>
-
-    </div>
-    <div class="item-actions">
-      <a href="#" class="btn btn-secondary btn-link-color">GET</a>
-    </div>
-  </div> -->
+  <div id="pages" class="has-toolbar-bottom"></div>

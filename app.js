@@ -61,6 +61,7 @@ passport.deserializeUser(function(id, done) {
 app.use('/', require('./auth/routes'))
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
+app.use('/spa', require('./routes/pages'));
 app.use('*', function(req, res, next) {
   res.sendStatus(404)
 })

@@ -1,0 +1,6 @@
+
+.icon-apps:before { content: '\e800'; } /* '' */
+.icon-games:before { content: '\e801'; } /* '' */
+.icon-search:before { content: '\e802'; } /* '' */
+.icon-updates:before { content: '\e804'; } /* '' */
+.icon-today:before { content: '\e806'; } /* '' */
