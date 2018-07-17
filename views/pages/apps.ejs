@@ -1,31 +1,34 @@
-<?- include('../layouts/page-title') ?>
+<div class="container">
+  <?- include('../layouts/page-title') ?>
 
 
-<div class="section-title top">
-  New Apps We Love
-  <a href="#">See All</a>
-</div>
-<div class="item-slider">
-  <? for(i=0; i<20; i++) { ?>
-    <? if (i % 3 == 0) { ?>
-      <div class="item-grouping col-12 col-md-6 col-lg-4 px-1">
-      <!-- <div class="item-grouping col-12 col-md-6 col-lg-4"> -->
+  <div class="section-title top">
+    New Apps We Love
+    <a href="#">See All</a>
+  </div>
+  <div class="item-slider">
+    <? for(i=0; i<20; i++) { ?>
+      <? if (i % 3 == 0) { ?>
+        <div class="item-grouping col-12 col-md-6 col-lg-4 px-1">
+        <!-- <div class="item-grouping col-12 col-md-6 col-lg-4"> -->
+      <? } ?>
+      <div class="item app">
+        <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/0fKs7bHvjcFilZhavta63yItSgALa3Cu2z0ah8bh.png" alt=""></div>
+        <div class="item-content">
+          <div class="item-content-title">Instagram Rocket</div>
+          <div class="item-content-subtitle">Tweaked Instagram</div>
+        </div>
+        <div class="item-actions">
+          <a href="#" class="app-link apple">Get</a>
+        </div>
+      </div>
+      <? if (i % 3 == 2) { ?>
+        </div> <!-- closing item grouping -->
+      <? } ?>
     <? } ?>
-    <div class="item app">
-      <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/0fKs7bHvjcFilZhavta63yItSgALa3Cu2z0ah8bh.png" alt=""></div>
-      <div class="item-content">
-        <div class="item-content-title">Instagram Rocket</div>
-        <div class="item-content-subtitle">Tweaked Instagram</div>
-      </div>
-      <div class="item-actions">
-        <a href="#" class="app-link apple">Get</a>
-      </div>
-    </div>
-    <? if (i % 3 == 2) { ?>
+    <? if (20 % 3 != 0) { ?>
       </div> <!-- closing item grouping -->
     <? } ?>
-  <? } ?>
-  <? if (20 % 3 != 0) { ?>
-    </div> <!-- closing item grouping -->
-  <? } ?>
+  </div>
+
 </div>

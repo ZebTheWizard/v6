@@ -23,5 +23,9 @@ router.get('/search', function(req, res, next) {
   res.render('pages/search', {title: 'Search'});
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('pages/login');
+});
+
 
 module.exports = router;

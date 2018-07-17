@@ -20,6 +20,10 @@ $cyan:    #17a2b8 !default;
           box-sizing: border-box;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 a {
   color: $blue;
   text-decoration: none;
@@ -28,6 +32,67 @@ a {
 i {
   color: inherit;
 }
+
+#loading {
+  position: fixed;
+  height: 100%;
+  background: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 200;
+  flex-wrap: wrap;
+}
+
+#app {
+  position: relative;
+}
+
+.flex-wrap {
+  flex-wrap: wrap
+}
+.text-normal, .text-normal *{
+  font-size: 1rem !important;
+}
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+.page-hidden {
+  opacity: 0;
+  visibility: hidden;
+  height: 0 !important;
+  overflow: hidden;
+}
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  &.push-up { top: 99vh; transition: top 0.5s ease 0.1s;}
+  &.push-down { top: -100vh; transition: top 0.5s ease 0.1s;}
+  &.push-left { left: -100vw; transition: left 0.5s ease 0.1s;}
+  &.push-right { left: 100vw; transition: left 0.5s ease 0.1s;}
+  &.page-visible {
+    visibility: visible;
+    height: auto;
+    &.push-up, &.push-down {top: 0; opacity: 1;}
+    &.push-left, &.push-right {left: 0; opacity: 1;}
+  }
+  &.popover {
+    border: none;
+    z-index: 200;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    max-width: none;
+  }
+}
+
 
 
 a:hover {
@@ -68,6 +133,10 @@ a:hover {
       position: absolute;
       top: -20px;
       left: 0;
+    }
+    &.flexible {
+      flex-wrap: wrap;
+      height: auto;
     }
 }
 
@@ -290,17 +359,20 @@ a:hover {
 
 .highlighted-search {
   .input-group-text {
-    background: white;
-    border-right: 0;
+    background: #eee;
+    border: none;
     padding-right: 0.25rem;
   }
   input {
     padding-left: 0.25rem;
     border-left: 0px;
+    background: #eee;
+    border: none;
   }
   input:focus {
-    border-color: #ced4da;
+    border: none;
     outline: none;
     box-shadow: none;
+    background: #eee;
   }
 }

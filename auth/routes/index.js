@@ -9,6 +9,8 @@ passport.use(require('../setup/local'))
 
 router.use(function (req, res, next) {
   res.locals.user = req.user
+  res.locals.isGuest = !req.isAuthenticated()
+  res.locals.isAuthenticated = req.isAuthenticated()
   next()
 })
 

@@ -3,8 +3,11 @@ import scrollSnapPolyfill from 'css-scroll-snap-polyfill'
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
+window.axios = require('axios');
 window.Sniddl = require('sniddl-ajax')
-require('sniddl-spa')
+window.$history = window.$history || []
+
+// require('sniddl-spa')
 
 Sniddl.init('.linkable', {
   addCss: true,
@@ -13,45 +16,25 @@ Sniddl.init('.linkable', {
 })
 // window.fa = require('@fortawesome/fontawesome-pro')
 
-try {
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap');
-    require('jquery-touchswipe')
-} catch (e) {}
-
-function setDates() {
+window.today = function() {
   var d = new Date();
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  console.log(`${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`);
-  $('.today').html(`${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`)
+  return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`
 }
+
+try {
+    window.$ = window.jQuery = require('jquery');
+    require('bootstrap');
+    // require('jquery-touchswipe')
+    require('./client-router')
+    require('./router')
+    // console.log('tried to load jquery');
+} catch (e) {}
+
+
+
 
 $(document).ready(function () {
   scrollSnapPolyfill()
-
-  $('.carousel').carousel({
-    interval: false
-  })
-
-  $('.carousel').bind('wheel', function (e) {
-    if (e.originalEvent.deltaX > 0) {
-      $(this).carousel('next')
-    } else if (e.originalEvent.deltaX < 0) {
-      $(this).carousel('prev')
-    }
-  })
-
-
-})
-
-$(window).on('hashchange', function () {
-  // setDates()
-  setTimeout(function () {
-    $('.today').each(function () {
-      $(this).get()[0].innerHTML = 'asdf'
-      // console.log($(this).get(), $(this).html());
-    })
-  }, 100)
-
 })
