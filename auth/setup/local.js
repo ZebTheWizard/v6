@@ -10,12 +10,10 @@ module.exports = new Strategy({
   passReqToCallback: true
 }, function (req, username, password, done) {
   User.findOne({ username: username }, (err, user) => {
-    if (user && typeof req.user !== 'undefined') {
-      console.log('user already exists');
+    if (user && typeof req.user === 'undefined') {
       done((new Error('User already exists')))
     }
     if (user) {
-      console.log('found user');
       argon2.verify(user.password, password).then(match => {
         if (match) return done(null, user)
         else return done((new Error('Invalid Login')))
@@ -28,7 +26,6 @@ module.exports = new Strategy({
       }
       argon2.hash(password).then(hash => {
         var user = (typeof req.user === 'undefined') ? new User : req.user;
-        console.log(user);
         user.username = username;
         user.password = hash;
         user.avatar = `https://api.adorable.io/avatars/100/${username}.png`,
@@ -38,23 +35,7 @@ module.exports = new Strategy({
         })
       })
     } else {
-      // return res.render('signup', {finishingSignup: true})
-      // console.log(req.cookies);
-      // console.log('user does not exist');
       done(null, {username, password}, 'nouser')
     }
-    // if (user) return done(null, user)
-    //
-    // var user = new User;
-    // user.twitter = {
-    //   id: profile.id,
-    //   avatar: profile._json.profile_image_url_https,
-    //   username: profile.username,
-    //   displayName: profile.displayName
-    // }
-    // user.incompleteSignup = true
-    // user.save(err => {
-    //   done(err, user)
-    // })
   })
 })

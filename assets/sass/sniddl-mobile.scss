@@ -1,14 +1,3 @@
-$blue:    #007aff !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #e83e8c !default;
-$red:     #dc3545 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #28a745 !default;
-$teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
-
 * {
   padding: 0;
   margin: 0;
@@ -27,6 +16,9 @@ body {
 a {
   color: $blue;
   text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 i {
@@ -359,20 +351,40 @@ a:hover {
 
 .highlighted-search {
   .input-group-text {
-    background: #eee;
+    background: $light;
     border: none;
     padding-right: 0.25rem;
   }
   input {
     padding-left: 0.25rem;
     border-left: 0px;
-    background: #eee;
+    background: $light;
     border: none;
   }
   input:focus {
     border: none;
     outline: none;
     box-shadow: none;
-    background: #eee;
+    background: $light;
   }
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+  }
+}
+
+.back {
+    position: absolute;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    z-index: 200;
 }

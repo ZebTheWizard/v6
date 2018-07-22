@@ -26,7 +26,7 @@ ejs.delimiter = '?'
 app.set('view engine', 'ejs');
 
 
-app.use(logger('combined'));
+// app.use(logger('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -60,7 +60,7 @@ passport.deserializeUser(function(id, done) {
 
 app.use('/', require('./auth/routes'))
 app.use('/', require('./routes/index'));
-app.use('/user', require('./routes/user'));
+app.use('/me', require('./routes/user'));
 app.use('/spa', require('./routes/pages'));
 app.use('*', function(req, res, next) {
   res.sendStatus(404)

@@ -7,7 +7,7 @@ module.exports = new Strategy({
   clientSecret: config.get('github.secret'),
   callbackURL: config.get("github.callback")
 }, function (token, secret, profile, done) {
-  User.findOne({ githubID: profile.id }, (err, user) => {
+  User.findOne({ 'github.id': profile.id }, (err, user) => {
     if (user) return done(null, user)
 
     var user = new User;

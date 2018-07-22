@@ -439,3 +439,16 @@ a:hover {
   background: #eee;
 }
 
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar img {
+  height: 100%;
+  width: 100%;
+  vertical-align: top;
+}
+

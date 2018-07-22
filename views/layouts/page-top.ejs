@@ -7,27 +7,27 @@
 
 <div id="app" class="has-toolbar">
   <div class="toolbar-bottom">
-    <div id="nav-today" class="item linkable navigation-link" url="#/">
+    <div id="nav-today" class="item linkable navigation-link <?= tab === 'today' ? 'active' : '' ?>" url="/today">
       <i class="icon-today"></i>
       <div class="label">Today</div>
     </div>
-    <div id="nav-games" class="item linkable navigation-link" url="#/games">
+    <div id="nav-games" class="item linkable navigation-link <?= tab === 'games' ? 'active' : '' ?>" url="/games">
       <i class="icon-games"></i>
       <div class="label">Games</div>
     </div>
-    <div id="nav-apps" class="item linkable navigation-link" url="#/apps">
+    <div id="nav-apps" class="item linkable navigation-link <?= tab === 'apps' ? 'active' : '' ?>" url="/apps">
       <i class="icon-apps"></i>
       <div class="label">Apps</div>
     </div>
-    <div id="nav-updates" class="item linkable navigation-link" url="#/updates">
+    <div id="nav-updates" class="item linkable navigation-link <?= tab === 'updates' ? 'active' : '' ?>" url="/updates">
       <i class="icon-updates"></i>
       <div class="label">Updates</div>
     </div>
-    <div id="nav-search" class="item linkable navigation-link" url="#/search">
+    <div id="nav-search" class="item linkable navigation-link <?= tab === 'search' ? 'active' : '' ?>" url="/search">
       <i class="icon-search"></i>
       <div class="label">Search</div>
     </div>
   </div>
-  <div id="pages" class="has-toolbar-bottom">
+  <div id="pages">
     <div id="page-login" class="push-up popover"></div>
   </div>

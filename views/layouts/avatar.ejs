@@ -1,0 +1,9 @@
+<? if (user) {?>
+    <!-- <a href="/profile"> -->
+      <span class="avatar linkable" url="/me"><img src="<?= user.avatar ?>" alt="profile-image"></span>
+    <!-- </a> -->
+  <? } else { ?>
+    <a href="#/login">
+      <i class="fal fa-user-circle"></i>
+    </a>
+  <? } ?>

@@ -20,12 +20,16 @@ router.use(function (req, res, next) {
     return next()
   }
   res.cookie('isGuest', false)
-  console.log(req.url);
   if (req.user.incompleteSignup && req.url !== '/auth/local') {
-    return res.render('signup', {finishingSignup: true})
+    return res.render('popups/login', {finishingSignup: true})
   }
   next()
 })
+
+router.post('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect('/');
+});
 
 router.use('/', require('./twitter'));
 router.use('/', require('./github'));

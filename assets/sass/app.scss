@@ -1,7 +1,4 @@
-@import "functions";
-@import "variables";
-@import "mixins";
-@import "utilities";
+
 //
 // .icon {
 //   min-width: 40px !important;
@@ -10,9 +7,14 @@
 //   justify-content: center !important;
 // }
 // @import "variables";
-@import "~bootstrap/scss/bootstrap.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-brands.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-light.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-regular.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-solid.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "utilities";
+@import "sniddl-mobile.scss";

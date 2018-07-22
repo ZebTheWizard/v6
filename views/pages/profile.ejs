@@ -1,0 +1,49 @@
+<?- include('../layouts/page-top', {tab: 'today'}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <div class="page-title-fixed"><span><?= title || 'IOS Haven' ?></span></div>
+  <div class="page-title">
+    <?= title || 'IOS Haven' ?>
+  </div>
+
+  <form action="/me/update/username" method="post" class="mt-4">
+    <div class="card col-12 p-2 mx-auto bg-gradient-light" style="max-width: 30rem;">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="username">Change Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?= user.username ?>">
+        </div>
+        <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+      </div>
+    </div>
+  </form>
+
+  <form action="/me/update/password" method="post" class="mt-4">
+    <div class="card col-12 p-2 mx-auto bg-gradient-light" style="max-width: 30rem;">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="current-password">Current Password</label>
+          <input type="password" class="form-control" id="current-password" placeholder="Current Password" name="current-password">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm New Password</label>
+          <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password" name="confirm-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Save <i class="fas fa-check"></i></button>
+      </div>
+    </div>
+  </form>
+
+  <form action="/logout" method="post" class="mt-4">
+    <div class="card col-12 p-2 mx-auto bg-gradient-light" style="max-width: 30rem;">
+      <div class="card-body">
+        <p>Would you like to logout?</p>
+        <button type="submit" class="btn btn-danger">Logout <i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+<?- include('../layouts/page-bot') ?>

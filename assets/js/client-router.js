@@ -32,7 +32,6 @@ function loadPage(name, url, data={}) {
 
 function view(page) {
   // window.$history = window.history || new Array
-  window.$history.push(window.$hash || '')
   $('#pages .page').addClass('page-hidden').removeClass('page-visible')
   $('.navigation-link').removeClass('active')
   $('#nav-' + page).addClass('active')
@@ -60,8 +59,9 @@ window.loader = function(cb) {
 }
 
 window.router = function(cb, backgroundLoading) {
+  window.$history.push(window.location.href || '')
   $(window).on('hashchange load', function () {
-    window.location.hash = window.location.hash || '#/'
+    window.$history.push(window.location.href || '')
     $('#pages .page').addClass('page-hidden').removeClass('page-visible')
     var promises = cb({
       route: route,
@@ -72,6 +72,6 @@ window.router = function(cb, backgroundLoading) {
       if (window.$loader) window.$loader(backgroundLoad)
     })
     console.log(window.$history);
-    $('a.back').attr('href', window.$history.pop() || '/#/')
+    $('a.back').attr('href', window.$history.shift())
   })
 }

@@ -1,0 +1,53 @@
+<? if (typeof finishingSignup !== 'undefined') { ?>
+  <?- include('../layouts/header') ?>
+<? } ?>
+
+<a href="/#/" class="back"><i class="far fa-chevron-left mr-2"></i>Back</a>
+<div class="container mt-5">
+  <? if (typeof finishingSignup !== 'undefined') { ?>
+    <h1 class="text-center mb-4">Finish Signup</h1>
+  <? } else { ?>
+    <h1 class="text-center mb-4">Login / Signup</h1>
+  <? } ?>
+
+  <div class="m-auto w-100" style="max-width: 400px">
+    <form action="/auth/local" method="POST">
+      <div class="item-grouping">
+        <div class="item">
+          <div class="item-content py-1">
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Username" name="username" value="<?= (typeof nouser !== 'undefined') ? username : ''?>">
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content py-1">
+            <input type="password" class="form-control border-0 shadow-none" name="password" placeholder="Password" value="<?= (typeof nouser !== 'undefined') ? password : ''?>">
+          </div>
+        </div>
+        <? if (typeof finishingSignup !== 'undefined') { ?>
+          <div class="item">
+            <div class="item-content py-1">
+              <input type="password" class="form-control border-0 shadow-none" name="confirm-password" placeholder="Confirm Password">
+            </div>
+          </div>
+        <? } ?>
+      </div>
+
+      <div class="w-100 d-flex align-items-center justify-content-center">
+        <button type="submit" name="button" class="btn btn-link py-0">Continue</button>
+      </div>
+
+    </form>
+
+    <? if (typeof finishingSignup === 'undefined') { ?>
+      <div class="text-center mt-4">
+        <p>Or authenticate with services you already use.</p>
+        <div>
+          <i class="fab fa-twitter fa-2x linkable text-primary mx-1" url="/auth/twitter"></i>
+          <i class="fab fa-github fa-2x linkable mx-1" url="/auth/github"></i>
+        </div>
+      </div>
+    <? } ?>
+  </div>
+
+
+</div>
