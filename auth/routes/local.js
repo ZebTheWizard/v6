@@ -3,14 +3,14 @@ var router = express.Router();
 var passport = require('passport');
 
 router.get('/auth/local', function (req, res) {
-  res.render('signup')
+  res.render('popups/login')
 });
 
 router.post('/auth/local', function (req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (info === 'nouser') {
       res.cookie('isGuest', false)
-      return res.render('signup', {
+      return res.render('popups/login', {
         finishingSignup: true,
         nouser: true,
         username: user.username,

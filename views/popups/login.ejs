@@ -1,8 +1,8 @@
 <? if (typeof finishingSignup !== 'undefined') { ?>
-  <?- include('../layouts/header') ?>
+  <?- include('../layouts/header', {tab: 'none'}) ?>
 <? } ?>
 
-<a href="/#/" class="back"><i class="far fa-chevron-left mr-2"></i>Back</a>
+<a href="/" class="back"><i class="far fa-chevron-left mr-2"></i>Back</a>
 <div class="container mt-5">
   <? if (typeof finishingSignup !== 'undefined') { ?>
     <h1 class="text-center mb-4">Finish Signup</h1>

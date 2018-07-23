@@ -19169,10 +19169,16 @@ window.router = function (cb, backgroundLoading) {
     Promise.all(promises).then(function () {
       if (window.$loader) window.$loader(backgroundLoad);
     });
-    console.log(window.$history);
+  });
+  $(window).on('hashchange', function () {
     $('a.back').attr('href', window.$history.shift());
   });
 };
+
+$('a.internal').click(function (e) {
+  e.preventDefault();
+  window.location = $(this).attr('href');
+});
 
 /***/ }),
 /* 39 */
