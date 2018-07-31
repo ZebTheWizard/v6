@@ -1,0 +1,87 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row">
+
+
+      <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6 ">
+        <input type="hidden" name="id" value="<?= download.id ?>">
+        <div class="card p-2 bg-gradient-light" >
+          <div class="card-body">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
+            </div>
+            <div class="form-group">
+              <label for="version">Version</label>
+              <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
+            </div>
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select class="form-control" name="type" id="type">
+                <?
+                var options = ["signed", "unsigned", "duplicate"];
+                var found = false;
+                options.forEach( option => {
+                  if (download.type === option) {
+                    found = true; ?>
+                    <option value="<?= option ?>" selected><?= option ?></option>
+                  <? } else { ?>
+                    <option value="<?= option ?>"><?= option ?></option>
+                  <? }
+                })
+                if (!found) { ?>
+                  <option value="" selected disabled>--- Select Type ---</option>
+                <? }
+                ?>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+          </div>
+        </div>
+      </form>
+
+
+            <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6 ">
+              <input type="hidden" name="id" value="<?= download.id ?>">
+              <div class="card p-2 bg-gradient-light" >
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="version">Version</label>
+                    <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="form-control" name="type" id="type">
+                      <?
+                      var options = ["signed", "unsigned", "duplicate"];
+                      var found = false;
+                      options.forEach( option => {
+                        if (download.type === option) {
+                          found = true; ?>
+                          <option value="<?= option ?>" selected><?= option ?></option>
+                        <? } else { ?>
+                          <option value="<?= option ?>"><?= option ?></option>
+                        <? }
+                      })
+                      if (!found) { ?>
+                        <option value="" selected disabled>--- Select Type ---</option>
+                      <? }
+                      ?>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+                </div>
+              </div>
+            </form>
+
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

@@ -62,6 +62,9 @@ app.use('/', require('./auth/routes'))
 app.use('/', require('./routes/index'));
 app.use('/me', require('./routes/user'));
 app.use('/spa', require('./routes/pages'));
+app.use('/dashboard', require('./routes/dashboard'));
+app.use('/download', require('./routes/download'));
+app.use('/app', require('./routes/app'));
 app.use('*', function(req, res, next) {
   res.sendStatus(404)
 })

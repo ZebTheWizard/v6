@@ -1,6 +1,9 @@
-<div class="page-title-fixed"><span><?= title || 'IOS Haven' ?></span></div>
+
+<? if (typeof fixed !== 'undefined') {?>
+  <div class="page-title-fixed"><span><?= title || 'IOS Haven' ?></span></div>
+<? } ?>
+
 <div class="page-title">
   <?= title || 'IOS Haven' ?>
   <?- include('avatar') ?>
-
 </div>

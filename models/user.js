@@ -6,7 +6,7 @@ module.exports = new Schema({
   "avatar": String,
   "incompleteSignup": {
     type: Boolean,
-    required: true
+    default: true
   },
   "twitter": {
     "id": String,

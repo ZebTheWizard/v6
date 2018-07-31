@@ -1,0 +1,82 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row" data-masonry='{ "itemSelector": ".grid-item" }'>
+    <form action="/app/new" method="post" class="mt-4 col-12 col-md-6 grid-item">
+      <div class="card bg-gradient-light">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Apps</h5>
+          <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+        </div>
+        <div class="card-body">
+          <h4>Apps</h4>
+        </div>
+      </div>
+    </form>
+
+    <form action="/article/new" method="post" class="mt-4 col-12 col-md-6 grid-item">
+      <div class="card bg-gradient-light">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Articles</h5>
+          <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+        </div>
+        <div class="card-body">
+          <h4>Apps</h4>
+        </div>
+      </div>
+    </form>
+
+    <div class="mt-4 col-12 col-md-6 grid-item">
+      <div class="card bg-gradient-light">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Downloads</h5>
+          <form action="/download/new" method="post">
+            <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+          </form>
+        </div>
+        <div class="card-body">
+          <div class="position-relative">
+            <input type="text" id="auto-download" class="form-control" placeholder="Search Downloads...">
+          </div>
+          <div class="mt-4 mb-1">Recently Created</div>
+          <ul class="list-group">
+            <? downloads.forEach(download => { ?>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>
+                  <span class="h6"><?= download.name ?></span>
+                  <span class="pl-2 small text-muted"><?= download.version ?></span>
+                  <span class="pl-2 small text-muted"><?= download.type ?></span>
+                </span>
+                <a href="/download/edit/<?= download.id ?>">Edit</a>
+              </li>
+            <? }) ?>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 col-12 col-md-6 grid-item">
+      <div class="card p-2 bg-gradient-light">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Stats</h5>
+          <button type="submit" class="btn-primary btn-sm">View<i class="fas fa-eye ml-2"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 col-12 col-md-6 grid-item">
+      <div class="card p-2 bg-gradient-light">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Logs</h5>
+          <button type="submit" class="btn-primary btn-sm">View<i class="fas fa-eye ml-2"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

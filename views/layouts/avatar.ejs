@@ -1,9 +1,12 @@
-<? if (user) {?>
-    <!-- <a href="/profile"> -->
-      <span class="avatar linkable" url="/me"><img src="<?= user.avatar ?>" alt="profile-image"></span>
-    <!-- </a> -->
+<span class="d-inline-flex">
+  <a href="/dashboard" class="mr-3">
+    <i class="fal fa-sliders-h"></i>
+  </a>
+  <? if (user) {?>
+    <span class="avatar linkable" url="/me"><img src="<?= user.avatar ?>" alt="profile-image"></span>
   <? } else { ?>
     <a href="#/login">
       <i class="fal fa-user-circle"></i>
     </a>
   <? } ?>
+</span>

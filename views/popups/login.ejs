@@ -15,12 +15,12 @@
       <div class="item-grouping">
         <div class="item">
           <div class="item-content py-1">
-            <input type="text" class="form-control border-0 shadow-none" placeholder="Username" name="username" value="<?= (typeof nouser !== 'undefined') ? username : ''?>">
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Username" name="username" value="<?= (typeof user !== 'undefined') ? user.username : ''?>">
           </div>
         </div>
         <div class="item">
           <div class="item-content py-1">
-            <input type="password" class="form-control border-0 shadow-none" name="password" placeholder="Password" value="<?= (typeof nouser !== 'undefined') ? password : ''?>">
+            <input type="password" class="form-control border-0 shadow-none" name="password" placeholder="Password">
           </div>
         </div>
         <? if (typeof finishingSignup !== 'undefined') { ?>

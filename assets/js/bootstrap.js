@@ -26,14 +26,37 @@ try {
     // require('jquery-touchswipe')
     require('./client-router')
     require('./router')
+    require('jquery-autocompleter')
     // console.log('tried to load jquery');
 } catch (e) {}
 
 
 
-
 $(document).ready(function () {
   scrollSnapPolyfill()
+  console.log(window.jQuery);
+  $('#auto-download').autocompleter({
+    highlightMatches: true,
+    source: '/download/json',
+    asLocal: true,
+    customLabel: 'name',
+    template: `
+    <div class="list-group-item list-group-item-action list-autocomplete">
+        <span class="h6">{{ label }}</span>
+        <span class="pl-2 small text-muted">{{ version }}</span>
+        <span class="pl-2 small text-muted">{{ type }}</span>
+    </div>`,
+    hint: true,
+    empty: false,
+    limit: 5,
+    callback(value, index, selected) {
+      if (selected) {
+        console.log(selected._id);
+        window.location.href = "/download/edit/" + selected._id
+      }
+    }
+
+  })
 })
 
 $(window).on('hashchange load', function () {
@@ -43,3 +66,7 @@ $(window).on('hashchange load', function () {
     params: {}
   })
 })
+
+// $('.grid').masonry({
+//   itemSelector: '.grid-item',
+// });

@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth/middleware');
-var authMiddleware = require('../auth/middleware')
 var argon2 = require('argon2')
 
 /* GET users listing. */
-router.use(authMiddleware)
+router.use(auth)
 
-router.get('/', authMiddleware, function(req, res) {
+router.get('/', function(req, res) {
   res.render('pages/profile', {title: 'Account'});
 });
 
