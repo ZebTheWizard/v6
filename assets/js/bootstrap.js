@@ -44,7 +44,6 @@ $(document).ready(function () {
     <div class="list-group-item list-group-item-action list-autocomplete">
         <span class="h6">{{ label }}</span>
         <span class="pl-2 small text-muted">{{ version }}</span>
-        <span class="pl-2 small text-muted">{{ type }}</span>
     </div>`,
     hint: true,
     empty: false,

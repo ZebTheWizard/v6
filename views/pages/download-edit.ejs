@@ -5,7 +5,7 @@
   <div class="row">
 
 
-      <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6 ">
+      <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= download.id ?>">
         <div class="card p-2 bg-gradient-light" >
           <div class="card-body">
@@ -18,67 +18,34 @@
               <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
             </div>
             <div class="form-group">
-              <label for="type">Type</label>
-              <select class="form-control" name="type" id="type">
-                <?
-                var options = ["signed", "unsigned", "duplicate"];
-                var found = false;
-                options.forEach( option => {
-                  if (download.type === option) {
-                    found = true; ?>
-                    <option value="<?= option ?>" selected><?= option ?></option>
-                  <? } else { ?>
-                    <option value="<?= option ?>"><?= option ?></option>
-                  <? }
-                })
-                if (!found) { ?>
-                  <option value="" selected disabled>--- Select Type ---</option>
-                <? }
-                ?>
-              </select>
+              <label for="upload">Upload File</label>
+              <input type="file" class="form-control-file" id="upload" name="upload">
             </div>
             <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
           </div>
         </div>
       </form>
 
-
-            <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6 ">
-              <input type="hidden" name="id" value="<?= download.id ?>">
-              <div class="card p-2 bg-gradient-light" >
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="version">Version</label>
-                    <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="type">Type</label>
-                    <select class="form-control" name="type" id="type">
-                      <?
-                      var options = ["signed", "unsigned", "duplicate"];
-                      var found = false;
-                      options.forEach( option => {
-                        if (download.type === option) {
-                          found = true; ?>
-                          <option value="<?= option ?>" selected><?= option ?></option>
-                        <? } else { ?>
-                          <option value="<?= option ?>"><?= option ?></option>
-                        <? }
-                      })
-                      if (!found) { ?>
-                        <option value="" selected disabled>--- Select Type ---</option>
-                      <? }
-                      ?>
-                    </select>
-                  </div>
-                  <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+      <? if (download.ipaUrl) { ?>
+        <div class="mx-auto mt-4 col-12 col-md-6">
+          <div class="card p-2 bg-gradient-light" >
+            <div class="card-body">
+              <h4><?= download.name ?></h4>
+              <div class="d-flex">
+                <img src="<?= download.iconUrl ?>" alt="icon">
+                <div class="ml-3">
+                  <div><strong>Size: </strong><?= download.size ?></div>
+                  <div><strong>Version: </strong><?= download.version ?></div>
+                  <a href="/download/get/<?= download.id ?>" class="btn btn-primary">Download .ipa</a>
                 </div>
               </div>
-            </form>
+
+
+            </div>
+          </div>
+        </div>
+
+      <? } ?>
 
   </div>
 

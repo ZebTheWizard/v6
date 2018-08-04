@@ -13808,7 +13808,7 @@ $(document).ready(function () {
     source: '/download/json',
     asLocal: true,
     customLabel: 'name',
-    template: '\n    <div class="list-group-item list-group-item-action list-autocomplete">\n        <span class="h6">{{ label }}</span>\n        <span class="pl-2 small text-muted">{{ version }}</span>\n        <span class="pl-2 small text-muted">{{ type }}</span>\n    </div>',
+    template: '\n    <div class="list-group-item list-group-item-action list-autocomplete">\n        <span class="h6">{{ label }}</span>\n        <span class="pl-2 small text-muted">{{ version }}</span>\n    </div>',
     hint: true,
     empty: false,
     limit: 5,

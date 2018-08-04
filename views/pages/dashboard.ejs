@@ -39,19 +39,20 @@
           <div class="position-relative">
             <input type="text" id="auto-download" class="form-control" placeholder="Search Downloads...">
           </div>
-          <div class="mt-4 mb-1">Recently Created</div>
-          <ul class="list-group">
-            <? downloads.forEach(download => { ?>
-              <li class="list-group-item d-flex justify-content-between">
-                <span>
-                  <span class="h6"><?= download.name ?></span>
-                  <span class="pl-2 small text-muted"><?= download.version ?></span>
-                  <span class="pl-2 small text-muted"><?= download.type ?></span>
-                </span>
-                <a href="/download/edit/<?= download.id ?>">Edit</a>
-              </li>
-            <? }) ?>
-          </ul>
+          <? if (downloads.length > 0) { ?>
+            <div class="mt-4 mb-1">Recently Created</div>
+            <ul class="list-group">
+              <? downloads.forEach(download => { ?>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>
+                    <span class="h6"><?= download.name ?></span>
+                    <span class="pl-2 small text-muted"><?= download.version ?></span>
+                  </span>
+                  <a href="/download/edit/<?= download.id ?>">Edit</a>
+                </li>
+              <? }) ?>
+            </ul>
+          <? } ?>
 
         </div>
       </div>

@@ -1,19 +1,12 @@
 const { Schema } = require('mongoose')
 
 const Model = new Schema({
-  "version": {
-    "type": String,
-    // "required": true,
-  },
-  "url": String,
-  "type": {
-    "type": String,
-    // "required": true,
-  },
-  "name": {
-    "type": String,
-    // "required": true,
-  },
+  "version": String,
+  "size": Number,
+  "ipaUrl": String,
+  "iconUrl": String,
+  "extension": String,
+  "name": String,
   "created_at": {
     type: Date,
     default: Date.now
@@ -23,7 +16,6 @@ const Model = new Schema({
 Model.index({
   "version": 1,
   "name": 1,
-  "type": 1,
 }, { "unique": true })
 
 module.exports = Model
