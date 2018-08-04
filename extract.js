@@ -4,7 +4,7 @@ var unzip = require('unzip')
 var fs = require('mz/fs')
 var tmp = require('tmp')
 var pngdefry = require('pngdefry')
-
+var bplist = require('./bplistParser')
 
 function defry(input, output) {
   return new Promise(function(resolve, reject) {
@@ -25,14 +25,19 @@ module.exports = async function (buffer) {
       // await exec(`mv "${ipapath}" "${ipapath += '.zip'}"`)
       var { stdout } = await exec(`unzip -l "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
       var plistPath = stdout.trim() + 'Info.plist'
-      var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}"`)
-
-      try {
-        var json = plist.parse(stdout)
-      } catch (e) {
-        return reject('corrupt plist')
-      }
-
+      var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}" > "${ipapath + '.plist'}"`)
+      // await fs.writeFile(ipapath + '.plist', stdout)
+      var { stdout } = await exec(`plutil -convert json -o - -- "${ipapath + '.plist'}"`)
+      var json = JSON.parse(stdout)
+      // try {
+      //   var json = plist.parse(stdout)
+      // } catch (e) {
+      //   console.log('plist might be bplist');
+      //   console.log('typeof stdout', typeof stdout);
+      //   // await fs.writeFile(ipapath + '.bplist', stdout)
+      //   bplist.parseBuffer(Buffer.from(stdout))
+      //   return reject('corrupt plist')
+      // }
       try {
         // console.log('try');
         // console.log(json.CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles);

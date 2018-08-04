@@ -16,7 +16,19 @@ class S3 {
           console.log(err);
           return reject(err)
         }
-        return resolve({data, url: this.getURL(options.Key)})
+        return resolve({data, url: this.getURL(options.Key), key: options.Key})
+      })
+    });
+  }
+
+  deleteObject(options) {
+    return new Promise((resolve, reject) => {
+      this.client.deleteObject(options, (err, data) => {
+        if (err) {
+          console.log(err);
+          return reject(err)
+        }
+        return resolve(data)
       })
     });
   }

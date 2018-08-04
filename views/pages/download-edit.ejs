@@ -9,14 +9,15 @@
         <input type="hidden" name="id" value="<?= download.id ?>">
         <div class="card p-2 bg-gradient-light" >
           <div class="card-body">
+            <h4>Modify App Data</h4>
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="version">Version</label>
               <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="upload">Upload File</label>
               <input type="file" class="form-control-file" id="upload" name="upload">
@@ -26,18 +27,27 @@
         </div>
       </form>
 
-      <? if (download.ipaUrl) { ?>
+      <? if (download.name) { ?>
         <div class="mx-auto mt-4 col-12 col-md-6">
           <div class="card p-2 bg-gradient-light" >
             <div class="card-body">
-              <h4><?= download.name ?></h4>
+              <h4>App Data</h4>
               <div class="d-flex">
                 <img src="<?= download.iconUrl ?>" alt="icon" width="80" height="80">
                 <div class="ml-3">
+                  <div><strong>Display Name: </strong><?= download.displayName ?></div>
                   <div><strong>Size: </strong><?= download.size ?></div>
                   <div><strong>Version: </strong><?= download.version ?></div>
-                  <a href="/download/get/<?= download.id ?>" class="btn btn-primary">Download .ipa</a>
+                  <div><strong>Minimum OS: </strong> <?= download.minimumOS ?></div>
                 </div>
+              </div>
+
+              <div class="d-flex align-items-center mt-3">
+                <a href="/download/get/<?= download.id ?>" class="btn btn-primary mr-3">Download</a>
+
+                <form action="/download/delete" method="post">
+                  <button type="submit" name="id" value="<?= download.id ?>" class="btn btn-danger">Delete</button>
+                </form>
               </div>
 
 

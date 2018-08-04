@@ -19,7 +19,7 @@ router.post('/new', function(req, res) {
   var download = new Ipa()
   download.save()
   return res.render('pages/download-edit', {
-    title: 'Edit Download',
+    title: 'Edit IPA',
     download,
   });
 });
@@ -34,6 +34,7 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
+  // return res.json(req.body)
   if (req.file) {
     var ext = req.file.originalname.split('.').reverse()[0]
     if (ext !== 'ipa') return res.status(501).send('invalid file type')
@@ -45,6 +46,8 @@ router.post('/update', multer.single('upload'), async function(req, res) {
       return res.json(e)
     }
 
+    // return res.json(plist)
+
     var ipa = await Dropbox.filesUpload({
       path: '/ipas/' + uuid() + '.' + ext,
       contents: req.file.buffer
@@ -52,31 +55,36 @@ router.post('/update', multer.single('upload'), async function(req, res) {
 
     var icon = await s3.putObject({
       Bucket: config.get('s3.bucket'),
-      Key: '/icons/' + uuid() + '.' + iconExtension,
+      Key: 'icons/' + uuid() + '.' + iconExtension,
       Body: iconBinary,
       ACL: 'public-read',
       ContentType: 'image/' + iconExtension,
     })
-    // return res.json('done')
-    var download = await Ipa.findByIdAndUpdate(req.body.id, {
-      $set: {
-        version: req.body.version,
-        ipaUrl: ipa.path_display,
-        iconUrl: icon.url,
-        extension: ext,
-        name: req.body.name,
-        size: ipa.size,
-      }
-    }, {new: true}).exec()
+    try {
+      var download = await Ipa.findByIdAndUpdate(req.body.id, {
+        $set: {
+          displayName: plist.CFBundleDisplayName,
+          version: plist.CFBundleShortVersionString || plist.CFBundleVersion || 'n/a',
+          ipaUrl: ipa.path_display,
+          iconUrl: icon.url,
+          iconKey: icon.key,
+          extension: ext,
+          name: req.body.name,
+          size: ipa.size,
+          minimumOS: plist.MinimumOSVersion,
+        }
+      }, {new: true}).exec()
+    } catch (e) {
+      return res.json(e)
+    }
+
   } else {
     var download = await Ipa.findByIdAndUpdate(req.body.id, {
       $set: {
-        version: req.body.version,
         name: req.body.name,
       }
     }, {new: true}).exec()
   }
-
   return res.redirect(`/download/edit/${ download.id }`);
 })
 
@@ -88,9 +96,19 @@ router.get('/json', async function(req, res) {
 router.get('/edit/:id', async function(req, res) {
   var download = await Ipa.findById(req.params.id).exec()
   res.render('pages/download-edit', {
-    title: 'Edit Ipa',
+    title: 'Edit IPA',
     download
   });
+});
+
+router.post('/delete', async function(req, res) {
+  var ipa = await Ipa.findByIdAndRemove(req.body.id).exec()
+  await Dropbox.filesDelete({path: ipa.ipaUrl})
+  await s3.deleteObject({
+    Bucket: config.get('s3.bucket'),
+    Key: ipa.iconKey
+  })
+  res.redirect('/dashboard');
 });
 
 
