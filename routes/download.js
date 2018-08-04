@@ -34,38 +34,49 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
-  var ext = req.file.originalname.split('.').reverse()[0]
-  if (ext !== 'ipa') return res.status(501).send('invalid file type')
+  if (req.file) {
+    var ext = req.file.originalname.split('.').reverse()[0]
+    if (ext !== 'ipa') return res.status(501).send('invalid file type')
 
-  try {
-    var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
-  } catch (e) {
-    return res.json(e)
+
+    try {
+      var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
+    } catch (e) {
+      return res.json(e)
+    }
+
+    var ipa = await Dropbox.filesUpload({
+      path: '/ipas/' + uuid() + '.' + ext,
+      contents: req.file.buffer
+    })
+
+    var icon = await s3.putObject({
+      Bucket: config.get('s3.bucket'),
+      Key: '/icons/' + uuid() + '.' + iconExtension,
+      Body: iconBinary,
+      ACL: 'public-read',
+      ContentType: 'image/' + iconExtension,
+    })
+    // return res.json('done')
+    var download = await Ipa.findByIdAndUpdate(req.body.id, {
+      $set: {
+        version: req.body.version,
+        ipaUrl: ipa.path_display,
+        iconUrl: icon.url,
+        extension: ext,
+        name: req.body.name,
+        size: ipa.size,
+      }
+    }, {new: true}).exec()
+  } else {
+    var download = await Ipa.findByIdAndUpdate(req.body.id, {
+      $set: {
+        version: req.body.version,
+        name: req.body.name,
+      }
+    }, {new: true}).exec()
   }
 
-  var ipa = await Dropbox.filesUpload({
-    path: '/ipas/' + uuid() + '.' + ext,
-    contents: req.file.buffer
-  })
-
-  var icon = await s3.putObject({
-    Bucket: config.get('s3.bucket'),
-    Key: 'randomfile.png',
-    Body: iconBinary,
-    ACL: 'public-read',
-    ContentType: 'image/png',
-  })
-
-  var download = await Ipa.findByIdAndUpdate(req.body.id, {
-    $set: {
-      version: req.body.version,
-      ipaUrl: ipa.path_display,
-      iconUrl: icon.url,
-      extension: ext,
-      name: req.body.name,
-      size: ipa.size,
-    }
-  }, {new: true}).exec()
   return res.redirect(`/download/edit/${ download.id }`);
 })
 

@@ -22,8 +22,8 @@ module.exports = async function (buffer) {
       if (err) throw err;
       await fs.writeFile(ipapath, buffer)
 
-      var { stdout } = await exec(`tar -tvf "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
-
+      // await exec(`mv "${ipapath}" "${ipapath += '.zip'}"`)
+      var { stdout } = await exec(`unzip -l "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
       var plistPath = stdout.trim() + 'Info.plist'
       var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}"`)
 
@@ -34,21 +34,26 @@ module.exports = async function (buffer) {
       }
 
       try {
-        var possibleImage = json.CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles[0]
+        // console.log('try');
+        // console.log(json.CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles);
+        var possibleImage = json.CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles.reverse()[0]
       } catch (e) {
+        // console.log('catch');
         var possibleImage = json.CFBundleIconFile
       }
 
-      var { stdout } = await exec(`tar -tvf ${ipapath} | grep "${possibleImage}" | tail -n1 | rev | cut -d ' ' -f1 | rev`)
+      var { stdout } = await exec(`unzip -l ${ipapath} | grep "${possibleImage}" | sort | tail -n1 | rev | cut -d ' ' -f1 | rev`)
+      // console.log(`unzip -l ${ipapath} | grep "${possibleImage}" | tail -n1 | rev | cut -d ' ' -f1 | rev`);
       var imagePath = stdout.trim()
       var { stdout } = await exec(`unzip -p "${ipapath}" "${imagePath}" > "${ipapath}.png"`)
 
       var iconBinary = await defry(ipapath + '.png', ipapath + '.defry.png')
 
-      await fs.unlink(ipapath + '.png')
-      await fs.unlink(ipapath + '.defry.png')
-
-      cleanup()
+      // await fs.unlink(ipapath)
+      // await fs.unlink(ipapath + '.png')
+      // await fs.unlink(ipapath + '.defry.png')
+      //
+      // cleanup()
 
       resolve({
         ipapath,
