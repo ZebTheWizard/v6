@@ -1,4 +1,4 @@
-var exec = require('mz/child_process').exec
+var exec = require('child-process-promise').exec
 var unzip = require('unzip')
 var fs = require('mz/fs')
 var tmp = require('tmp')
@@ -21,6 +21,7 @@ module.exports = async function (buffer) {
       if (err) throw err;
       await fs.writeFile(ipapath, buffer)
 
+      // await exec(`mv "${ipapath}" "${ipapath += '.zip'}"`)
       var { stdout } = await exec(`unzip -l "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
       var plistPath = stdout.trim() + 'Info.plist'
       var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}" > "${ipapath + '.plist'}"`)
