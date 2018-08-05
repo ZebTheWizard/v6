@@ -88,58 +88,60 @@ router.post('/update', multer.single('upload'), async function(req, res) {
     }
   }, {new: true}).exec()
 
-  res.redirect(`/download/edit/${ req.body.id }`);
-  if (req.file) {
-    var ext = req.file.originalname.split('.').reverse()[0]
-    if (ext !== 'ipa') {
+  res.on('finish', async () => {
+    if (req.file) {
+      var ext = req.file.originalname.split('.').reverse()[0]
+      if (ext !== 'ipa') {
+        await setProgress({ status: 'done', amount: 100, id: req.body.id })
+        console.log('invalid file type');
+        return
+      }
+
+      try {
+        var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
+      } catch (e) {
+        return res.json(e)
+      }
+
+      var ipa = await Dropbox.uploadSession({
+        stream: bufferToStream(req.file.buffer, 1 * 1000 * 1000), // 8mb chunks
+        path: `/${uuid()}.txt`,
+      }, function (data) {
+        setProgress({ status: 'uploading ipa', amount: data.progress, id: req.body.id })
+      })
+
+      var icon = await s3.putObject({
+        Bucket: config.get('s3.bucket'),
+        Key: 'icons/' + uuid() + '.' + iconExtension,
+        Body: iconBinary,
+        ACL: 'public-read',
+        ContentType: 'image/' + iconExtension,
+      }, function (data) {
+        setProgress({ status: 'uploading images', amount: data.loaded / data.total * 100, id: req.body.id })
+      })
+
+      try {
+        await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })
+        var download = await Ipa.findByIdAndUpdate(req.body.id, {
+          $set: {
+            displayName: plist.CFBundleDisplayName,
+            version: plist.CFBundleShortVersionString || plist.CFBundleVersion || 'n/a',
+            ipaUrl: ipa.path_display || 'n/a',
+            iconUrl: icon.url,
+            iconKey: icon.key,
+            extension: ext,
+            size: ipa.size || 0,
+            minimumOS: plist.MinimumOSVersion,
+          }
+        }, {new: true}).exec()
+        await setProgress({ status: 'done', amount: 100, id: req.body.id })
+      } catch (e) {}
+
+    } else {
       await setProgress({ status: 'done', amount: 100, id: req.body.id })
-      console.log('invalid file type');
-      return
     }
-
-    try {
-      var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
-    } catch (e) {
-      return res.json(e)
-    }
-
-    var ipa = await Dropbox.uploadSession({
-      stream: bufferToStream(req.file.buffer, 1 * 1000 * 1000), // 8mb chunks
-      path: `/${uuid()}.txt`,
-    }, function (data) {
-      setProgress({ status: 'uploading ipa', amount: data.progress, id: req.body.id })
-    })
-
-    var icon = await s3.putObject({
-      Bucket: config.get('s3.bucket'),
-      Key: 'icons/' + uuid() + '.' + iconExtension,
-      Body: iconBinary,
-      ACL: 'public-read',
-      ContentType: 'image/' + iconExtension,
-    }, function (data) {
-      setProgress({ status: 'uploading images', amount: data.loaded / data.total * 100, id: req.body.id })
-    })
-
-    try {
-      await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })
-      var download = await Ipa.findByIdAndUpdate(req.body.id, {
-        $set: {
-          displayName: plist.CFBundleDisplayName,
-          version: plist.CFBundleShortVersionString || plist.CFBundleVersion || 'n/a',
-          ipaUrl: ipa.path_display || 'n/a',
-          iconUrl: icon.url,
-          iconKey: icon.key,
-          extension: ext,
-          size: ipa.size || 0,
-          minimumOS: plist.MinimumOSVersion,
-        }
-      }, {new: true}).exec()
-      await setProgress({ status: 'done', amount: 100, id: req.body.id })
-    } catch (e) {}
-
-  } else {
-    await setProgress({ status: 'done', amount: 100, id: req.body.id })
-  }
+  })
+  return res.redirect(`/download/edit/${ req.body.id }`);
 
 })
 
