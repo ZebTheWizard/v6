@@ -3,6 +3,7 @@ var unzip = require('unzip')
 var fs = require('mz/fs')
 var tmp = require('tmp')
 var pngdefry = require('pngdefry')
+var plist = require('simple-plist')
 
 
 function defry(input, output) {
@@ -15,19 +16,26 @@ function defry(input, output) {
   });
 }
 
+function plistToJson(path) {
+  return new Promise(function(resolve, reject) {
+    plist.readFile(path, function (err, data) {
+      if (err) return reject(err)
+      else return resolve(data)
+    })
+  });
+}
+
 module.exports = async function (buffer) {
   return new Promise((resolve, reject) => {
     tmp.file(async function (err, ipapath, fd, cleanup) {
       if (err) throw err;
       await fs.writeFile(ipapath, buffer)
 
-      // await exec(`mv "${ipapath}" "${ipapath += '.zip'}"`)
       var { stdout } = await exec(`unzip -l "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
       var plistPath = stdout.trim() + 'Info.plist'
       var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}" > "${ipapath + '.plist'}"`)
-      // await fs.writeFile(ipapath + '.plist', stdout)
-      var { stdout } = await exec(`plutil -convert json -o - -- "${ipapath + '.plist'}"`)
-      var json = JSON.parse(stdout)
+
+      var json = await plistToJson(ipapath + '.plist')
 
       try {
         var possibleImage = json.CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles.reverse()[0]

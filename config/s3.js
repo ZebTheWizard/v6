@@ -9,7 +9,7 @@ class S3 {
     this.options = options
   }
 
-  putObject(options) {
+  putObject(options, cb=(function() {})) {
     return new Promise((resolve, reject) => {
       this.client.putObject(options, (err, data) => {
         if (err) {
@@ -17,6 +17,8 @@ class S3 {
           return reject(err)
         }
         return resolve({data, url: this.getURL(options.Key), key: options.Key})
+      }).on('httpUploadProgress', function (progress) {
+        cb(progress)
       })
     });
   }

@@ -3,33 +3,42 @@
   <?- include('../layouts/page-title', {fixed: true}) ?>
 
   <div class="row">
-
-
-      <form action="/download/update" method="post" class="mx-auto mt-4 col-12 col-md-6" enctype="multipart/form-data">
+      <div class="mx-auto mt-4 col-12">
+        <div class="position-relative">
+          <input type="text" id="auto-download" class="form-control" placeholder="Search Downloads...">
+        </div>
+      </div>
+      <? if (!download.progress.amount) { ?>
+      <form class="mx-auto mt-4 col-12 col-md-6" action="/download/update" method="post" enctype="multipart/form-data" id="ipa-form">
         <input type="hidden" name="id" value="<?= download.id ?>">
         <div class="card p-2 bg-gradient-light" >
           <div class="card-body">
-            <h4>Modify App Data</h4>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
-            </div>
-            <!-- <div class="form-group">
-              <label for="version">Version</label>
-              <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
-            </div> -->
-            <div class="form-group">
-              <label for="upload">Upload File</label>
-              <input type="file" class="form-control-file" id="upload" name="upload">
-            </div>
-            <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+            <!-- <form action="/download/update" method="post" enctype="multipart/form-data" id="ipa-form"> -->
+              <h4>Modify App Data</h4>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">
+              </div>
+              <!-- <div class="form-group">
+                <label for="version">Version</label>
+                <input type="text" class="form-control" id="version" name="version" placeholder="Version" value="<?= download.version ?>">
+              </div> -->
+              <div class="form-group">
+                <label for="upload">Upload File</label>
+                <input type="file" class="form-control-file" id="upload" name="upload">
+              </div>
+              <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+              <button type="button" url="/download/delete" method="post" redirect="true" params='{"id": "<?= download.id ?>"}' class="btn btn-danger linkable">Delete</button>
+
           </div>
         </div>
       </form>
+      <? } ?>
 
-      <? if (download.name) { ?>
+      <? if (download.displayName || download.progress.amount) { ?>
         <div class="mx-auto mt-4 col-12 col-md-6">
           <div class="card p-2 bg-gradient-light" >
+            <? if (!download.progress.amount) { ?>
             <div class="card-body">
               <h4>App Data</h4>
               <div class="d-flex">
@@ -44,14 +53,21 @@
 
               <div class="d-flex align-items-center mt-3">
                 <a href="/download/get/<?= download.id ?>" class="btn btn-primary mr-3">Download</a>
-
-                <form action="/download/delete" method="post">
-                  <button type="submit" name="id" value="<?= download.id ?>" class="btn btn-danger">Delete</button>
-                </form>
               </div>
 
 
             </div>
+            <? } else { ?>
+              <div class="card-body">
+                <h4>Updating IPA</h4>
+                <div class="mt-3 mb-1 small" id="ipa-progress-status">
+                  <?= download.progress.status ?>...
+                </div>
+                <div class="progress">
+                  <div id="ipa-progress-amount" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?= download.progress.amount ?>%;"></div>
+                </div>
+              </div>
+            <? } ?>
           </div>
         </div>
 

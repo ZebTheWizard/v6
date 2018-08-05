@@ -2,7 +2,10 @@ const { Schema } = require('mongoose')
 
 const Model = new Schema({
   "displayName": String,
-  "version": String,
+  "version": {
+    type: String,
+    default: 'n/a'
+  },
   "size": Number,
   "ipaUrl": String,
   "iconUrl": String,
@@ -10,6 +13,11 @@ const Model = new Schema({
   "extension": String,
   "name": String,
   "minimumOS": String,
+  "progress": {
+    id: String,
+    status: String,
+    amount: Number
+  },
   "created_at": {
     type: Date,
     default: Date.now

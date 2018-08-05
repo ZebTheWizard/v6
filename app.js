@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 // app.use(logger('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('body-parser').urlencoded({ limit: '2gb', extended: true }));
 app.use(session({
   secret: 'string that needs to be changed',
   resave: true,

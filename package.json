@@ -44,8 +44,11 @@
     "pngdefry": "git+https://github.com/ZebTheWizard/node-pngdefry.git",
     "popper.js": "^1.14.3",
     "route-parser": "0.0.5",
+    "simple-plist": "^0.3.0",
     "sniddl-ajax": "^1.0.9",
     "sniddl-spa": "^1.0.2",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "tmp": "0.0.33",
     "unzip": "^0.1.11"
   },
