@@ -6,7 +6,7 @@ window.Popper = require('popper.js').default;
 window.axios = require('axios');
 window.Sniddl = require('sniddl-ajax')
 window.$history = window.$history || []
-var io = require('socket.io-client')('http://localhost:8000')
+var io = require('socket.io-client')(window.location.protocol + '//' + window.location.hostname + ':8000')
 window.socket = io.connect()
 
 

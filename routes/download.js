@@ -142,7 +142,6 @@ router.post('/update', multer.single('upload'), async function(req, res) {
     }
   })
   return res.redirect(`/download/edit/${ req.body.id }`);
-
 })
 
 router.get('/json', async function(req, res) {

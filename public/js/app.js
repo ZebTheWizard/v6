@@ -13808,7 +13808,7 @@ window.Popper = __webpack_require__(2).default;
 window.axios = __webpack_require__(16);
 window.Sniddl = __webpack_require__(36);
 window.$history = window.$history || [];
-var io = __webpack_require__(98)('http://localhost:8000');
+var io = __webpack_require__(98)(window.location.protocol + '//' + window.location.hostname + ':8000');
 window.socket = io.connect();
 
 // console.log(socket);
