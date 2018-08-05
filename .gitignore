@@ -2,6 +2,7 @@
 node_modules
 .DS_Store
 /config/default.js
+/config/production.example.js
 .npmrc
 /fonts
 
