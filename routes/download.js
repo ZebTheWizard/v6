@@ -56,11 +56,6 @@ function setProgress(options) {
 }
 
 
-// var io = socket.on('connection', client => {
-//   console.log('user connected');
-// })
-// console.log(a);
-
 router.get('/stream/:chunks', function (req, res) {
   res.render('pages/today', {title: 'Today'});
   setTimeout(() => {
@@ -85,7 +80,6 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
-  // return res.json(req.body)
   await setProgress({ status: 'processing', amount: 100, id: req.body.id })
 
   var download = await Ipa.findByIdAndUpdate(req.body.id, {
@@ -103,14 +97,11 @@ router.post('/update', multer.single('upload'), async function(req, res) {
       return
     }
 
-    // console.log('extracting');
     try {
       var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
     } catch (e) {
       return res.json(e)
     }
-
-    // var text = Buffer.from('Hello')
 
     var ipa = await Dropbox.uploadSession({
       stream: bufferToStream(req.file.buffer, 1 * 1000 * 1000), // 8mb chunks
@@ -118,16 +109,7 @@ router.post('/update', multer.single('upload'), async function(req, res) {
     }, function (data) {
       setProgress({ status: 'uploading ipa', amount: data.progress, id: req.body.id })
     })
-    // console.log('all finished!!');
-    // console.log(ipa);
-    // res.end()
-    // var thing = fs.createReadStream(iconBinary)
 
-    // console.log(text.length, text.forEach);
-
-    // var ipa = await Dropbox.filesUpload()
-    // console.log(ipa);
-    // console.log('uploading images');
     var icon = await s3.putObject({
       Bucket: config.get('s3.bucket'),
       Key: 'icons/' + uuid() + '.' + iconExtension,
@@ -137,7 +119,7 @@ router.post('/update', multer.single('upload'), async function(req, res) {
     }, function (data) {
       setProgress({ status: 'uploading images', amount: data.loaded / data.total * 100, id: req.body.id })
     })
-    // return res.end()
+
     try {
       await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })
       var download = await Ipa.findByIdAndUpdate(req.body.id, {
@@ -153,14 +135,11 @@ router.post('/update', multer.single('upload'), async function(req, res) {
         }
       }, {new: true}).exec()
       await setProgress({ status: 'done', amount: 100, id: req.body.id })
-    } catch (e) {
-      // return res.json(e)
-    }
+    } catch (e) {}
 
   } else {
     await setProgress({ status: 'done', amount: 100, id: req.body.id })
   }
-  // return res.end()
 
 })
 
