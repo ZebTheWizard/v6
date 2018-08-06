@@ -31,7 +31,8 @@ module.exports = async function (buffer) {
       if (err) throw err;
       await fs.writeFile(ipapath, buffer)
 
-      var { stdout } = await exec(`unzip -l "${ipapath}" | rev | cut -d ' ' -f1 | rev | grep 'Payload/.*app/$'`)
+      var { stdout } = await exec(`unzip -l "${ipapath}" | tr -s ' ' | cut -d ' ' -f5- | grep 'Payload/.*app/$'`)
+      console.log(stdout);
       var plistPath = stdout.trim() + 'Info.plist'
       var { stdout } = await exec(`unzip -p "${ipapath}" "${plistPath}" > "${ipapath + '.plist'}"`)
 
@@ -43,7 +44,8 @@ module.exports = async function (buffer) {
         var possibleImage = json.CFBundleIconFile
       }
 
-      var { stdout } = await exec(`unzip -l ${ipapath} | grep "${possibleImage}" | sort | tail -n1 | rev | cut -d ' ' -f1 | rev`)
+      var { stdout } = await exec(`unzip -l ${ipapath} | grep "${possibleImage}" | sort | tail -n1 | tr -s ' ' | cut -d ' ' -f5-`)
+      console.log(`unzip -l ${ipapath} | grep "${possibleImage}" | sort | tail -n1 | tr -s ' ' | cut -d ' ' -f5-`);
       var imagePath = stdout.trim()
       var { stdout } = await exec(`unzip -p "${ipapath}" "${imagePath}" > "${ipapath}.png"`)
 

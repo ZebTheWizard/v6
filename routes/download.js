@@ -80,7 +80,8 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
-  await setProgress({ status: 'processing', amount: 100, id: req.body.id })
+  // return res.json([req.body, req.file])
+  await setProgress({ status: 'validating data', amount: 100, id: req.body.id })
 
   var download = await Ipa.findByIdAndUpdate(req.body.id, {
     $set: {
@@ -92,7 +93,7 @@ router.post('/update', multer.single('upload'), async function(req, res) {
     if (req.file) {
       var ext = req.file.originalname.split('.').reverse()[0]
       if (ext !== 'ipa') {
-        await setProgress({ status: 'done', amount: 100, id: req.body.id })
+        await setProgress({ status: 'failed - invalid file type', amount: 100, id: req.body.id })
         console.log('invalid file type');
         return
       }
@@ -103,11 +104,14 @@ router.post('/update', multer.single('upload'), async function(req, res) {
         return res.json(e)
       }
 
+      // console.log(plist);
+      // return
+
       var ipa = await Dropbox.uploadSession({
         stream: bufferToStream(req.file.buffer, 1 * 1000 * 1000), // 8mb chunks
-        path: `/${uuid()}.txt`,
+        path: `/ipas/${uuid()}.ipa`,
       }, function (data) {
-        setProgress({ status: 'uploading ipa', amount: data.progress, id: req.body.id })
+        setProgress({ status: 'distributing ipa', amount: data.progress, id: req.body.id })
       })
 
       var icon = await s3.putObject({
@@ -117,14 +121,14 @@ router.post('/update', multer.single('upload'), async function(req, res) {
         ACL: 'public-read',
         ContentType: 'image/' + iconExtension,
       }, function (data) {
-        setProgress({ status: 'uploading images', amount: data.loaded / data.total * 100, id: req.body.id })
+        setProgress({ status: 'distributing images', amount: data.loaded / data.total * 100, id: req.body.id })
       })
 
       try {
         await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })
         var download = await Ipa.findByIdAndUpdate(req.body.id, {
           $set: {
-            displayName: plist.CFBundleDisplayName,
+            displayName: plist.CFBundleDisplayName || plist.CFBundleName,
             version: plist.CFBundleShortVersionString || plist.CFBundleVersion || 'n/a',
             ipaUrl: ipa.path_display || 'n/a',
             iconUrl: icon.url,
