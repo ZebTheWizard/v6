@@ -1,2 +1,0 @@
-[alias]
-    pushpr = "!f() { git push production master;git commit --allow-empty -m 'push to execute post-receive';git push origin master; }; f"
