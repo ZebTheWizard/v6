@@ -3,10 +3,13 @@
   <?- include('../layouts/page-title', {fixed: true}) ?>
 
   <div class="row">
-      <div class="mx-auto mt-4 col-12">
-        <div class="position-relative">
-          <input type="text" id="auto-download" class="form-control" placeholder="Search Downloads...">
+      <div class="mx-auto mt-4 col-12 d-flex">
+        <div class="position-relative w-100">
+          <input type="text" id="auto-download" class="form-control" placeholder="Search IPAs...">
         </div>
+        <button type="button" url="/download/new" method="post" redirect="true" class="btn btn-primary linkable ml-3">
+          New<i class="fas fa-plus ml-2"></i>
+        </button>
       </div>
       <? if (!download.progress.amount) { ?>
       <form class="mx-auto mt-4 col-12 col-md-6" action="/download/update" method="post" enctype="multipart/form-data" id="ipa-form">

@@ -7,10 +7,10 @@
       <div class="card bg-gradient-light">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
           <h5 class="m-0">Apps</h5>
-          <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+          <button type="submit" class="btn-primary btn-sm" disabled>New<i class="fas fa-plus ml-2"></i></button>
         </div>
         <div class="card-body">
-          <h4>Apps</h4>
+          <div>Coming Soon...</div>
         </div>
       </div>
     </form>
@@ -19,10 +19,10 @@
       <div class="card bg-gradient-light">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
           <h5 class="m-0">Articles</h5>
-          <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+          <button type="submit" class="btn-primary btn-sm" disabled>New<i class="fas fa-plus ml-2"></i></button>
         </div>
         <div class="card-body">
-          <h4>Apps</h4>
+          <div>Coming Soon...</div>
         </div>
       </div>
     </form>
@@ -30,14 +30,14 @@
     <div class="mt-4 col-12 col-md-6 grid-item">
       <div class="card bg-gradient-light">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
-          <h5 class="m-0">Downloads</h5>
+          <h5 class="m-0">Upload IPA</h5>
           <form action="/download/new" method="post">
-            <button type="submit" class="btn-primary btn-sm">Add<i class="fas fa-plus ml-2"></i></button>
+            <button type="submit" class="btn-primary btn-sm">New<i class="fas fa-plus ml-2"></i></button>
           </form>
         </div>
         <div class="card-body">
           <div class="position-relative">
-            <input type="text" id="auto-download" class="form-control" placeholder="Search Downloads...">
+            <input type="text" id="auto-download" class="form-control" placeholder="Search IPAs...">
           </div>
           <? if (downloads.length > 0) { ?>
             <div class="mt-4 mb-1">Recently Created</div>
@@ -62,7 +62,10 @@
       <div class="card p-2 bg-gradient-light">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
           <h5 class="m-0">Stats</h5>
-          <button type="submit" class="btn-primary btn-sm">View<i class="fas fa-eye ml-2"></i></button>
+          <button type="submit" class="btn-primary btn-sm" disabled>View<i class="fas fa-eye ml-2"></i></button>
+        </div>
+        <div class="card-body">
+          <div>Coming Soon...</div>
         </div>
       </div>
     </div>
@@ -71,7 +74,10 @@
       <div class="card p-2 bg-gradient-light">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
           <h5 class="m-0">Logs</h5>
-          <button type="submit" class="btn-primary btn-sm">View<i class="fas fa-eye ml-2"></i></button>
+          <button type="submit" class="btn-primary btn-sm" disabled>View<i class="fas fa-eye ml-2"></i></button>
+        </div>
+        <div class="card-body">
+          <div>Coming Soon...</div>
         </div>
       </div>
     </div>
