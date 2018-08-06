@@ -50,7 +50,7 @@ function setProgress(options) {
     if (options.status === 'done') var query = { $unset: { progress: 1 }}
     else var query = { $set: { progress: options }}
     var ipa = await Ipa.findByIdAndUpdate(options.id, query, {new: true}).exec()
-    io.sockets.in(`/download/edit/${options.id}`).emit('ipa-progress-message', options)
+    io.sockets.in(`/download/edit/${options.id}`).emit('message', {type: 'ipa-progress-message', data: options})
     resolve(ipa)
   });
 }
@@ -105,6 +105,9 @@ router.post('/update', multer.single('upload'), async function(req, res) {
       }
 
       // console.log(plist);
+      // setTimeout(() => {
+      //   setProgress({ status: 'done', amount: 100, id: req.body.id,  reload: true })
+      // },2000)
       // return
 
       var ipa = await Dropbox.uploadSession({
@@ -138,11 +141,11 @@ router.post('/update', multer.single('upload'), async function(req, res) {
             minimumOS: plist.MinimumOSVersion,
           }
         }, {new: true}).exec()
-        await setProgress({ status: 'done', amount: 100, id: req.body.id })
+        await setProgress({ status: 'done', amount: 100, id: req.body.id, reload: true })
       } catch (e) {}
 
     } else {
-      await setProgress({ status: 'done', amount: 100, id: req.body.id })
+      await setProgress({ status: 'done', amount: 100, id: req.body.id,  reload: true })
     }
   })
   return res.redirect(`/download/edit/${ req.body.id }`);
@@ -163,15 +166,22 @@ router.get('/edit/:id', async function(req, res) {
 
 router.post('/delete', async function(req, res) {
   var ipa = await Ipa.findByIdAndRemove(req.body.id).exec()
-  if (ipa.ipaUrl) await Dropbox.filesDelete({path: ipa.ipaUrl})
+  res.on('finish', async () => {
+    if (ipa.ipaUrl) {
+      try {
+        await Dropbox.filesDelete({path: ipa.ipaUrl})
+      } catch (e) {}
+    }
 
-  if (ipa.iconKey) {
-    await s3.deleteObject({
-      Bucket: config.get('s3.bucket'),
-      Key: ipa.iconKey
-    })
-  }
-
+    if (ipa.iconKey) {
+      try {
+        await s3.deleteObject({
+          Bucket: config.get('s3.bucket'),
+          Key: ipa.iconKey
+        })
+      } catch (e) {}
+    }
+  })
   res.redirect('/dashboard');
 });
 

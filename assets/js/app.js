@@ -23,6 +23,10 @@ $(document).ready(function () {
   })
 })
 
+function updateIPAProgress(data) {
+  socket.emit('send', {room: location.pathname, type: 'ipa-progress-message', data:data })
+}
+
 // $(window).on('beforeunload', function () {
 //   return 'Are you sure you want to leave?'
 // })
@@ -43,8 +47,28 @@ $(window).scroll(function (e) {
   window.scrolling = true
 })
 
-function updateIPAProgress(progress) {
-  if (progress.status === 'done') return location.reload()
+function renderIPAProgress(progress) {
+  var cardBody = `<div class="card-body" id="ipa-progress-card">
+    <h4>Updating IPA</h4>
+    <div class="mt-3 mb-1 small" id="ipa-progress-status"></div>
+    <div class="progress mb-3">
+      <div id="ipa-progress-amount" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+    </div>
+  </div>`
+  if ($('#ipa-info-card').length && !$('#ipa-progress-card').length) {
+    $('#ipa-info-card').after(cardBody)
+    $('#ipa-info-card').remove()
+  } else if (!$('#ipa-progress-card').length) {
+    $('#ipa-form').after(`<div class="mx-auto mt-4 col-12 col-md-6" >
+      <div class="card p-2 bg-gradient-light">
+        ${cardBody}
+      </div>
+    </div>`)
+  }
+  if ($('#ipa-form').length) {
+    $('#ipa-form').remove()
+  }
+  if (progress.reload) return location.reload()
   $('#ipa-progress-status').html(progress.status)
   $('#ipa-progress-amount').css("width", progress.amount + '%')
 }
@@ -52,8 +76,9 @@ function updateIPAProgress(progress) {
 console.log(`socket.emit('subscribe', ${location.pathname})`);
 socket.emit('subscribe', location.pathname)
 
-socket.on('ipa-progress-message', function (progress) {
-  updateIPAProgress(progress)
+socket.on('message', function (msg) {
+  console.log(msg);
+  if (msg.type === 'ipa-progress-message') renderIPAProgress(msg.data)
 })
 // io.on('connection', function (socket) {
 //   console.log('connected to socket stream');
@@ -80,24 +105,7 @@ $('#ipa-form').on('submit', function (e) {
     e.returnValue = t;
     return t;
   }
-  var cardBody = `<div class="card-body">
-    <h4>Updating IPA</h4>
-    <div class="mt-3 mb-1 small" id="ipa-progress-status"></div>
-    <div class="progress mb-3">
-      <div id="ipa-progress-amount" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
-    </div>
-  </div>`
-  if ($('#download-progress-card').length) {
-    $('#download-progress-card').after(cardBody)
-    $('#download-progress-card').hide()
-  } else {
-    $('#ipa-form').after(`<div class="mx-auto mt-4 col-12 col-md-6" >
-      <div class="card p-2 bg-gradient-light">
-        ${cardBody}
-      </div>
-    </div>`)
-  }
-  $('#ipa-form').hide()
+
 
   axios.post('/download/update', new FormData(e.target), {
     headers: {
@@ -107,7 +115,7 @@ $('#ipa-form').on('submit', function (e) {
     onDownloadProgress: downloadIPA
   }).then(res => {
     window.onbeforeunload = function () {}
-    return location.reload()
-    console.log(res.data);
+    console.log('AXIOS IS DONE');
+    updateIPAProgress({ status: 'upload validated', amount: 100, reload: true})
   })
 })
