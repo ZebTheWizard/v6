@@ -49,12 +49,20 @@ module.exports = async function (buffer) {
       var imagePath = stdout.trim()
       var { stdout } = await exec(`unzip -p "${ipapath}" "${imagePath}" > "${ipapath}.png"`)
 
-      var iconBinary = await defry(ipapath + '.png', ipapath + '.defry.png')
+      try {
+        var iconBinary = await defry(ipapath + '.png', ipapath + '.defry.png')
+      } catch (e) {
+        var iconBinary = await fs.readFile(ipapath + '.png')
+      }
+
 
       await fs.unlink(ipapath)
       await fs.unlink(ipapath + '.png')
       await fs.unlink(ipapath + '.plist')
-      await fs.unlink(ipapath + '.defry.png')
+      try {
+        await fs.unlink(ipapath + '.defry.png')
+      } catch (e) {}
+
 
       resolve({
         ipapath,

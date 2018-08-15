@@ -1,0 +1,33 @@
+<div class="card bg-gradient-light">
+  <div class="card-header bg-white d-flex align-items-center justify-content-between">
+    <h5 class="m-0">Upload IPA</h5>
+    <form action="/download/new" method="post">
+      <button type="submit" class="btn-primary btn-sm">New<i class="fas fa-plus ml-2"></i></button>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="input-group mb-3 highlighted-search text-normal ">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-search text-muted"></i></span>
+      </div>
+      <div class="position-relative w-100">
+        <input type="text" class="form-control auto-download" placeholder="Search IPAs..." id="ipa-redirect">
+      </div>
+    </div>
+    <? if (downloads.length > 0) { ?>
+      <div class="mt-4 mb-1">Recently Created</div>
+      <ul class="list-group">
+        <? downloads.forEach(download => { ?>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>
+              <span class="h6"><?= download.name ?></span>
+              <span class="pl-2 small text-muted"><?= download.version ?></span>
+            </span>
+            <a href="/download/edit/<?= download.id ?>">Edit</a>
+          </li>
+        <? }) ?>
+      </ul>
+    <? } ?>
+
+  </div>
+</div>

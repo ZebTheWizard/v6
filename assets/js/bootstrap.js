@@ -4,11 +4,17 @@ import scrollSnapPolyfill from 'css-scroll-snap-polyfill'
 // window._ = require('lodash');
 window.Popper = require('popper.js').default;
 window.axios = require('axios');
+window.$jsonp = require('axios-jsonp')
 window.Sniddl = require('sniddl-ajax')
 window.$history = window.$history || []
-var io = require('socket.io-client')(window.location.protocol + '//' + window.location.hostname + ':8000')
-window.socket = io.connect()
+var Socket = require('../../lib/sockets-client')
 
+window.socket = new Socket()
+socket.room(location.pathname).subscribe()
+// socket.message('hello world').of('mytype').send()
+// socket.onMessage('mytype', function (msg) {
+//   console.log(msg);
+// })
 
 
 
@@ -35,6 +41,7 @@ try {
     require('./client-router')
     require('./router')
     require('jquery-autocompleter')
+    require('../../lib/jquery-plugins')
     // console.log('tried to load jquery');
 } catch (e) {}
 

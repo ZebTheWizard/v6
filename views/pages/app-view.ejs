@@ -1,0 +1,27 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row">
+    <div class="input-group mb-3 highlighted-search text-normal mx-auto mt-4 col-12 col-md-8">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-search text-muted"></i></span>
+      </div>
+      <div class="position-relative w-100">
+        <input type="text" class="form-control auto-download" placeholder="Search Apps..." id="ipa-redirect">
+      </div>
+    </div>
+
+      <? if (app.ipas.length > 0) { ?>
+        <div class="mx-auto mt-4 col-12 col-md-8">
+          <div class="card p-2 bg-gradient-light" >
+            <?- include('../layouts/app-info', {app}) ?>
+          </div>
+        </div>
+      <? } ?>
+
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

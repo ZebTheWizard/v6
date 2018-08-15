@@ -14,6 +14,8 @@
     "argon2": "^0.19.3",
     "aws-sdk": "^2.279.1",
     "axios": "^0.18.0",
+    "axios-jsonp": "^1.0.2",
+    "axios-jsonp-pro": "^1.1.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
     "child-process-promise": "^2.2.1",

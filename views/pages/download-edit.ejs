@@ -5,7 +5,7 @@
   <div class="row">
       <div class="mx-auto mt-4 col-12 d-flex">
         <div class="position-relative w-100">
-          <input type="text" id="auto-download" class="form-control" placeholder="Search IPAs...">
+          <input type="text" class="form-control auto-download" placeholder="Search IPAs..." id="ipa-redirect">
         </div>
         <button type="button" url="/download/new" method="post" redirect="true" class="btn btn-primary linkable ml-3">
           New<i class="fas fa-plus ml-2"></i>
@@ -17,7 +17,7 @@
         <div class="card p-2 bg-gradient-light" >
           <div class="card-body">
             <!-- <form action="/download/update" method="post" enctype="multipart/form-data" id="ipa-form"> -->
-              <h4>Modify App Data</h4>
+              <h4>Modify IPA Data</h4>
               <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= download.name ?>">

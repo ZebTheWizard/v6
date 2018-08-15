@@ -20125,6 +20125,14 @@ a:hover {
   }
 }
 
+.highlighted-search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
 .highlighted-search .input-group-text {
   background: #f8f9fa;
   border: none;
@@ -20132,7 +20140,6 @@ a:hover {
 }
 
 .highlighted-search input {
-  padding-left: 0.25rem;
   border-left: 0px;
   background: #f8f9fa;
   border: none;
@@ -20175,7 +20182,7 @@ a:hover {
 
 .autocompleter-hint {
   width: 100%;
-  top: -31px;
+  top: -30px;
   left: 13px;
   opacity: 0.4;
 }
@@ -20183,5 +20190,13 @@ a:hover {
 .autocompleter-item-selected,
 .autocompleter-item-selected > div {
   background: #f8f9fa;
+}
+
+.close.big span {
+  font-size: 1.5rem;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
 }
 

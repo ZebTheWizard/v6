@@ -1,0 +1,81 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row">
+      <div class="mx-auto mt-4 col-12 d-flex">
+        <div class="position-relative w-100">
+          <input type="text" id="auto-app" class="form-control" placeholder="Search Apps...">
+        </div>
+        <button type="button" url="/app/new" method="post" redirect="true" class="btn btn-primary linkable ml-3">
+          New<i class="fas fa-plus ml-2"></i>
+        </button>
+      </div>
+      <div class="mx-auto mt-4 col-12 col-md-6">
+        <div class="card p-2 bg-gradient-light" >
+          <div class="card-body">
+            <form action="/app/update" method="post">
+              <input type="hidden" name="id" value="<?= app.id ?>">
+              <h4>Modify App Data</h4>
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name of app" value="<?= app.name ?>">
+              </div>
+
+              <div class="form-group">
+                <label for="name">Short Description</label>
+                <input type="text" class="form-control" id="short" name="short" placeholder="A short description" value="<?= app.short ?>">
+              </div>
+
+              <div class="form-group">
+                <label for="name">Features</label>
+                <textarea class="form-control" rows="5" placeholder="Tell us about the app. Features, updates, general info, etc." name="features"><?= app.features ?></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Signed Url</label>
+                <input type="text" class="form-control" id="signed" name="signed" placeholder="itms-services://?action=download-manifest&url=" value="<?= app.signed ?>">
+              </div>
+
+              <div class="form-group">
+                <label for="name">Add IPA Version</label>
+                <div class="position-relative w-100">
+                  <input type="text" class="form-control auto-download" placeholder="Search IPAs..." id="add-ipa-version">
+                </div>
+                <ul id="app-ipas" class="list-group mt-3">
+                  <? app.ipas.forEach(download => { ?>
+                    <li class="list-group-item list-group-item-light d-flex align-items-center justify-content-between" id="download-<?= download.id ?>">
+                      <div>
+                        <input type="hidden" name="ipas" value="<?= download.id ?>">
+                        <span class="h6"><?= download.name ?></span>
+                        <span class="pl-2 small text-muted"><?= download.version ?></span>
+                      </div>
+                      <button type="button" class="close d-flex ml-2 big" aria-label="Close" data-remove="#download-<?= download.id ?>">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </li>
+                  <? }) ?>
+                </ul>
+              </div>
+
+              <button type="submit" class="btn btn-primary shadow-sm">Save <i class="fas fa-check"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <? if (app.ipas.length > 0) { ?>
+        <div class="mx-auto mt-4 col-12 col-md-6">
+          <div class="card p-2 bg-gradient-light" >
+            <?- include('../layouts/app-info', {app}) ?>
+          </div>
+        </div>
+      <? } ?>
+
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

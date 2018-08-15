@@ -358,13 +358,14 @@ a:hover {
 }
 
 .highlighted-search {
+  display: flex;
+  flex-wrap: nowrap;
   .input-group-text {
     background: $light;
     border: none;
     padding-right: 0.25rem;
   }
   input {
-    padding-left: 0.25rem;
     border-left: 0px;
     background: $light;
     border: none;
@@ -405,11 +406,19 @@ a:hover {
 
 .autocompleter-hint {
     width: 100%;
-    top: -31px;
+    top: -30px;
     left: 13px;
     opacity: 0.4;
 }
 
 .autocompleter-item-selected, .autocompleter-item-selected > div {
   background: $gray-100;
+}
+
+.close.big span {
+  font-size: 1.5rem;
+}
+
+.pre-wrap {
+    white-space: pre-wrap;
 }

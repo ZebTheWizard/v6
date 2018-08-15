@@ -1,0 +1,31 @@
+<div class="card bg-gradient-light">
+  <div class="card-header bg-white d-flex align-items-center justify-content-between">
+    <h5 class="m-0">App</h5>
+    <button type="button" url="/app/new" redirect="true" method="post" class="btn-primary btn-sm linkable">
+      New<i class="fas fa-plus ml-2"></i>
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="input-group mb-3 highlighted-search text-normal ">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-search text-muted"></i></span>
+      </div>
+      <div class="position-relative w-100">
+        <input type="text" class="form-control auto-download" placeholder="Search Apps..." id="ipa-redirect">
+      </div>
+    </div>
+    <? if (apps.length > 0) { ?>
+      <div class="mt-4 mb-1">Recently Created</div>
+      <ul class="list-group">
+        <? apps.forEach(app => { ?>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>
+              <span class="h6"><?= app.name ?></span>
+            </span>
+            <a href="/app/edit/<?= app.id ?>">Edit</a>
+          </li>
+        <? }) ?>
+      </ul>
+    <? } ?>
+  </div>
+</div>

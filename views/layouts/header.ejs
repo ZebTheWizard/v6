@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Express</title>
+    <title><?= config.get('title') ?>
+      <? if (typeof title !== 'undefined') { ?>
+        | <?= title ?>
+      <? } ?>
+    </title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#2196f3">
 
-    <!-- <link rel="stylesheet" href="/css/f7-icons.min.css"> -->
-    <!-- <link rel="stylesheet" href="/css/f7.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-87DrmpqHRiY8hPLIr7ByqhPIywuSsjuQAfMXAE0sMUpY3BM7nXjf+mLIUSvhDArs" crossorigin="anonymous"> -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=bOLw3p3jEA" class="site-favicon">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=bOLw3p3jEA" class="site-favicon">
+    <link rel="icon" type="image/png" sizes="194x194" href="/favicons/favicon-194x194.png?v=bOLw3p3jEA" class="site-favicon">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png?v=bOLw3p3jEA" class="site-favicon">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=bOLw3p3jEA" class="site-favicon">
+    <link rel="manifest" href="/favicons/site.webmanifest?v=bOLw3p3jEA">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg?v=bOLw3p3jEA" color="#ff3333" class="site-favicon">
+    <link rel="shortcut icon" href="/favicons/favicon.ico?v=bOLw3p3jEA" class="site-favicon">
+    <meta name="apple-mobile-web-app-title" content="<?= config.get('title') ?>">
+    <meta name="application-name" content="<?= config.get('title') ?>">
+    <meta name="msapplication-TileColor" content="#ff3333">
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml?v=bOLw3p3jEA">
+    <meta name="theme-color" content="#ff3333">
+
 
     <link rel="stylesheet" href="/css/autocomplete.css">
     <link rel="stylesheet" href="/css/app.css">
-    <!-- <link rel="stylesheet" href="/css/sniddl-mobile.css"> -->
     <link rel="stylesheet" href="/fontello/css/fontello.css">
   </head>
   <body>

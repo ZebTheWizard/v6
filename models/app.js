@@ -1,18 +1,32 @@
 const { Schema } = require('mongoose')
 
 const Model = new Schema({
-  "title": String,
-  "description": String,
-  "images": {
-    "banner": String,
-    "icon": String,
+  "name": String,
+  "features": String,
+  "short": String,
+  "signed": String,
+  "user": {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
-  "downloads": [{ type: Schema.Types.ObjectId, ref: 'Download'}],
+  "ipas": [{
+    type: Schema.Types.ObjectId,
+    ref: 'Ipa'
+  }],
   "stats": {
     "downloads": Number,
     "likes": Number,
     "size": Number,
     "views": Number
+  },
+  "itunes": {
+    "advisories": [String],
+    "icon": String,
+    "contentAdvisoryRating": String,
+    "genres": [String],
+    "description": String,
+    "screenshots": [String],
+    "languages": [String]
   },
   "created_at": {
     type: Date,

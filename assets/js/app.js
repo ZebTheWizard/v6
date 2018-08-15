@@ -1,69 +1,62 @@
 require('./bootstrap')
+var ejs = require('./ejs')
 
-$(document).ready(function () {
-  $('#auto-download').autocompleter({
+function render(path, data={}) {
+  return ejs.render(require(`../templates/${path}.html`), data, {
+    delimiter: '?'
+  })
+}
+
+function autocomplete(obj) {
+  return {
     highlightMatches: true,
-    source: '/download/json',
+    source: obj.source,
     asLocal: true,
     customLabel: 'name',
-    template: `
-    <div class="list-group-item list-group-item-action list-autocomplete">
-        <span class="h6">{{ label }}</span>
-        <span class="pl-2 small text-muted">{{ version }}</span>
-    </div>`,
+    template: render(obj.template),
     hint: true,
     empty: false,
     limit: 5,
-    callback(value, index, selected) {
-      if (selected) {
-        window.location.href = "/download/edit/" + selected._id
-      }
-    }
-
-  })
-})
-
-function updateIPAProgress(data) {
-  socket.emit('send', {room: location.pathname, type: 'ipa-progress-message', data:data })
+    callback: obj.callback
+  }
 }
 
-// $(window).on('beforeunload', function () {
-//   return 'Are you sure you want to leave?'
-// })
+$(document).ready(function () {
+  $('.auto-download').autocompleter(autocomplete({
+      source: '/download/json',
+      template: 'autocomplete-download',
+      callback(value, index, selected) {
+        console.log(value, index, selected);
+        var el = $(this).parent().find('input')
+        if (selected && el.attr('id') === 'ipa-redirect') {
+          window.location.href = "/download/edit/" + selected._id
+        }
+        else if (selected && el.attr('id') === 'add-ipa-version') {
+          $('#app-ipas').append(render('addipaversion', selected))
+          el.val('')
+        }
+      }
+  }))
+})
 
 $(window).scroll(function (e) {
-  if ($(window).scrollTop() > 45) {
-    $('.page-title-fixed').addClass('visible')
-  } else {
-    $('.page-title-fixed').removeClass('visible')
-  }
-
-  if ($(window).scrollTop() > 59) {
-    $('.page-title-fixed').addClass('has-border')
-  } else {
-    $('.page-title-fixed').removeClass('has-border')
-  }
-
+  $('.page-title-fixed').showClassIf($(window).scrollTop() > 45, 'visible')
+  $('.page-title-fixed').showClassIf($(window).scrollTop() > 59, 'has-border')
   window.scrolling = true
 })
 
+socket.onMessage('ipa-progress-message', function (msg) {
+  renderIPAProgress(msg.data)
+  $.favicon('/favicons/processing.png')
+})
+
 function renderIPAProgress(progress) {
-  var cardBody = `<div class="card-body" id="ipa-progress-card">
-    <h4>Updating IPA</h4>
-    <div class="mt-3 mb-1 small" id="ipa-progress-status"></div>
-    <div class="progress mb-3">
-      <div id="ipa-progress-amount" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
-    </div>
-  </div>`
+  document.title = 'IOS Haven | ' + Math.floor(progress.amount) + '% - ' + progress.status
+  var cardBody = render('ipa-progress-card')
   if ($('#ipa-info-card').length && !$('#ipa-progress-card').length) {
-    $('#ipa-info-card').after(cardBody)
-    $('#ipa-info-card').remove()
+    $('#ipa-info-card').after(cardBody).remove()
   } else if (!$('#ipa-progress-card').length) {
-    $('#ipa-form').after(`<div class="mx-auto mt-4 col-12 col-md-6" >
-      <div class="card p-2 bg-gradient-light">
-        ${cardBody}
-      </div>
-    </div>`)
+    $('#ipa-form').after(render('card-top') + cardBody + render('card-bottom'))
   }
   if ($('#ipa-form').length) {
     $('#ipa-form').remove()
@@ -73,29 +66,19 @@ function renderIPAProgress(progress) {
   $('#ipa-progress-amount').css("width", progress.amount + '%')
 }
 
-console.log(`socket.emit('subscribe', ${location.pathname})`);
-socket.emit('subscribe', location.pathname)
 
-socket.on('message', function (msg) {
-  console.log(msg);
-  if (msg.type === 'ipa-progress-message') renderIPAProgress(msg.data)
-})
-// io.on('connection', function (socket) {
-//   console.log('connected to socket stream');
-// })
-
-// $('.toolbar-bottom .item').click(function () {
-//   $('.toolbar-bottom .item').removeClass('active')
-//   $(this).addClass('active')
-// })
-
-// console.log('hello world');
 function uploadingIPA(e) {
-  updateIPAProgress({ status: 'uploading', amount:  e.loaded / e.total * 100})
+  socket.message({
+    status: 'uploading',
+    amount:  e.loaded / e.total * 100
+  }).of('ipa-progress-message').send()
 }
 
 function downloadIPA(e) {
-  updateIPAProgress({ status: 'processing upload', amount:  e.loaded / e.total * 100})
+  socket.message({
+    status: 'processing upload',
+    amount:  e.loaded / e.total * 100
+  }).of('ipa-progress-message').send()
 }
 
 $('#ipa-form').on('submit', function (e) {
@@ -116,6 +99,6 @@ $('#ipa-form').on('submit', function (e) {
   }).then(res => {
     window.onbeforeunload = function () {}
     console.log('AXIOS IS DONE');
-    updateIPAProgress({ status: 'upload validated', amount: 100, reload: true})
+    socket.message({ status: 'upload validated', amount: 100, reload: true}).of('ipa-progress-message').send()
   })
 })

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
+var { App, Ipa } = require('../models')
+var dsession = require('../lib/download-uuid')
 
 /* GET home page. */
 router.get(['/', '/today'], function(req, res, next) {
@@ -11,9 +13,17 @@ router.get('/games', function(req, res, next) {
   res.render('pages/games', {title: 'Games'});
 });
 
-router.get('/apps', function(req, res, next) {
-  res.render('pages/apps', {title: 'Apps'});
+router.get('/apps', async function(req, res, next) {
+  var apps = await App.find().populate({ path: 'ipas', options: {sort: {'version': -1}}}).limit(20).exec()
+  return res.render('pages/apps', {
+    title: 'Apps',
+    apps,
+    dsession: dsession.regen(req)
+  });
 });
+
+
+
 
 router.get('/updates', function(req, res, next) {
   res.render('pages/updates', {title: 'Updates'});

@@ -60,20 +60,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 99);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 48:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(49);
-
-
-/***/ }),
-
-/***/ 49:
+/***/ 100:
 /***/ (function(module, exports) {
 
 // window.Mustache = require('mustache')
@@ -91,6 +83,14 @@ $('[data-today]').html(function () {
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   return days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate();
 }());
+
+/***/ }),
+
+/***/ 99:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(100);
+
 
 /***/ })
 

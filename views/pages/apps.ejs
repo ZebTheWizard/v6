@@ -9,19 +9,24 @@
     <a href="#">See All</a>
   </div>
   <div class="item-slider">
-    <? for(i=0; i<20; i++) { ?>
+    <? for(i=0; i < apps.length; i++) {
+      var app = apps[i]?>
       <? if (i % 3 == 0) { ?>
         <div class="item-grouping col-12 col-md-6 col-lg-4 px-1">
         <!-- <div class="item-grouping col-12 col-md-6 col-lg-4"> -->
       <? } ?>
-      <div class="item app">
-        <div class="item-media"><img src="https://ioshavenco.s3.us-east-2.amazonaws.com/public/icons/0fKs7bHvjcFilZhavta63yItSgALa3Cu2z0ah8bh.png" alt=""></div>
+      <div class="item app linkable" url="/app/<?= app.id ?>">
+        <div class="item-media"><img src="<?= app.ipas[0].iconUrl ?>" alt="app icon"></div>
         <div class="item-content">
-          <div class="item-content-title">Instagram Rocket</div>
-          <div class="item-content-subtitle">Tweaked Instagram</div>
+          <div class="item-content-title"><?= app.name ?></div>
+          <div class="item-content-subtitle"><?= app.short ?></div>
         </div>
         <div class="item-actions">
-          <a href="#" class="app-link apple">Get</a>
+          <? if (app.signed) { ?>
+            <a href="/app/signed/<?= app.id ?>?d=<?= dsession ?>" class="app-link apple">Get</a>
+          <? } else { ?>
+            <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= dsession ?>" class="app-link apple">IPA</a>
+          <? } ?>
         </div>
       </div>
       <? if (i % 3 == 2) { ?>

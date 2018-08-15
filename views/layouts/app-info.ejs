@@ -1,0 +1,82 @@
+<div class="card-body">
+  <div class="d-flex">
+    <img src="<?= app.ipas[0].iconUrl ?>" alt="icon" width="80" height="80">
+    <div class="ml-3">
+      <h4><?= app.name ?></h4>
+      <h6 class="text-muted"><?= app.short ?></h6>
+      <div>
+        <? if (app.signed) { ?>
+          <a href="/app/signed/<?= app.id ?>?d=<?= dsession ?>" class="app-link apple bg-primary text-white">Get</a>
+        <? } if (app.ipas.length > 0) { ?>
+          <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= dsession ?>" class="app-link apple">IPA</a>
+        <? } ?>
+        <!-- <a href="#" class="app-link apple bg-primary text-white">Get</a>
+        <a href="#" class="app-link apple">IPA</a> -->
+      </div>
+    </div>
+  </div>
+  <? if (app.itunes.screenshots.length > 0) { ?>
+    <div class="mt-3">
+      <h5>Preview</h5>
+      <div class="item-slider">
+        <? app.itunes.screenshots.forEach(img => { ?>
+          <div class="item-grouping col-11 px-1">
+            <img class="w-100" style="border-radius: 0.5rem" src="<?= img ?>" alt="screenshot">
+          </div>
+        <? }) ?>
+      </div>
+    </div>
+  <? } ?>
+
+
+  <div class="mt-3">
+    <h5 class="section-title">Features</h5>
+    <div class="pre-wrap"><?= app.features ?></div>
+  </div>
+
+  <? if (app.itunes.description) { ?>
+    <div class="mt-3">
+      <h5 class="section-title">App Description</h5>
+      <div class="pre-wrap"><?= app.itunes.description ?></div>
+    </div>
+  <? } ?>
+
+
+  <ul class="list-group list-group-flush mt-3">
+    <li class="list-group-item">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>Size</div>
+        <div><?= app.ipas[0].size ?></div>
+      </div>
+    </li>
+    <? if (app.itunes.contentAdvisoryRating) { ?>
+      <li class="list-group-item" data-collapse="#contentAdvisoryRating">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>Age Rating</div>
+          <div><?= app.itunes.contentAdvisoryRating ?> <i class="fal fa-chevron-down"></i></div>
+        </div>
+        <div class="collapse mt-1" id="contentAdvisoryRating">
+          <? app.itunes.advisories.forEach(advisory => { ?>
+            <div><?= advisory ?></div>
+          <? }) ?>
+        </div>
+      </li>
+    <? } ?>
+
+    <? if (app.itunes.languages.length > 0) { ?>
+      <li class="list-group-item" data-collapse="#languages">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>Languages</div>
+          <div><i class="fal fa-chevron-down"></i></div>
+        </div>
+        <div class="collapse mt-1" id="languages">
+          <?= app.itunes.languages.map(l => lang.name(l)).join(', ') ?>
+        </div>
+      </li>
+    <? } ?>
+
+  </ul>
+  <!-- <a href="#contentAdvisoryRating" role="button" data-toggle="collapse">Age <?= app.itunes.contentAdvisoryRating ?></a> -->
+
+
+</div>

@@ -7,6 +7,7 @@ const Model = new Schema({
     default: 'n/a'
   },
   "size": Number,
+  "bundleId": String,
   "ipaUrl": String,
   "iconUrl": String,
   "iconKey": String,

@@ -11,26 +11,15 @@ var uuid = require('uuid/v4')
 var fs = require('mz/fs')
 var config = require('../config')
 var extract = require('../extract')
-var io = require('socket.io')()
-io.attach(8000)
+var Socket = require('../lib/sockets')
+var socket = new Socket
+var dsession = require('../lib/download-uuid')
+
 // var www = require('../bin/www')
 
 
 router.use(auth)
 
-io.on('connect', socket => {
-  socket.on('subscribe', room => {
-    socket.join(room)
-  })
-
-  socket.on('unsubscribe', room => {
-    socket.leave(room)
-  })
-
-  socket.on('send', data => {
-    io.sockets.in(data.room).emit('message', data)
-  })
-})
 
 function bufferToStream(buffer, size) {
   var items = []
@@ -45,23 +34,18 @@ function bufferToStream(buffer, size) {
   }
 }
 
-function setProgress(options) {
-  return new Promise(async function(resolve, reject) {
-    if (options.status === 'done') var query = { $unset: { progress: 1 }}
-    else var query = { $set: { progress: options }}
-    var ipa = await Ipa.findByIdAndUpdate(options.id, query, {new: true}).exec()
-    io.sockets.in(`/download/edit/${options.id}`).emit('message', {type: 'ipa-progress-message', data: options})
-    resolve(ipa)
+function setProgress (data) {
+  return new Promise( async (resolve, reject) => {
+    var id = data.id
+    delete data.id
+    if (data.status === 'done') var query = { $unset: { progress: 1}}
+    else var query = { $set: { progress: data}}
+    var ipa = await Ipa.findByIdAndUpdate(id, query, {new: true}).exec()
+    await socket.room(`/download/edit/${id}`).message(data).of('ipa-progress-message').send()
+    resolve()
   });
 }
 
-
-router.get('/stream/:chunks', function (req, res) {
-  res.render('pages/today', {title: 'Today'});
-  setTimeout(() => {
-    io.sockets.in('download').emit('message', { count: 1, progress: 20})
-  }, 3000)
-})
 
 router.post('/new', function(req, res) {
   var download = new Ipa()
@@ -137,6 +121,7 @@ router.post('/update', multer.single('upload'), async function(req, res) {
             iconUrl: icon.url,
             iconKey: icon.key,
             extension: ext,
+            bundleId: plist.CFBundleIdentifier,
             size: ipa.size || 0,
             minimumOS: plist.MinimumOSVersion,
           }
@@ -167,13 +152,13 @@ router.get('/edit/:id', async function(req, res) {
 router.post('/delete', async function(req, res) {
   var ipa = await Ipa.findByIdAndRemove(req.body.id).exec()
   res.on('finish', async () => {
-    if (ipa.ipaUrl) {
+    if (typeof ipa.ipaUrl !== 'undefined') {
       try {
         await Dropbox.filesDelete({path: ipa.ipaUrl})
       } catch (e) {}
     }
 
-    if (ipa.iconKey) {
+    if (typeof ipa.iconKey !== 'undefined') {
       try {
         await s3.deleteObject({
           Bucket: config.get('s3.bucket'),

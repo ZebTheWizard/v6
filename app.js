@@ -16,7 +16,8 @@ var mongoose = require('mongoose');
 mongoose.connect(config.get('MONGODB_URI'), { useNewUrlParser: true });
 
 app.locals = {
-  title: config.get('title')
+  config,
+  lang: require('./lib/lang')
 }
 
 // view engine setup
@@ -31,8 +32,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(require('body-parser').urlencoded({ limit: '2gb', extended: true }));
 app.use(session({
   secret: 'string that needs to be changed',
-  resave: true,
+  resave: false,
   saveUninitialized: true,
+  cookie: {
+    maxAge: null,
+  },
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 app.use(cookieParser());
