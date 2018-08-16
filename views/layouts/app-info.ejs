@@ -6,9 +6,9 @@
       <h6 class="text-muted"><?= app.short ?></h6>
       <div>
         <? if (app.signed) { ?>
-          <a href="/app/signed/<?= app.id ?>?d=<?= dsession ?>" class="app-link apple bg-primary text-white">Get</a>
+          <a href="/app/signed/<?= app.id ?>?d=<?= _token ?>" class="app-link apple bg-primary text-white">Get</a>
         <? } if (app.ipas.length > 0) { ?>
-          <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= dsession ?>" class="app-link apple">IPA</a>
+          <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= _token ?>" class="app-link apple">IPA</a>
         <? } ?>
       </div>
     </div>

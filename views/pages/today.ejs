@@ -1,7 +1,7 @@
 <?- include('../layouts/page-top', {tab: 'today'}) ?>
 <div class="container" id="today-page-container">
   <div class="page-title">
-    <div class="text-muted subtitle" data-today></div>
+    <div class="text-muted subtitle"><script>document.write(getDate())</script></div>
     Today
     <?- include('../layouts/avatar') ?>
   </div>

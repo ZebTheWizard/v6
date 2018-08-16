@@ -6,6 +6,7 @@ var passport = require('passport')
 passport.use(require('../setup/twitter'))
 passport.use(require('../setup/github'))
 passport.use(require('../setup/local'))
+passport.use('mongoose', require('../setup/mongoose'))
 
 router.use(function (req, res, next) {
   res.locals.user = req.user

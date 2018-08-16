@@ -6,7 +6,11 @@ var { App, Ipa, Reaction, User } = Model
 var dsession = require('../lib/download-uuid')
 
 /* GET home page. */
-router.get(['/', '/today'], function(req, res, next) {
+router.get('/', function(req, res, next) {
+  res.render('pages/landing', {title: ''});
+});
+
+router.get('/today', function(req, res, next) {
   res.render('pages/today', {title: 'Today'});
 });
 
@@ -18,8 +22,7 @@ router.get('/apps', async function(req, res, next) {
   var apps = await App.find().populate({ path: 'ipas', options: {sort: {'version': -1}}}).limit(20).exec()
   return res.render('pages/apps', {
     title: 'Apps',
-    apps,
-    dsession: dsession.regen(req)
+    apps
   });
 });
 
@@ -53,23 +56,6 @@ router.get('/test/reaction', async function (req, res) {
   return res.json(reactions)
 })
 
-// router.get('/about', function(req, res, next) {
-//   res.render('about', {title: 'About'});
-// });
-//
 
-//
-// router.get('/login', function(req, res, next) {
-//   if (typeof req.user !== 'undefined') res.redirect('/profile')
-//   res.render('login')
-// });
-
-// router.get('/auth/twitter', passport.authenticate('twitter'));
-// router.get('/auth/twitter/callback',
-//   passport.authenticate('twitter', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
 
 module.exports = router;

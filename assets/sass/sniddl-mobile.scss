@@ -13,6 +13,21 @@ body {
   overflow-x: hidden;
 }
 
+.h-100v {
+  height: 100vh;
+}
+
+.bg-memphis {
+  background-image: url(/images/memphis-colorful.png);
+  background-color: #4dbdf8;
+  max-height: 100vh;
+  overflow: auto;
+  // background-attachment: fixed;
+  // min-height: 100vh;
+  width: 100%;
+  background-position: center;
+}
+
 a {
   color: $blue;
   text-decoration: none;
@@ -338,7 +353,7 @@ a:hover {
     * {
       color: #a1a1a1;
     }
-    &:hover *, &.active * {
+    &.active * {
       color: $blue;
     }
     .label {

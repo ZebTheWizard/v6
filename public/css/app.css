@@ -20143,6 +20143,19 @@ body {
   overflow-x: hidden;
 }
 
+.h-100v {
+  height: 100vh;
+}
+
+.bg-memphis {
+  background-image: url(/images/memphis-colorful.png);
+  background-color: #4dbdf8;
+  max-height: 100vh;
+  overflow: auto;
+  width: 100%;
+  background-position: center;
+}
+
 a {
   color: #007bff;
   text-decoration: none;
@@ -20541,7 +20554,6 @@ a:hover {
   color: #a1a1a1;
 }
 
-.toolbar-bottom .item:hover *,
 .toolbar-bottom .item.active * {
   color: #007bff;
 }

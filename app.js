@@ -11,6 +11,7 @@ var config = require('./config');
 
 var passport = require('passport')
 const { User } = require('./models')
+var dsession = require('./lib/download-uuid')
 
 var mongoose = require('mongoose');
 mongoose.connect(config.get('MONGODB_URI'), { useNewUrlParser: true });
@@ -35,7 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: null,
+    maxAge: 14 * 24 * 60 * 60 * 1000, // d, h, m, s, ms
   },
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
@@ -47,6 +48,10 @@ app.use(passport.session())
 
 app.use(function(req, res, next) {
   req.config = config
+  if (!app.locals._token){
+    app.locals._token = dsession.regen(req)
+  }
+
   next()
 });
 

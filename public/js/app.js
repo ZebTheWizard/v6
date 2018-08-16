@@ -17782,10 +17782,6 @@ try {
 
 $(document).ready(function () {
   __WEBPACK_IMPORTED_MODULE_0_css_scroll_snap_polyfill___default()();
-  setTimeout(function () {
-    console.log('adding link');
-    $('#today-page-container').append('<div class="linkable bg-primary" url="https://twitter.com">click me: twitter</div>');
-  }, 1000);
 });
 
 $(window).on('hashchange load', function () {

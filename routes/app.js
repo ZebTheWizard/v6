@@ -130,7 +130,6 @@ router.get('/:id', async function (req, res) {
   return res.render('pages/app-view', {
     title: app.name,
     app,
-    dsession: dsession.regen(req),
     reactions,
     reactionFromUser: reactionFromUser.emoji
   });

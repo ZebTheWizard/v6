@@ -49,10 +49,6 @@ try {
 
 $(document).ready(function () {
   scrollSnapPolyfill()
-  setTimeout(function () {
-    console.log('adding link');
-    $('#today-page-container').append(`<div class="linkable bg-primary" url="https://twitter.com">click me: twitter</div>`)
-  }, 1000)
 })
 
 $(window).on('hashchange load', function () {

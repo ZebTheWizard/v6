@@ -23,9 +23,9 @@
         </div>
         <div class="item-actions">
           <? if (app.signed) { ?>
-            <a href="/app/signed/<?= app.id ?>?d=<?= dsession ?>" class="app-link apple">Get</a>
+            <a href="/app/signed/<?= app.id ?>?d=<?= _token ?>" class="app-link apple">Get</a>
           <? } else { ?>
-            <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= dsession ?>" class="app-link apple">IPA</a>
+            <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= _token ?>" class="app-link apple">IPA</a>
           <? } ?>
         </div>
       </div>
