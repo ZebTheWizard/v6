@@ -55,7 +55,7 @@ $(document).ready(function () {
   }, 1000)
 })
 
-$(window).on('load', function () {
+$(window).on('hashchange load', function () {
   Sniddl.init('.linkable', {
     addCss: true,
     headers: {},

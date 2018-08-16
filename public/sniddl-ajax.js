@@ -31,8 +31,8 @@ function domWatcher (options, cb) { // { type, query}
 
 function live (event, query, cb) {
   document.addEventListener(event, function (e) {
+    console.log(e, 'asdfasdf');
     e.currentEl = e.target.closest(query)
-    // console.log(currentEl);
     if (!e.currentEl) return
     cb(e, e.currentEl.$sniddl)
   }, true)
@@ -80,7 +80,7 @@ Sniddl.init = function(query, options={}) {
 }
 
 Sniddl.addCss = function(query) {
-  var css = query + ':hover{cursor: pointer;}';
+  var css = query + ', ' + 'query' + ':hover{cursor: pointer;}';
   var style = document.createElement('style');
   if (style.styleSheet) style.styleSheet.cssText = css;
   else style.appendChild(document.createTextNode(css));
