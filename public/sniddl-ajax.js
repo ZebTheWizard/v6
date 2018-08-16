@@ -31,13 +31,7 @@ function domWatcher (options, cb) { // { type, query}
 
 function live (event, query, cb) {
   document.addEventListener(event, function (e) {
-    e.currentEl = null
-    for (var i = 0; i < e.path.length; i++) {
-      var el = e.path[i]
-      if (typeof el.matches === 'function' && el.matches(query)) {
-        e.currentEl = el
-      }
-    }
+    e.currentEl = e.target.closest(query)
     // console.log(currentEl);
     if (!e.currentEl) return
     cb(e, e.currentEl.$sniddl)
@@ -94,16 +88,19 @@ Sniddl.addCss = function(query) {
 }
 
 Sniddl.click = function(e, s) {
+  console.log(e);
   e.preventDefault();
   e.stopPropagation();
 
   if(e.target.href) {
+    console.log('trying to link href');
     if (e.target.href) return window.open(e.target.href, e.target.target)
     window.location = e.target.href
     return false
   }
   // var s = this.$sniddl;
   if (!s.method) {
+    console.log('trying to link url');
     if (s.blank) return window.open(s.url, '_blank')
     window.location = s.url
     return false
