@@ -20,7 +20,7 @@ router.post('/auth/local', function (req, res, next) {
     if (err) return next(err)
     req.logIn(user, err => {
       if (err) return next(err)
-      return res.redirect('/')
+      return res.redirect('/today')
     })
   })(req, res, next)
 })

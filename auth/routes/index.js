@@ -6,7 +6,6 @@ var passport = require('passport')
 passport.use(require('../setup/twitter'))
 passport.use(require('../setup/github'))
 passport.use(require('../setup/local'))
-passport.use('mongoose', require('../setup/mongoose'))
 
 router.use(function (req, res, next) {
   res.locals.user = req.user
@@ -29,7 +28,7 @@ router.use(function (req, res, next) {
 
 router.post('/logout', function(req, res, next) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/today');
 });
 
 router.use('/', require('./twitter'));
