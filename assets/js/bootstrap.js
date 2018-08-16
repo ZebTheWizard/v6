@@ -5,7 +5,7 @@ import scrollSnapPolyfill from 'css-scroll-snap-polyfill'
 window.Popper = require('popper.js').default;
 window.axios = require('axios');
 window.$jsonp = require('axios-jsonp')
-window.Sniddl = require('sniddl-ajax')
+window.Sniddl = require('../../public/sniddl-ajax')
 window.$history = window.$history || []
 var Socket = require('../../lib/sockets-client')
 
@@ -49,14 +49,27 @@ try {
 
 $(document).ready(function () {
   scrollSnapPolyfill()
+  setTimeout(function () {
+    console.log('adding link');
+    $('#today-page-container').append(`<div class="linkable bg-primary" url="https://twitter.com">click me: twitter</div>`)
+  }, 1000)
 })
 
-$(window).on('hashchange load', function () {
+$(window).on('load', function () {
   Sniddl.init('.linkable', {
     addCss: true,
     headers: {},
     params: {}
   })
+})
+
+
+
+$(document).on('click', 'a', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
+  window.location = $(this).getAttribute('href')
+  return false
 })
 
 // $('.grid').masonry({
