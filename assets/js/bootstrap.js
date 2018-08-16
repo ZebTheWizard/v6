@@ -66,9 +66,10 @@ $(window).on('load', function () {
 
 
 $(document).on('click', 'a', function (e) {
+  // console.log($(this));
   e.preventDefault()
   e.stopPropagation()
-  window.location = $(this).getAttribute('href')
+  window.location = $(this).attr('href')
   return false
 })
 
