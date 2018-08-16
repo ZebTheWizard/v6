@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
-var { App, Ipa } = require('../models')
+var Model = require('../models')
+var { App, Ipa, Reaction, User } = Model
 var dsession = require('../lib/download-uuid')
 
 /* GET home page. */
@@ -33,6 +34,24 @@ router.get('/search', function(req, res, next) {
   res.render('pages/search', {title: 'Search'});
 });
 
+router.post('/react/app', async function (req, res) {
+  var app = await App.findById(req.body.id).exec()
+  var reaction = await Reaction.add({
+    user: req.user,
+    model: app,
+    emoji: req.body.value
+  })
+  return res.redirect('back')
+})
+
+router.get('/test/reaction', async function (req, res) {
+  var app = await App.findById('5b70282fc44eb6bfbe98561c').exec()
+  console.log(app.id);
+  var allreactions = await Reaction.find().exec()
+  var reactions = await app.getReactionCount()
+
+  return res.json(reactions)
+})
 
 // router.get('/about', function(req, res, next) {
 //   res.render('about', {title: 'About'});

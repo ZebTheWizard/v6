@@ -12,9 +12,11 @@
 @import "~@fortawesome/fontawesome-pro/scss/fa-light.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-regular.scss";
 @import "~@fortawesome/fontawesome-pro/scss/fa-solid.scss";
+// $enable-gradients:          true;
 @import "~bootstrap/scss/bootstrap.scss";
 @import "functions";
 @import "variables";
 @import "mixins";
 @import "utilities";
+@import "emojis";
 @import "sniddl-mobile.scss";

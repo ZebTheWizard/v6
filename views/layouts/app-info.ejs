@@ -1,8 +1,8 @@
 <div class="card-body">
   <div class="d-flex">
-    <img src="<?= app.ipas[0].iconUrl ?>" alt="icon" width="80" height="80">
-    <div class="ml-3">
-      <h4><?= app.name ?></h4>
+    <img class="rounded" src="<?= app.ipas[0].iconUrl ?>" alt="icon" width="60" height="60">
+    <div class="ml-3 ellipse-wrapper pb-1">
+      <h4 class=""><?= app.name ?></h4>
       <h6 class="text-muted"><?= app.short ?></h6>
       <div>
         <? if (app.signed) { ?>
@@ -10,11 +10,10 @@
         <? } if (app.ipas.length > 0) { ?>
           <a href="/app/ipa/<?= app.ipas[0].id ?>?d=<?= dsession ?>" class="app-link apple">IPA</a>
         <? } ?>
-        <!-- <a href="#" class="app-link apple bg-primary text-white">Get</a>
-        <a href="#" class="app-link apple">IPA</a> -->
       </div>
     </div>
   </div>
+  <?- include('../layouts/rating', { type: 'app', id: app.id, reactions, reactionFromUser}) ?>
   <? if (app.itunes.screenshots.length > 0) { ?>
     <div class="mt-3">
       <h5>Preview</h5>

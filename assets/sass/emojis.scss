@@ -1,0 +1,98 @@
+i.emoji {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-size: inherit;
+  margin-top: 4px;
+  &.hover-increase-size:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+  }
+  &.angry::before {content: "😠"} /*Angry Face*/
+  &.anguished::before {content: "😧"} /*Anguished Face*/
+  &.astonished::before {content: "😲"} /*Astonished Face*/
+  &.axious::before {content: "😰"} /*Anxious Face With Sweat*/
+  &.bandage::before {content: "🤕"} /*Face With Head-Bandage*/
+  &.beaming::before {content: "😁"} /*Beaming Face With Smiling Eyes*/
+  &.confounded::before {content: "😖"} /*Confounded Face*/
+  &.confused::before {content: "😕"} /*Confused Face*/
+  &.cowboy::before {content: "🤠"} /*Cowboy Hat Face*/
+  &.crying-loudly::before {content: "😭"} /*Loudly Crying Face*/
+  &.crying::before {content: "😢"} /*Crying Face*/
+  &.disappointed::before {content: "😞"} /*Disappointed Face*/
+  &.dizzy::before {content: "😵"} /*Dizzy Face*/
+  &.downcast::before {content: "😓"} /*Downcast Face With Sweat*/
+  &.drool::before {content: "🤤"} /*Drooling Face*/
+  &.exploding::before {content: "🤯"} /*Exploding Head*/
+  &.expressionless::before {content: "😑"} /*Expressionless Face*/
+  &.eye-roll::before {content: "🙄"} /*Face With Rolling Eyes*/
+  &.fearful::before {content: "😨"} /*Fearful Face*/
+  &.flushed::before {content: "😳"} /*Flushed Face*/
+  &.frown-open::before {content: "😦"} /*Frowning Face With Open Mouth*/
+  &.frown-slight::before {content: "🙁"} /*Slightly Frowning Face*/
+  &.frown::before {content: "☹️"} /*Frowning Face*/
+  &.grimacing::before {content: "😬"} /*Grimacing Face*/
+  &.grin-big::before {content: "😃"} /*Grinning Face With Big Eyes*/
+  &.grin-smile::before {content: "😄"} /*Grinning Face With Smiling Eyes*/
+  &.grin-squint::before {content: "😆"} /*Grinning Squinting Face*/
+  &.grin-sweat::before {content: "😅"} /*Grinning Face With Sweat*/
+  &.grinning::before {content: "😀"} /*Grinning Face*/
+  &.hand-over::before {content: "🤭"} /*Face With Hand Over Mouth*/
+  &.hug::before {content: "🤗"} /*Hugging Face*/
+  &.hushed::before {content: "😯"} /*Hushed Face*/
+  &.joy::before {content: "😂"} /*Face With Tears Of Joy*/
+  &.kiss-blowing::before {content: "😘"} /*Face Blowing A Kiss*/
+  &.kiss-closed::before {content: "😚"} /*Kissing Face With Closed Eyes*/
+  &.kiss-smile::before {content: "😙"} /*Kissing Face With Smiling Eyes*/
+  &.kiss::before {content: "😗"} /*Kissing Face*/
+  &.lying::before {content: "🤥"} /*Lying Face*/
+  &.medical::before {content: "😷"} /*Face With Medical Mask*/
+  &.money::before {content: "🤑"} /*Money-Mouth Face*/
+  &.monocle::before {content: "🧐"} /*Face With Monocle*/
+  &.nauseated::before {content: "🤢"} /*Nauseated Face*/
+  &.nerd::before {content: "🤓"} /*Nerd Face*/
+  &.neutral::before {content: "😐"} /*Neutral Face*/
+  &.no-mouth::before {content: "😶"} /*Face Without Mouth*/
+  &.open::before {content: "😮"} /*Face With Open Mouth*/
+  &.pensive::before {content: "😔"} /*Pensive Face*/
+  &.pouting::before {content: "😡"} /*Pouting Face*/
+  &.preserving::before {content: "😣"} /*Persevering Face*/
+  &.raised-eyebrow::before {content: "🤨"} /*Face With Raised Eyebrow*/
+  &.relieved::before {content: "😌"} /*Relieved Face*/
+  &.rofl::before {content: "🤣"} /*Rolling On The Floor Laughing*/
+  &.sad-relieved::before {content: "😥"} /*Sad But Relieved Face*/
+  &.savoring::before {content: "😋"} /*Face Savoring Food*/
+  &.screaming::before {content: "😱"} /*Face Screaming In Fear*/
+  &.shush::before {content: "🤫"} /*Shushing Face*/
+  &.sleeping::before {content: "😴"} /*Sleeping Face*/
+  &.sleepy::before {content: "😪"} /*Sleepy Face*/
+  &.smile-halo::before {content: "😇"} /*Smiling Face With Halo*/
+  &.smile-heart::before {content: "😍"} /*Smiling Face With Heart-Eyes*/
+  &.smile-slight::before {content: "🙂"} /*Slightly Smiling Face*/
+  &.smile-smile::before {content: "😊"} /*Smiling Face With Smiling Eyes*/
+  &.smile-sun::before {content: "😎"} /*Smiling Face With Sunglasses*/
+  &.smile::before {content: "☺️"} /*Smiling Face*/
+  &.smirk::before {content: "😏"} /*Smirking Face*/
+  &.sneezing::before {content: "🤧"} /*Sneezing Face*/
+  &.squint-tongue::before {content: "😝"} /*Squinting Face With Tongue*/
+  &.star-struck::before {content: "🤩"} /*Star-Struck*/
+  &.steam::before {content: "😤"} /*Face With Steam From Nose*/
+  &.swearing::before {content: "🤬"} /*Face With Symbols On Mouth*/
+  &.thermometer::before {content: "🤒"} /*Face With Thermometer*/
+  &.think::before {content: "🤔"} /*Thinking Face*/
+  &.tired::before {content: "😫"} /*Tired Face*/
+  &.tongue::before {content: "😛"} /*Face With Tongue*/
+  &.unamused::before {content: "😒"} /*Unamused Face*/
+  &.upside-down::before {content: "🙃"} /*Upside-Down Face*/
+  &.vomiting::before {content: "🤮"} /*Face Vomiting*/
+  &.weary::before {content: "😩"} /*Weary Face*/
+  &.wink-tongue::before {content: "😜"} /*Winking Face With Tongue*/
+  &.wink::before {content: "😉"} /*Winking Face*/
+  &.worried::before {content: "😟"} /*Worried Face*/
+  &.zany::before {content: "🤪"} /*Zany Face*/
+  &.zipper::before {content: "🤐"} /*Zipper-Mouth Face*/
+}

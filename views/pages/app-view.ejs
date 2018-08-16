@@ -12,13 +12,11 @@
       </div>
     </div>
 
-      <? if (app.ipas.length > 0) { ?>
-        <div class="mx-auto mt-4 col-12 col-md-8">
-          <div class="card p-2 bg-gradient-light" >
-            <?- include('../layouts/app-info', {app}) ?>
-          </div>
-        </div>
-      <? } ?>
+    <div class="mx-auto mt-4 col-12 col-md-8">
+      <div class="card p-2 bg-gradient-light" >
+        <?- include('../layouts/app-info', {app, reactions, reactionFromUser}) ?>
+      </div>
+    </div>
 
   </div>
 

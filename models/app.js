@@ -1,10 +1,16 @@
-const { Schema } = require('mongoose')
+const mongoose = require('mongoose')
+const { Schema } = mongoose
+const { hasReactions } = require('../lib/mongoose-traits')
 
 const Model = new Schema({
   "name": String,
   "features": String,
   "short": String,
   "signed": String,
+  "ratings": [{
+    type: Schema.Types.ObjectId,
+    ref: 'Rating'
+  }],
   "user": {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -34,8 +40,7 @@ const Model = new Schema({
   }
 })
 
-// Model.statics.findSigned = function() {
-//   return this.find({})
-// }
+hasReactions(Model, mongoose)
+
 
 module.exports = Model

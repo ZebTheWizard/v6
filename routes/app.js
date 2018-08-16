@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth/middleware');
-var { App, Ipa } = require('../models')
+var { App, Ipa, Rating } = require('../models')
 var multer = require('multer')()
 var Socket = require('../lib/sockets')
 var uuid = require('uuid/v4')
@@ -124,10 +124,15 @@ router.get('/signed/:id', async function(req, res) {
 
 router.get('/:id', async function (req, res) {
   var app = await App.findById(req.params.id).populate({ path: 'ipas', options: {sort: {'version': -1}}}).exec()
+  var reactions = await app.getReactionCount()
+  var [ reactionFromUser ] = await req.user.reactions().where({model: req.params.id}).limit(1).exec()
+  var reactionFromUser = reactionFromUser || {}
   return res.render('pages/app-view', {
     title: app.name,
     app,
-    dsession: dsession.regen(req)
+    dsession: dsession.regen(req),
+    reactions,
+    reactionFromUser: reactionFromUser.emoji
   });
 })
 

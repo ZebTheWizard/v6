@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /*!
  * Font Awesome Pro 5.1.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Commercial License)
@@ -19693,6 +19695,439 @@ a.text-dark:focus {
   visibility: hidden !important;
 }
 
+i.emoji {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-size: inherit;
+  margin-top: 4px;
+  /*Angry Face*/
+  /*Anguished Face*/
+  /*Astonished Face*/
+  /*Anxious Face With Sweat*/
+  /*Face With Head-Bandage*/
+  /*Beaming Face With Smiling Eyes*/
+  /*Confounded Face*/
+  /*Confused Face*/
+  /*Cowboy Hat Face*/
+  /*Loudly Crying Face*/
+  /*Crying Face*/
+  /*Disappointed Face*/
+  /*Dizzy Face*/
+  /*Downcast Face With Sweat*/
+  /*Drooling Face*/
+  /*Exploding Head*/
+  /*Expressionless Face*/
+  /*Face With Rolling Eyes*/
+  /*Fearful Face*/
+  /*Flushed Face*/
+  /*Frowning Face With Open Mouth*/
+  /*Slightly Frowning Face*/
+  /*Frowning Face*/
+  /*Grimacing Face*/
+  /*Grinning Face With Big Eyes*/
+  /*Grinning Face With Smiling Eyes*/
+  /*Grinning Squinting Face*/
+  /*Grinning Face With Sweat*/
+  /*Grinning Face*/
+  /*Face With Hand Over Mouth*/
+  /*Hugging Face*/
+  /*Hushed Face*/
+  /*Face With Tears Of Joy*/
+  /*Face Blowing A Kiss*/
+  /*Kissing Face With Closed Eyes*/
+  /*Kissing Face With Smiling Eyes*/
+  /*Kissing Face*/
+  /*Lying Face*/
+  /*Face With Medical Mask*/
+  /*Money-Mouth Face*/
+  /*Face With Monocle*/
+  /*Nauseated Face*/
+  /*Nerd Face*/
+  /*Neutral Face*/
+  /*Face Without Mouth*/
+  /*Face With Open Mouth*/
+  /*Pensive Face*/
+  /*Pouting Face*/
+  /*Persevering Face*/
+  /*Face With Raised Eyebrow*/
+  /*Relieved Face*/
+  /*Rolling On The Floor Laughing*/
+  /*Sad But Relieved Face*/
+  /*Face Savoring Food*/
+  /*Face Screaming In Fear*/
+  /*Shushing Face*/
+  /*Sleeping Face*/
+  /*Sleepy Face*/
+  /*Smiling Face With Halo*/
+  /*Smiling Face With Heart-Eyes*/
+  /*Slightly Smiling Face*/
+  /*Smiling Face With Smiling Eyes*/
+  /*Smiling Face With Sunglasses*/
+  /*Smiling Face*/
+  /*Smirking Face*/
+  /*Sneezing Face*/
+  /*Squinting Face With Tongue*/
+  /*Star-Struck*/
+  /*Face With Steam From Nose*/
+  /*Face With Symbols On Mouth*/
+  /*Face With Thermometer*/
+  /*Thinking Face*/
+  /*Tired Face*/
+  /*Face With Tongue*/
+  /*Unamused Face*/
+  /*Upside-Down Face*/
+  /*Face Vomiting*/
+  /*Weary Face*/
+  /*Winking Face With Tongue*/
+  /*Winking Face*/
+  /*Worried Face*/
+  /*Zany Face*/
+  /*Zipper-Mouth Face*/
+}
+
+i.emoji.hover-increase-size:hover {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  cursor: pointer;
+}
+
+i.emoji.angry::before {
+  content: "\1F620";
+}
+
+i.emoji.anguished::before {
+  content: "\1F627";
+}
+
+i.emoji.astonished::before {
+  content: "\1F632";
+}
+
+i.emoji.axious::before {
+  content: "\1F630";
+}
+
+i.emoji.bandage::before {
+  content: "\1F915";
+}
+
+i.emoji.beaming::before {
+  content: "\1F601";
+}
+
+i.emoji.confounded::before {
+  content: "\1F616";
+}
+
+i.emoji.confused::before {
+  content: "\1F615";
+}
+
+i.emoji.cowboy::before {
+  content: "\1F920";
+}
+
+i.emoji.crying-loudly::before {
+  content: "\1F62D";
+}
+
+i.emoji.crying::before {
+  content: "\1F622";
+}
+
+i.emoji.disappointed::before {
+  content: "\1F61E";
+}
+
+i.emoji.dizzy::before {
+  content: "\1F635";
+}
+
+i.emoji.downcast::before {
+  content: "\1F613";
+}
+
+i.emoji.drool::before {
+  content: "\1F924";
+}
+
+i.emoji.exploding::before {
+  content: "\1F92F";
+}
+
+i.emoji.expressionless::before {
+  content: "\1F611";
+}
+
+i.emoji.eye-roll::before {
+  content: "\1F644";
+}
+
+i.emoji.fearful::before {
+  content: "\1F628";
+}
+
+i.emoji.flushed::before {
+  content: "\1F633";
+}
+
+i.emoji.frown-open::before {
+  content: "\1F626";
+}
+
+i.emoji.frown-slight::before {
+  content: "\1F641";
+}
+
+i.emoji.frown::before {
+  content: "\2639\FE0F";
+}
+
+i.emoji.grimacing::before {
+  content: "\1F62C";
+}
+
+i.emoji.grin-big::before {
+  content: "\1F603";
+}
+
+i.emoji.grin-smile::before {
+  content: "\1F604";
+}
+
+i.emoji.grin-squint::before {
+  content: "\1F606";
+}
+
+i.emoji.grin-sweat::before {
+  content: "\1F605";
+}
+
+i.emoji.grinning::before {
+  content: "\1F600";
+}
+
+i.emoji.hand-over::before {
+  content: "\1F92D";
+}
+
+i.emoji.hug::before {
+  content: "\1F917";
+}
+
+i.emoji.hushed::before {
+  content: "\1F62F";
+}
+
+i.emoji.joy::before {
+  content: "\1F602";
+}
+
+i.emoji.kiss-blowing::before {
+  content: "\1F618";
+}
+
+i.emoji.kiss-closed::before {
+  content: "\1F61A";
+}
+
+i.emoji.kiss-smile::before {
+  content: "\1F619";
+}
+
+i.emoji.kiss::before {
+  content: "\1F617";
+}
+
+i.emoji.lying::before {
+  content: "\1F925";
+}
+
+i.emoji.medical::before {
+  content: "\1F637";
+}
+
+i.emoji.money::before {
+  content: "\1F911";
+}
+
+i.emoji.monocle::before {
+  content: "\1F9D0";
+}
+
+i.emoji.nauseated::before {
+  content: "\1F922";
+}
+
+i.emoji.nerd::before {
+  content: "\1F913";
+}
+
+i.emoji.neutral::before {
+  content: "\1F610";
+}
+
+i.emoji.no-mouth::before {
+  content: "\1F636";
+}
+
+i.emoji.open::before {
+  content: "\1F62E";
+}
+
+i.emoji.pensive::before {
+  content: "\1F614";
+}
+
+i.emoji.pouting::before {
+  content: "\1F621";
+}
+
+i.emoji.preserving::before {
+  content: "\1F623";
+}
+
+i.emoji.raised-eyebrow::before {
+  content: "\1F928";
+}
+
+i.emoji.relieved::before {
+  content: "\1F60C";
+}
+
+i.emoji.rofl::before {
+  content: "\1F923";
+}
+
+i.emoji.sad-relieved::before {
+  content: "\1F625";
+}
+
+i.emoji.savoring::before {
+  content: "\1F60B";
+}
+
+i.emoji.screaming::before {
+  content: "\1F631";
+}
+
+i.emoji.shush::before {
+  content: "\1F92B";
+}
+
+i.emoji.sleeping::before {
+  content: "\1F634";
+}
+
+i.emoji.sleepy::before {
+  content: "\1F62A";
+}
+
+i.emoji.smile-halo::before {
+  content: "\1F607";
+}
+
+i.emoji.smile-heart::before {
+  content: "\1F60D";
+}
+
+i.emoji.smile-slight::before {
+  content: "\1F642";
+}
+
+i.emoji.smile-smile::before {
+  content: "\1F60A";
+}
+
+i.emoji.smile-sun::before {
+  content: "\1F60E";
+}
+
+i.emoji.smile::before {
+  content: "\263A\FE0F";
+}
+
+i.emoji.smirk::before {
+  content: "\1F60F";
+}
+
+i.emoji.sneezing::before {
+  content: "\1F927";
+}
+
+i.emoji.squint-tongue::before {
+  content: "\1F61D";
+}
+
+i.emoji.star-struck::before {
+  content: "\1F929";
+}
+
+i.emoji.steam::before {
+  content: "\1F624";
+}
+
+i.emoji.swearing::before {
+  content: "\1F92C";
+}
+
+i.emoji.thermometer::before {
+  content: "\1F912";
+}
+
+i.emoji.think::before {
+  content: "\1F914";
+}
+
+i.emoji.tired::before {
+  content: "\1F62B";
+}
+
+i.emoji.tongue::before {
+  content: "\1F61B";
+}
+
+i.emoji.unamused::before {
+  content: "\1F612";
+}
+
+i.emoji.upside-down::before {
+  content: "\1F643";
+}
+
+i.emoji.vomiting::before {
+  content: "\1F92E";
+}
+
+i.emoji.weary::before {
+  content: "\1F629";
+}
+
+i.emoji.wink-tongue::before {
+  content: "\1F61C";
+}
+
+i.emoji.wink::before {
+  content: "\1F609";
+}
+
+i.emoji.worried::before {
+  content: "\1F61F";
+}
+
+i.emoji.zany::before {
+  content: "\1F92A";
+}
+
+i.emoji.zipper::before {
+  content: "\1F910";
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -20198,5 +20633,81 @@ a:hover {
 
 .pre-wrap {
   white-space: pre-wrap;
+}
+
+.rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.1rem 0.7rem;
+  border: 1px solid #dfdfdf;
+}
+
+.rating:hover,
+.rating.selected {
+  background: rgba(0, 123, 255, 0.5);
+  cursor: pointer;
+  border: 1px solid rgba(0, 123, 255, 0.5);
+}
+
+.rating:hover *,
+.rating.selected * {
+  color: white !important;
+}
+
+.btn-close {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+  font-size: 18px;
+  cursor: pointer;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  -o-border-image: initial;
+     border-image: initial;
+  background: whitesmoke;
+  border-radius: 3px;
+  padding: 0px;
+  -webkit-transition: all 0.15s ease 0s;
+  transition: all 0.15s ease 0s;
+}
+
+.btn-close span {
+  position: relative;
+  top: -1px;
+}
+
+.btn-close:hover {
+  background: #ededed;
+}
+
+.btn-close:active {
+  -webkit-transform: translateY(1px);
+          transform: translateY(1px);
+  color: inherit;
+  background: #e1e1e1;
+}
+
+.rating-selected .emoji-wrapper:not(.selected) {
+  opacity: 0.3;
+}
+
+.ellipse-wrapper {
+  overflow: hidden;
+}
+
+.ellipse {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 

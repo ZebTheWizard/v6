@@ -422,3 +422,63 @@ a:hover {
 .pre-wrap {
     white-space: pre-wrap;
 }
+
+.rating {
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0.1rem 0.7rem;
+    border: 1px solid #dfdfdf;
+    &:hover, &.selected {
+      * {
+        color: white !important;
+      }
+      background: rgba(0, 123, 255, 0.5);
+      cursor: pointer;
+      border: 1px solid rgba(0,123,255,0.5);
+    }
+}
+
+.btn-close {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  background: rgb(245, 245, 245);
+  border-radius: 3px;
+  padding: 0px;
+  transition: all 0.15s ease 0s;
+  span {
+    position: relative;
+    top: -1px;
+  }
+  &:hover {
+    background: rgb(237, 237, 237);
+  }
+  &:active {
+    transform: translateY(1px);
+    color: inherit;
+    background: rgb(225, 225, 225);
+  }
+}
+
+.rating-selected .emoji-wrapper:not(.selected) {
+    opacity: 0.3;
+}
+
+.ellipse-wrapper {
+  overflow: hidden;
+}
+
+.ellipse {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
