@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
+const traits = require('../lib/mongoose-traits')
 
 const Model = new Schema({
   "displayName": String,
@@ -7,7 +8,7 @@ const Model = new Schema({
     type: String,
     default: 'n/a'
   },
-  "size": Number,
+  "size": traits.size(),
   "bundleId": String,
   "ipaUrl": String,
   "iconUrl": String,
@@ -20,10 +21,7 @@ const Model = new Schema({
     status: String,
     amount: Number
   },
-  "created_at": {
-    type: Date,
-    default: Date.now
-  }
+  "created_at": traits.date()
 }, { "strict": false} )
 
 Model.index({

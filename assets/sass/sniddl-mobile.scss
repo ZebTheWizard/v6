@@ -11,6 +11,9 @@
 
 body {
   overflow-x: hidden;
+  background: linear-gradient(#fff 0%, #fff 100%);
+  background-attachment: fixed;
+  background-color: $gray-300;
 }
 
 .h-100v {
@@ -55,6 +58,9 @@ i {
 
 #app {
   position: relative;
+  background: white;
+  margin-top: -50px;
+  padding-top: 50px;
 }
 
 .flex-wrap {
@@ -496,4 +502,40 @@ a:hover {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.article-closed {
+    overflow: hidden;
+    border-radius: 1rem;
+    position: relative;
+}
+.article-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.darken-drop {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 30px 38px rgba(0,0,0,0.3);
+}
+
+#refresher {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-top: -10000px;
+  background: $gray-300;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  #refresher-icon {
+    opacity: 0;
+  }
 }

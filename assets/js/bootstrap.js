@@ -69,6 +69,7 @@ $(document).on('click', 'a', function (e) {
   return false
 })
 
+
 // $('.grid').masonry({
 //   itemSelector: '.grid-item',
 // });

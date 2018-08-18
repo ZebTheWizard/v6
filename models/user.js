@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
+const traits = require('../lib/mongoose-traits')
 
 const Model = new Schema({
   "username": String,
@@ -25,13 +26,10 @@ const Model = new Schema({
     "username": String,
     "displayName": String,
   },
-  "created_at": {
-    type: Date,
-    default: Date.now
-  }
+  "created_at": traits.date()
 })
 
-Model.methods.reactions = function () {
+Model.methods.getReactions = function () {
   return mongoose.model('Reaction').find({ user: this._id })
 }
 

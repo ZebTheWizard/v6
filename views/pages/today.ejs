@@ -1,15 +1,34 @@
 <?- include('../layouts/page-top', {tab: 'today'}) ?>
-<div class="container" id="today-page-container">
+<div class="container has-toolbar-bottom" id="today-page-container">
   <div class="page-title">
     <div class="text-muted subtitle"><script>document.write(getDate())</script></div>
     Today
     <?- include('../layouts/avatar') ?>
   </div>
-  <div class="mt-4 col-12 col-md-6 grid-item">
-    <?- include('../dashboard/install') ?>
+
+  <div class="row">
+    <? for (i=0; i < 6; i++) { ?>
+      <div class="col-md-4 p-2">
+        <div class="article-closed">
+          <img height="450" src="https://images.unsplash.com/photo-1527168027773-0cc890c4f42e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0dded43cb34de5723402e844260fab81&auto=format&fit=crop&w=1650&q=80" alt="">
+          <div class="article-content">
+            <div class="p-3 darken-drop">
+              <div class="h5 text-white" style="opacity: 0.8;">Behind The Scenes</div>
+              <div class="h3 text-white m-0 font-weight-bold">A Handmade Tale</div>
+            </div>
+            <div class="p-3 darken-drop">
+              <div class=" h6 text-white">Turning physical craft into digital play.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <? } ?>
   </div>
 
-  <div class="linkable bg-danger my-2" url="https://google.com"> click me</div>
+
+
+
 
 </div>
 <?- include('../layouts/page-bot') ?>

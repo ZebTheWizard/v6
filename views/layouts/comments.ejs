@@ -1,0 +1,40 @@
+<div class="mx-auto mt-4 col-12 col-md-6">
+  <div class="h5 d-flex align-items-center">Comments
+    <span class="badge badge-pill badge-secondary ml-3"> <?= comments.length ?></span>
+  </div>
+  <ul class="list-group mb-4">
+    <? comments.forEach(comment => { ?>
+      <li class="list-group-item p-3 d-flex">
+        <img src="<?= comment.user.avatar ?>" alt="" class="rounded-circle" height="50">
+        <div class="ml-3 w-100">
+          <div class="d-flex justify-content-between w-100">
+            <span>
+              <span class="font-weight-bold"><?= comment.user.username ?></span>
+              <span style="color: #ccc">
+                <? if (comment.user.twitter) { ?>
+                  <i class="fab fa-twitter ml-1 linkable" blank url="https://twitter.com/<?= comment.user.twitter.username ?>"></i>
+                <? } ?>
+                <? if (comment.user.github) { ?>
+                  <i class="fab fa-github ml-1 linkable" blank url="https://github.com/<?= comment.user.github.username ?>"></i>
+                <? } ?>
+              </span>
+            </span>
+            <span> <?= comment.created_at.ago() ?> </span>
+          </div>
+          <div class=""><?= comment.content ?></div>
+          <div><?- include('../layouts/reactions', { type: 'comment', id: comment._id, reactions: comment.reactions}) ?></div>
+        </div>
+      </li>
+    <? }) ?>
+  </ul>
+
+  <form action="/comment/<?= type ?>" method="post">
+    <input type="hidden" name="id" value="<?= id ?>">
+    <div class="form-group">
+      <textarea class="form-control" rows="5" placeholder="What do you think?" name="value"></textarea>
+    </div>
+    <div class=" bg-white text-right">
+      <button type="submit" class="btn btn-primary">Comment</button>
+    </div>
+  </form>
+</div>

@@ -13,13 +13,13 @@
       </div>
     </div>
   </div>
-  <?- include('../layouts/rating', { type: 'app', id: app.id, reactions, reactionFromUser}) ?>
+  <?- include('../layouts/reactions', { type: 'app', id: app.id, reactions: app.reactions}) ?>
   <? if (app.itunes.screenshots.length > 0) { ?>
     <div class="mt-3">
-      <h5>Preview</h5>
+      <div class="h5 d-flex align-items-center">Previews <span class="badge badge-pill badge-secondary ml-3"> <?= app.itunes.screenshots.length ?></span></div>
       <div class="item-slider">
         <? app.itunes.screenshots.forEach(img => { ?>
-          <div class="item-grouping col-11 px-1">
+          <div class="item-grouping col-4 px-1">
             <img class="w-100" style="border-radius: 0.5rem" src="<?= img ?>" alt="screenshot">
           </div>
         <? }) ?>

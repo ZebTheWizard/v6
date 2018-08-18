@@ -3,7 +3,7 @@
   <?- include('../layouts/page-title', {fixed: true}) ?>
 
   <div class="row">
-    <div class="input-group mb-3 highlighted-search text-normal mx-auto mt-4 col-12 col-md-8">
+    <div class="input-group mb-3 highlighted-search text-normal mx-auto mt-4 col-12">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="icon-search text-muted"></i></span>
       </div>
@@ -12,11 +12,20 @@
       </div>
     </div>
 
-    <div class="mx-auto mt-4 col-12 col-md-8">
+    <div class="mx-auto mt-4 col-12 col-md-6">
       <div class="card p-2 bg-gradient-light" >
-        <?- include('../layouts/app-info', {app, reactions, reactionFromUser}) ?>
+        <?- include('../layouts/app-info', {app}) ?>
       </div>
     </div>
+
+
+    <?- include('../layouts/comments', {
+      id: app.id,
+      type: 'app',
+      comments: app.comments
+    }) ?>
+
+
 
   </div>
 

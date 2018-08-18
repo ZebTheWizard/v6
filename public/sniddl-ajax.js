@@ -14,7 +14,8 @@ function domWatcher (options, cb) { // { type, query}
   var obs = new MutationObserver(function (record) {
     for (var i = 0; i < record.length; i++) {
       var event = record[i]
-      if (event.type === 'childList' && typeof event.addedNodes[0].matches === 'function') {
+      if (event.type === 'childList' && event.addedNodes[0]) {
+        if (typeof event.addedNodes[0].matches !== 'function') continue
         if (event.addedNodes[0].matches(options.query) && event.type === options.type) {
           cb(event, event.target)
         }
@@ -31,11 +32,10 @@ function domWatcher (options, cb) { // { type, query}
 
 function live (event, query, cb) {
   document.addEventListener(event, function (e) {
-    console.log(e, 'asdfasdf');
     e.currentEl = e.target.closest(query)
     if (!e.currentEl) return
     cb(e, e.currentEl.$sniddl)
-  }, true)
+  })
 }
 
 Sniddl.set = function(query, key, value, init=false) {

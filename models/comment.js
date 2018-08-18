@@ -3,36 +3,19 @@ const { Schema } = mongoose
 const traits = require('../lib/mongoose-traits')
 
 const Model = new Schema({
-  "name": String,
-  "features": String,
-  "short": String,
-  "signed": String,
+  "content": String,
+  "for": String,
+  "model": String,
+  "mentions": [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   "user": {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  "ipas": [{
-    type: Schema.Types.ObjectId,
-    ref: 'Ipa'
-  }],
-  "stats": {
-    "downloads": Number,
-    "likes": Number,
-    "size": Number,
-    "views": Number
-  },
-  "itunes": {
-    "advisories": [String],
-    "icon": String,
-    "contentAdvisoryRating": String,
-    "genres": [String],
-    "description": String,
-    "screenshots": [String],
-    "languages": [String]
-  },
   "created_at": traits.date()
-}, { toJSON: { virtuals: true }})
-
+})
 
 Model.virtual('reactions', {
   ref: 'Reaction',
@@ -40,7 +23,7 @@ Model.virtual('reactions', {
   foreignField: 'model',
   justOne: false,
   options: {
-    where: { for: 'App'},
+    where: { for: 'Comment'},
     select: 'user emoji'
   }
 })
@@ -48,6 +31,18 @@ Model.virtual('reactions', {
 // traits.hasReactions(Model, mongoose)
 traits.hasComments(Model, mongoose)
 // traits.hasDates(Model, mongoose)
+
+Model.statics.add = function (obj) { // {user, model, emoji}
+  return new Promise(async (resolve, reject) => {
+    var comment = new this
+    comment.user = obj.user.id
+    comment.for = obj.model.constructor.modelName
+    comment.model = obj.model.id
+    comment.content = obj.content
+    await comment.save()
+    resolve(comment)
+  });
+}
 
 
 module.exports = Model

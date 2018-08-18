@@ -17728,6 +17728,40 @@ $('#ipa-form').on('submit', function (e) {
   });
 });
 
+var pullToRefresh = false;
+$(document).on('touchmove', function (e) {
+  if (document.body.scrollTop < 10) {
+    $('#refresher').css({
+      'margin-top': parseInt(document.body.scrollTop) + 'px',
+      'height': Math.abs(parseInt(document.body.scrollTop)) + 'px'
+    });
+    $('.page-title-fixed').css({
+      'margin-top': parseInt(document.body.scrollTop) * -1 + 'px'
+    });
+  }
+
+  if (document.body.scrollTop < -80) {
+    $('#refresher-icon').css({
+      'opacity': '0.7'
+    });
+    pullToRefresh = true;
+  }
+});
+
+$(document).on('touchend', function (e) {
+  $('.page-title-fixed').css({
+    'margin-top': '0px'
+  });
+  $('#refresher').css({
+    'margin-top': '-1000px',
+    'height': '0px'
+  });
+  $('#refresher-icon').css({
+    'opacity': '0'
+  });
+  if (pullToRefresh) window.location.reload();
+});
+
 /***/ }),
 /* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -31320,12 +31354,29 @@ $.fn.showClassIf = function (bool, classname) {
   return this;
 };
 
-$('*[data-remove]').click(function (e) {
+$(document).on('click', '*[data-remove]', function (e) {
   $($(e.currentTarget).data('remove')).remove();
 });
 
-$('*[data-collapse]').click(function (e) {
+$(document).on('click', '*[data-collapse]', function (e) {
   $($(e.currentTarget).data('collapse')).collapse('toggle');
+});
+
+$('.modal').each(function () {
+  window.$modals = window.$modals || new Object();
+  $modals[$(this).attr('id')] = $(this).html();
+  $(this).html('');
+});
+
+$(document).on('click', '*[data-modal]', function (e) {
+  var target = $(this).data('modal');
+  $('#' + target).html(Mustache.render($modals[target], $(this).data()));
+  $('#' + target).modal('toggle');
+});
+
+$(document).on('click', '*[data-modal-close]', function (e) {
+  var target = $(this).data('modal-close');
+  $('#' + target).modal('hide');
 });
 
 /***/ }),
@@ -31923,7 +31974,8 @@ function domWatcher(options, cb) {
   var obs = new MutationObserver(function (record) {
     for (var i = 0; i < record.length; i++) {
       var event = record[i];
-      if (event.type === 'childList' && typeof event.addedNodes[0].matches === 'function') {
+      if (event.type === 'childList' && event.addedNodes[0]) {
+        if (typeof event.addedNodes[0].matches !== 'function') continue;
         if (event.addedNodes[0].matches(options.query) && event.type === options.type) {
           cb(event, event.target);
         }
@@ -31939,11 +31991,10 @@ function domWatcher(options, cb) {
 
 function live(event, query, cb) {
   document.addEventListener(event, function (e) {
-    console.log(e, 'asdfasdf');
     e.currentEl = e.target.closest(query);
     if (!e.currentEl) return;
     cb(e, e.currentEl.$sniddl);
-  }, true);
+  });
 }
 
 Sniddl.set = function (query, key, value) {

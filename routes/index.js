@@ -19,7 +19,7 @@ router.get('/games', function(req, res, next) {
 });
 
 router.get('/apps', async function(req, res, next) {
-  var apps = await App.find().populate({ path: 'ipas', options: {sort: {'version': -1}}}).limit(20).exec()
+  var apps = await App.find({ ipas: { $gt: [] } }).populate({ path: 'ipas', options: {sort: {'version': -1}}}).limit(20).exec()
   return res.render('pages/apps', {
     title: 'Apps',
     apps
@@ -47,14 +47,6 @@ router.post('/react/app', async function (req, res) {
   return res.redirect('back')
 })
 
-router.get('/test/reaction', async function (req, res) {
-  var app = await App.findById('5b70282fc44eb6bfbe98561c').exec()
-  console.log(app.id);
-  var allreactions = await Reaction.find().exec()
-  var reactions = await app.getReactionCount()
-
-  return res.json(reactions)
-})
 
 
 

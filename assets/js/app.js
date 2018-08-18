@@ -102,3 +102,37 @@ $('#ipa-form').on('submit', function (e) {
     socket.message({ status: 'upload validated', amount: 100, reload: true}).of('ipa-progress-message').send()
   })
 })
+
+var pullToRefresh = false
+$(document).on('touchmove', function (e) {
+  if (document.body.scrollTop < 10) {
+    $('#refresher').css({
+      'margin-top': `${parseInt(document.body.scrollTop)}px`,
+      'height': `${Math.abs(parseInt(document.body.scrollTop))}px`,
+    })
+    $('.page-title-fixed').css({
+      'margin-top': `${parseInt(document.body.scrollTop) * -1}px`,
+    })
+  }
+
+  if (document.body.scrollTop < -80) {
+    $('#refresher-icon').css({
+      'opacity': `0.7`,
+    })
+    pullToRefresh = true
+  }
+})
+
+$(document).on('touchend', function (e) {
+  $('.page-title-fixed').css({
+    'margin-top': `0px`,
+  })
+  $('#refresher').css({
+    'margin-top': `-1000px`,
+    'height': '0px'
+  })
+  $('#refresher-icon').css({
+    'opacity': `0`,
+  })
+  if (pullToRefresh) window.location.reload()
+})
