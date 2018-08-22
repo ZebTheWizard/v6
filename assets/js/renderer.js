@@ -2,7 +2,7 @@
 window.cookie = require('../../lib/cookie')
 window.Time = require('../../lib/time')
 window.Size = require('../../lib/size')
-window.Size = require('./fullscreen')
+window.Autocomplete = require('../../lib/autocomplete')
 
 window.getDate = function() {
   var d = new Date();

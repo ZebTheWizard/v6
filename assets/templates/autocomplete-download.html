@@ -1,4 +1,7 @@
-<div class="list-group-item list-group-item-action list-autocomplete">
-    <span class="h6">{{ label }}</span>
-    <span class="pl-2 small text-muted">{{ version }}</span>
+<div class="list-group-item list-group-item-action list-autocomplete linkable" url="/download/edit/<?= _id ?>">
+  <span>
+    <span class="h6"><?- name ?></span>
+    <span class="pl-2 small text-muted"><?= version ?></span>
+  </span>
+  <button class="btn-link btn-sm btn">Edit</button>
 </div>

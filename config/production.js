@@ -1,5 +1,9 @@
 module.exports = {
   "env": process.env.NODE_ENV,
+  "recaptcha": {
+    "key": process.env.RECAPTCHA_KEY,
+    "secret": process.env.RECAPTCHA_SECRET,
+  },
   "twitter": {
     "key": process.env.TWITTER_KEY,
     "secret": process.env.TWITTER_SECRET,

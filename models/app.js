@@ -34,18 +34,7 @@ const Model = new Schema({
 }, { toJSON: { virtuals: true }})
 
 
-Model.virtual('reactions', {
-  ref: 'Reaction',
-  localField: '_id',
-  foreignField: 'model',
-  justOne: false,
-  options: {
-    where: { for: 'App'},
-    select: 'user emoji'
-  }
-})
-
-// traits.hasReactions(Model, mongoose)
+traits.hasReactions(Model, 'App')
 traits.hasComments(Model, mongoose)
 // traits.hasDates(Model, mongoose)
 

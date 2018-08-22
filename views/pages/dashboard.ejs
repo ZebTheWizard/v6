@@ -9,19 +9,11 @@
     </div>
 
     <form action="/article/new" method="post" class="mt-4 col-12 col-md-6 grid-item">
-      <div class="card bg-gradient-light">
-        <div class="card-header bg-white d-flex align-items-center justify-content-between">
-          <h5 class="m-0">Articles</h5>
-          <button type="submit" class="btn-primary btn-sm" disabled>New<i class="fas fa-plus ml-2"></i></button>
-        </div>
-        <div class="card-body">
-          <div>Coming Soon...</div>
-        </div>
-      </div>
+      <?- include('../dashboard/articles') ?>
     </form>
 
     <div class="mt-4 col-12 col-md-6 grid-item">
-      <?- include('../dashboard/uploadIPA') ?>
+      <?- include('../dashboard/ipas') ?>
     </div>
 
     <div class="mt-4 col-12 col-md-6 grid-item">

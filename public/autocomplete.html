@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    body {
+      background: #efefef;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .spacer {
+      margin: auto;
+      text-align: center;
+    }
+    .autocomplete-match {
+      font-weight: bold;
+      color: red;
+      background: gold;
+      padding: 0px 1px;
+      font-size: 1.3rem;
+    }
+    input {
+      padding: 1rem;
+      width: 250px;
+      background: white;
+      border-radius: 0.5rem;
+      width: 920px;
+      border: 1px solid #ccc;
+      width: 996px;
+      font-size: 1rem;
+    }
+    .item {
+      width: 300px;
+      margin: 5px;
+      background: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      display: inline-block;
+      text-align: left;
+      font-family: helvetica;
+    }
+
+    div#results {
+      margin: 0 -5px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      list-style-type: none;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    img {
+      float: left;
+      margin-right: 10px;
+      height: 55px;
+    }
+    </style>
+  </head>
+  <body>
+
+    <div class="spacer">
+      <div id="autocomplete" class="autocomplete">
+        <input type="text" id="input" placeholder="Search for names...">
+      </div>
+      <div id="results"></div>
+    </div>
+
+
+
+    <script src="/js/renderer.js" charset="utf-8"></script>
+
+    <script>
+      new Autocomplete(document.getElementById('autocomplete'))
+        .settings({
+          source: 'https://randomuser.me/api/?results=5000',
+          data: (data) => data.results,
+          input: document.getElementById('input'),
+          results: document.getElementById('results'),
+          search: 'login.username',
+          limit: 50
+        })
+        .match((item, query) => item.login.username.toLowerCase().includes(query.toLowerCase()))
+        .template(`
+          <div class="item">
+            <img src="<%= picture.medium %>" />
+            <div><%- login.username %></div>
+            <div><%- name.title %> <%- name.first %> <%- name.last %></div>
+          </div>`)
+        .init()
+    </script>
+  </body>
+</html>

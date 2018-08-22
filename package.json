@@ -54,6 +54,7 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "tmp": "0.0.33",
+    "twemoji": "^11.0.1",
     "unzip": "^0.1.11"
   },
   "devDependencies": {

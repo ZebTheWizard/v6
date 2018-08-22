@@ -1,0 +1,101 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row">
+      <div class="mx-auto mt-4 col-12 d-flex">
+        <div class="position-relative w-100">
+          <input type="text" id="auto-app" class="form-control" placeholder="Search Apps...">
+        </div>
+        <button type="button" url="/article/new" method="post" redirect="true" class="btn btn-primary linkable ml-3">
+          New<i class="fas fa-plus ml-2"></i>
+        </button>
+      </div>
+      <div class="mx-auto mt-4 col-12 col-md-6">
+        <div class="card p-2 bg-gradient-light" >
+          <div class="card-body">
+            <form action="/article/update" method="post">
+              <input type="hidden" name="id" value="<?= article.id ?>">
+              <h4>Modify App Data</h4>
+
+              <div class="form-group">
+                <label for="title">Title</label>
+                <div class="input-group mb-3">
+                  <input type="hidden" name="title-color" id="title-color-input" value="<?= article.colors.title ?>">
+                  <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="<?= article.title ?>">
+                  <div class="input-group-append">
+                    <div class="input-group-text" id="title-color">
+                      <i class="well"></i>
+                    </div>
+                  </div>
+                  <div class="color-picker invisible" data-well="#title-color" data-input="#title-color-input" data-hex="<?= article.colors.title ?>" data-width="150" data-height="150"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="title2">Title 2</label>
+                <div class="input-group mb-3">
+                  <input type="hidden" name="title2-color" id="title2-color-input" value="<?= article.colors.title2 ?>">
+                  <input type="text" class="form-control" id="title2" name="title2" placeholder="Title2" value="<?= article.title2 ?>">
+                  <div class="input-group-append">
+                    <div class="input-group-text" id="title2-color">
+                      <i class="well"></i>
+                    </div>
+                  </div>
+                  <div class="color-picker invisible" data-well="#title2-color" data-input="#title2-color-input" data-hex="<?= article.colors.title2 ?>" data-width="150" data-height="150"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="subtitle">Subtitle</label>
+                <div class="input-group mb-3">
+                  <input type="hidden" name="subtitle-color" id="subtitle-color-input" value="<?= article.colors.subtitle ?>">
+                  <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="Subtitle" value="<?= article.subtitle ?>">
+                  <div class="input-group-append">
+                    <div class="input-group-text" id="subtitle-color">
+                      <i class="well"></i>
+                    </div>
+                  </div>
+                  <div class="color-picker invisible" data-well="#subtitle-color" data-input="#subtitle-color-input" data-hex="<?= article.colors.subtitle ?>" data-width="150" data-height="150"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="upload">Upload Image</label>
+                <input type="file" class="form-control-file" id="upload" name="upload">
+              </div>
+
+              <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" id="content" name="content"><?= article.content ?></textarea>
+              </div>
+              <div class="g-recaptcha" data-sitekey="6LezP2sUAAAAAD_-1WnpwZhsq_F5dR_giaM4fo00"></div>
+              <button type="submit" class="btn btn-primary mt-3 shadow-sm">Save <i class="fas fa-check"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-auto mt-4 col-12 col-md-6">
+        <div class="card p-2 bg-gradient-light">
+            <div class="article-closed">
+              <img height="400" src="<?= article.image.thumbnail || '/images/article-thumbnail.png' ?>" style="min-height: 400px" alt="">
+              <div class="article-header">
+                <div class="p-3">
+                  <div class="h5" style="opacity: 0.8;" data-bind="#title2" data-bind-color="#title2-color-input" ></div>
+                  <div class="h3 m-0 font-weight-bold" data-bind="#title" data-bind-color="#title-color-input"></div>
+                </div>
+                <div class="p-3">
+                  <div class=" h6" data-bind="#subtitle" data-bind-color="#subtitle-color-input"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

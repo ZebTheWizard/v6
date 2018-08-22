@@ -7,7 +7,9 @@ window.axios = require('axios');
 window.$jsonp = require('axios-jsonp')
 window.Sniddl = require('../../public/sniddl-ajax')
 window.$history = window.$history || []
+window.markdown = require('../../lib/markdown')
 var Socket = require('../../lib/sockets-client')
+require('../../lib/colorpicker')
 
 window.socket = new Socket()
 socket.room(location.pathname).subscribe()

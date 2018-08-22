@@ -21,7 +21,7 @@
             </span>
             <span> <?= comment.created_at.ago() ?> </span>
           </div>
-          <div class=""><?= comment.content ?></div>
+          <div class=""><?- markdown(comment.content, {headings: true, images: true}) ?></div>
           <div><?- include('../layouts/reactions', { type: 'comment', id: comment._id, reactions: comment.reactions}) ?></div>
         </div>
       </li>

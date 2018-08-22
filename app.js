@@ -18,7 +18,9 @@ mongoose.connect(config.get('MONGODB_URI'), { useNewUrlParser: true });
 
 app.locals = {
   config,
-  lang: require('./lib/lang')
+  lang: require('./lib/lang'),
+  markdown: require('./lib/markdown'),
+  tw: require('twemoji').parse,
 }
 
 // view engine setup
@@ -73,6 +75,7 @@ app.use('/spa', require('./routes/pages'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/download', require('./routes/download'));
 app.use('/app', require('./routes/app'));
+app.use('/article', require('./routes/article'));
 app.use('/react', require('./routes/reactions'));
 app.use('/comment', require('./routes/comment'));
 app.use('*', function(req, res, next) {

@@ -4,9 +4,13 @@
 
   <div class="row">
       <div class="mx-auto mt-4 col-12 d-flex">
-        <div class="position-relative w-100">
-          <input type="text" id="auto-app" class="form-control" placeholder="Search Apps...">
-        </div>
+        <?- include('../layouts/autocomplete', {
+          source: '/app/json',
+          template: 'autocomplete-app',
+          search: 'name',
+          limit: 5,
+          placeholder: 'Search Apps...'
+        }) ?>
         <button type="button" url="/app/new" method="post" redirect="true" class="btn btn-primary linkable ml-3">
           New<i class="fas fa-plus ml-2"></i>
         </button>

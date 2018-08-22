@@ -37,15 +37,15 @@ router.get('/search', function(req, res, next) {
   res.render('pages/search', {title: 'Search'});
 });
 
-router.post('/react/app', async function (req, res) {
-  var app = await App.findById(req.body.id).exec()
-  var reaction = await Reaction.add({
-    user: req.user,
-    model: app,
-    emoji: req.body.value
-  })
-  return res.redirect('back')
-})
+// router.post('/react/app', async function (req, res) {
+//   var app = await App.findById(req.body.id).exec()
+//   var reaction = await Reaction.add({
+//     user: req.user,
+//     model: app,
+//     emoji: req.body.value
+//   })
+//   return res.redirect('back')
+// })
 
 
 

@@ -17,18 +17,7 @@ const Model = new Schema({
   "created_at": traits.date()
 })
 
-Model.virtual('reactions', {
-  ref: 'Reaction',
-  localField: '_id',
-  foreignField: 'model',
-  justOne: false,
-  options: {
-    where: { for: 'Comment'},
-    select: 'user emoji'
-  }
-})
-
-// traits.hasReactions(Model, mongoose)
+traits.hasReactions(Model, 'Comment')
 traits.hasComments(Model, mongoose)
 // traits.hasDates(Model, mongoose)
 

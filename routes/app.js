@@ -124,13 +124,8 @@ router.get('/signed/:id', async function(req, res) {
 
 router.get('/:id', async function (req, res) {
   var app = await App.findById(req.params.id).populate({ path: 'ipas', options: {sort: {'version': -1}}}).populate('reactions').exec()
-  // var reactions = await app.getReactionCount()
-  // var [ reactionFromUser ] = await req.user.getReactions().where({model: req.params.id}).limit(1).exec()
-  // var reactionFromUser = reactionFromUser || {}
   app.comments = await app.getComments().populate('user').populate('reactions').exec()
-  // app.comments.forEach(async (comment) => {
-  //   comment.reactions = await comment.getReactions().exec()
-  // })
+
   return res.render('pages/app-view', {
     title: app.name,
     app

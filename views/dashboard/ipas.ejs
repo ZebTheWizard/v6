@@ -6,14 +6,13 @@
     </form>
   </div>
   <div class="card-body">
-    <div class="input-group mb-3 highlighted-search text-normal ">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="icon-search text-muted"></i></span>
-      </div>
-      <div class="position-relative w-100">
-        <input type="text" class="form-control auto-download" placeholder="Search IPAs..." id="ipa-redirect">
-      </div>
-    </div>
+    <?- include('../layouts/autocomplete', {
+      source: '/download/json',
+      template: 'autocomplete-download',
+      search: 'name',
+      limit: 5,
+      placeholder: 'Search IPAs...'
+    }) ?>
     <? if (downloads.length > 0) { ?>
       <div class="mt-4 mb-1">Recently Created</div>
       <ul class="list-group">

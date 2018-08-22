@@ -17635,35 +17635,49 @@ function render(path) {
   });
 }
 
-function autocomplete(obj) {
-  return {
-    highlightMatches: true,
-    source: obj.source,
-    asLocal: true,
-    customLabel: 'name',
-    template: render(obj.template),
-    hint: true,
-    empty: false,
-    limit: 5,
-    callback: obj.callback
-  };
-}
+// function autocomplete(obj) {
+//   console.log($(this), this);
+//   return {
+//     highlightMatches: true,
+//     source: obj.source,
+//     asLocal: true,
+//     customLabel: 'name',
+//     template: render(obj.template),
+//     hint: true,
+//     empty: false,
+//     limit: 5,
+//     callback: obj.callback
+//   }
+// }
 
-$(document).ready(function () {
-  $('.auto-download').autocompleter(autocomplete({
-    source: '/download/json',
-    template: 'autocomplete-download',
-    callback: function callback(value, index, selected) {
-      console.log(value, index, selected);
-      var el = $(this).parent().find('input');
-      if (selected && el.attr('id') === 'ipa-redirect') {
-        window.location.href = "/download/edit/" + selected._id;
-      } else if (selected && el.attr('id') === 'add-ipa-version') {
-        $('#app-ipas').append(render('addipaversion', selected));
-        el.val('');
-      }
-    }
-  }));
+// $(document).ready(function () {
+//   $('.auto-download').autocompleter(autocomplete({
+//       source: '/download/json',
+//       template: 'autocomplete-download',
+//       callback(value, index, selected) {
+//         console.log(value, index, selected);
+//         var el = $(this).parent().find('input')
+//         if (selected && el.attr('id') === 'ipa-redirect') {
+//           window.location.href = "/download/edit/" + selected._id
+//         }
+//         else if (selected && el.attr('id') === 'add-ipa-version') {
+//           $('#app-ipas').append(render('addipaversion', selected))
+//           el.val('')
+//         }
+//       }
+//   }))
+// })
+
+$('.autocomplete').each(function () {
+  var _this = this;
+
+  console.log($(this).find('.autocomplete-results')[0], $(this));
+  new Autocomplete($(this)[0]).settings({
+    results: $(this).find('.autocomplete-results')[0],
+    input: $(this).find('input')[0]
+  }).match(function (item, query) {
+    return item[$(_this).data('search')].toLowerCase().includes(query.toLowerCase());
+  }).template(__webpack_require__(128)("./" + $(this).data('template') + '.html'), { delimiter: '?' }).init();
 });
 
 $(window).scroll(function (e) {
@@ -17730,6 +17744,7 @@ $('#ipa-form').on('submit', function (e) {
 
 var pullToRefresh = false;
 $(document).on('touchmove', function (e) {
+  if ($('body').hasClass('modal-open')) return;
   if (document.body.scrollTop < 10) {
     $('#refresher').css({
       'margin-top': parseInt(document.body.scrollTop) + 'px',
@@ -17762,6 +17777,12 @@ $(document).on('touchend', function (e) {
   if (pullToRefresh) window.location.reload();
 });
 
+grecaptcha.ready(function () {
+  grecaptcha.execute('6LcrSWsUAAAAAH9-Cioqf2RB5fpD3lX8DDm2oRHq', { action: 'action_name' }).then(function (token) {
+    console.log(token);
+  });
+});
+
 /***/ }),
 /* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -17778,7 +17799,9 @@ window.axios = __webpack_require__(39);
 window.$jsonp = __webpack_require__(146);
 window.Sniddl = __webpack_require__(147);
 window.$history = window.$history || [];
+window.markdown = __webpack_require__(161);
 var Socket = __webpack_require__(126);
+__webpack_require__(162);
 
 window.socket = new Socket();
 socket.room(location.pathname).subscribe();
@@ -31296,10 +31319,12 @@ module.exports = Socket;
 
 var map = {
 	"./addipaversion.html": 145,
+	"./autocomplete-app.html": 160,
 	"./autocomplete-download.html": 129,
 	"./card-bottom.html": 132,
 	"./card-top.html": 131,
-	"./ipa-progress-card.html": 130
+	"./ipa-progress-card.html": 130,
+	"./testing.html": 158
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -31321,7 +31346,7 @@ webpackContext.id = 128;
 /* 129 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"list-group-item list-group-item-action list-autocomplete\">\n    <span class=\"h6\">{{ label }}</span>\n    <span class=\"pl-2 small text-muted\">{{ version }}</span>\n</div>\n";
+module.exports = "<div class=\"list-group-item list-group-item-action list-autocomplete linkable\" url=\"/download/edit/<?= _id ?>\">\n  <span>\n    <span class=\"h6\"><?- name ?></span>\n    <span class=\"pl-2 small text-muted\"><?= version ?></span>\n  </span>\n  <button class=\"btn-link btn-sm btn\">Edit</button>\n</div>\n";
 
 /***/ }),
 /* 130 */
@@ -31362,6 +31387,29 @@ $(document).on('click', '*[data-collapse]', function (e) {
   $($(e.currentTarget).data('collapse')).collapse('toggle');
 });
 
+$('*[data-bind]').each(function () {
+  var _this = this;
+
+  var options = $(this).data('options') || { everything: true };
+  var target = $(this).data('bind');
+  $(this).html(markdown($(target).val(), options));
+  $(document).on('input', target, function (e) {
+    $(_this).html(markdown($(target).val(), options));
+  });
+});
+
+$('*[data-bind-color]').each(function () {
+  var _this2 = this;
+
+  var target = $(this).data('bind-color');
+  var prop = $(this).data('bind-color-prop') || 'color';
+  console.log($(target)[0]);
+  this.style[prop] = '#' + $(target).val();
+  $(target).on('change', function (e) {
+    _this2.style[prop] = '#' + $(target).val();
+  });
+});
+
 $('.modal').each(function () {
   window.$modals = window.$modals || new Object();
   $modals[$(this).attr('id')] = $(this).html();
@@ -31372,11 +31420,30 @@ $(document).on('click', '*[data-modal]', function (e) {
   var target = $(this).data('modal');
   $('#' + target).html(Mustache.render($modals[target], $(this).data()));
   $('#' + target).modal('toggle');
+  $('body').css('overflow-y', 'hidden');
 });
 
 $(document).on('click', '*[data-modal-close]', function (e) {
   var target = $(this).data('modal-close');
   $('#' + target).modal('hide');
+  $('body').css('overflow-y', 'auto');
+});
+
+$('.color-picker').each(function () {
+  var _this3 = this;
+
+  var well = $($(this).data('well'));
+  var input = $($(this).data('input'));
+  well.css('color', '#' + this.options.hex);
+  well.click(function (e) {
+    $('.color-picker').not(_this3).addClass('invisible');
+    $(_this3).toggleClass('invisible');
+  });
+  var pop = new Popper(well[0], this, { placement: 'bottom' });
+  this.onColorChange(function (el) {
+    well.css('color', '#' + el.options.hex);
+    input.val(el.options.hex).change();
+  });
 });
 
 /***/ }),
@@ -32153,6 +32220,392 @@ SniddlComponent.prototype.constructor = SniddlComponent;
 try {
   module.exports = Sniddl;
 } catch (e) {}
+
+/***/ }),
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"list-group-item list-group-item-action list-autocomplete d-flex align-items-center justify-content-between linkable\" url=\"https://twitter.com\">\n    <span class=\"h6 m-0\"><?- title ?></span>\n    <button class=\"btn-link btn-sm btn linkable\" url=\"https://google.com\">Edit</button>\n</div>\n";
+
+/***/ }),
+/* 159 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
+var twemoji=function(){"use strict";var twemoji={base:"https://twemoji.maxcdn.com/2/",ext:".png",size:"72x72",className:"emoji",convert:{fromCodePoint:fromCodePoint,toCodePoint:toCodePoint},onerror:function onerror(){if(this.parentNode){this.parentNode.replaceChild(createText(this.alt,false),this)}},parse:parse,replace:replace,test:test},escaper={"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"},re=/(?:\ud83d[\udc68\udc69])(?:\ud83c[\udffb-\udfff])?\u200d(?:\u2695\ufe0f|\u2696\ufe0f|\u2708\ufe0f|\ud83c[\udf3e\udf73\udf93\udfa4\udfa8\udfeb\udfed]|\ud83d[\udcbb\udcbc\udd27\udd2c\ude80\ude92]|\ud83e[\uddb0-\uddb3])|(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75]|\u26f9)((?:\ud83c[\udffb-\udfff]|\ufe0f)\u200d[\u2640\u2642]\ufe0f)|(?:\ud83c[\udfc3\udfc4\udfca]|\ud83d[\udc6e\udc71\udc73\udc77\udc81\udc82\udc86\udc87\ude45-\ude47\ude4b\ude4d\ude4e\udea3\udeb4-\udeb6]|\ud83e[\udd26\udd35\udd37-\udd39\udd3d\udd3e\uddb8\uddb9\uddd6-\udddd])(?:\ud83c[\udffb-\udfff])?\u200d[\u2640\u2642]\ufe0f|(?:\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\u2764\ufe0f\u200d\ud83d\udc68|\ud83d\udc68\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc68\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d[\udc68\udc69]|\ud83d\udc69\u200d\ud83d\udc66\u200d\ud83d\udc66|\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83c\udff3\ufe0f\u200d\ud83c\udf08|\ud83c\udff4\u200d\u2620\ufe0f|\ud83d\udc41\u200d\ud83d\udde8|\ud83d\udc68\u200d\ud83d[\udc66\udc67]|\ud83d\udc69\u200d\ud83d[\udc66\udc67]|\ud83d\udc6f\u200d\u2640\ufe0f|\ud83d\udc6f\u200d\u2642\ufe0f|\ud83e\udd3c\u200d\u2640\ufe0f|\ud83e\udd3c\u200d\u2642\ufe0f|\ud83e\uddde\u200d\u2640\ufe0f|\ud83e\uddde\u200d\u2642\ufe0f|\ud83e\udddf\u200d\u2640\ufe0f|\ud83e\udddf\u200d\u2642\ufe0f)|[\u0023\u002a\u0030-\u0039]\ufe0f?\u20e3|(?:[\u00a9\u00ae\u2122\u265f]\ufe0f)|(?:\ud83c[\udc04\udd70\udd71\udd7e\udd7f\ude02\ude1a\ude2f\ude37\udf21\udf24-\udf2c\udf36\udf7d\udf96\udf97\udf99-\udf9b\udf9e\udf9f\udfcd\udfce\udfd4-\udfdf\udff3\udff5\udff7]|\ud83d[\udc3f\udc41\udcfd\udd49\udd4a\udd6f\udd70\udd73\udd76-\udd79\udd87\udd8a-\udd8d\udda5\udda8\uddb1\uddb2\uddbc\uddc2-\uddc4\uddd1-\uddd3\udddc-\uddde\udde1\udde3\udde8\uddef\uddf3\uddfa\udecb\udecd-\udecf\udee0-\udee5\udee9\udef0\udef3]|[\u203c\u2049\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb-\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u2660\u2663\u2665\u2666\u2668\u267b\u267f\u2692-\u2697\u2699\u269b\u269c\u26a0\u26a1\u26aa\u26ab\u26b0\u26b1\u26bd\u26be\u26c4\u26c5\u26c8\u26cf\u26d1\u26d3\u26d4\u26e9\u26ea\u26f0-\u26f5\u26f8\u26fa\u26fd\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b50\u2b55\u3030\u303d\u3297\u3299])(?:\ufe0f|(?!\ufe0e))|(?:(?:\ud83c[\udfcb\udfcc]|\ud83d[\udd74\udd75\udd90]|[\u261d\u26f7\u26f9\u270c\u270d])(?:\ufe0f|(?!\ufe0e))|(?:\ud83c[\udf85\udfc2-\udfc4\udfc7\udfca]|\ud83d[\udc42\udc43\udc46-\udc50\udc66-\udc69\udc6e\udc70-\udc78\udc7c\udc81-\udc83\udc85-\udc87\udcaa\udd7a\udd95\udd96\ude45-\ude47\ude4b-\ude4f\udea3\udeb4-\udeb6\udec0\udecc]|\ud83e[\udd18-\udd1c\udd1e\udd1f\udd26\udd30-\udd39\udd3d\udd3e\uddb5\uddb6\uddb8\uddb9\uddd1-\udddd]|[\u270a\u270b]))(?:\ud83c[\udffb-\udfff])?|(?:\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f|\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc77\udb40\udc6c\udb40\udc73\udb40\udc7f|\ud83c\udde6\ud83c[\udde8-\uddec\uddee\uddf1\uddf2\uddf4\uddf6-\uddfa\uddfc\uddfd\uddff]|\ud83c\udde7\ud83c[\udde6\udde7\udde9-\uddef\uddf1-\uddf4\uddf6-\uddf9\uddfb\uddfc\uddfe\uddff]|\ud83c\udde8\ud83c[\udde6\udde8\udde9\uddeb-\uddee\uddf0-\uddf5\uddf7\uddfa-\uddff]|\ud83c\udde9\ud83c[\uddea\uddec\uddef\uddf0\uddf2\uddf4\uddff]|\ud83c\uddea\ud83c[\udde6\udde8\uddea\uddec\udded\uddf7-\uddfa]|\ud83c\uddeb\ud83c[\uddee-\uddf0\uddf2\uddf4\uddf7]|\ud83c\uddec\ud83c[\udde6\udde7\udde9-\uddee\uddf1-\uddf3\uddf5-\uddfa\uddfc\uddfe]|\ud83c\udded\ud83c[\uddf0\uddf2\uddf3\uddf7\uddf9\uddfa]|\ud83c\uddee\ud83c[\udde8-\uddea\uddf1-\uddf4\uddf6-\uddf9]|\ud83c\uddef\ud83c[\uddea\uddf2\uddf4\uddf5]|\ud83c\uddf0\ud83c[\uddea\uddec-\uddee\uddf2\uddf3\uddf5\uddf7\uddfc\uddfe\uddff]|\ud83c\uddf1\ud83c[\udde6-\udde8\uddee\uddf0\uddf7-\uddfb\uddfe]|\ud83c\uddf2\ud83c[\udde6\udde8-\udded\uddf0-\uddff]|\ud83c\uddf3\ud83c[\udde6\udde8\uddea-\uddec\uddee\uddf1\uddf4\uddf5\uddf7\uddfa\uddff]|\ud83c\uddf4\ud83c\uddf2|\ud83c\uddf5\ud83c[\udde6\uddea-\udded\uddf0-\uddf3\uddf7-\uddf9\uddfc\uddfe]|\ud83c\uddf6\ud83c\udde6|\ud83c\uddf7\ud83c[\uddea\uddf4\uddf8\uddfa\uddfc]|\ud83c\uddf8\ud83c[\udde6-\uddea\uddec-\uddf4\uddf7-\uddf9\uddfb\uddfd-\uddff]|\ud83c\uddf9\ud83c[\udde6\udde8\udde9\uddeb-\udded\uddef-\uddf4\uddf7\uddf9\uddfb\uddfc\uddff]|\ud83c\uddfa\ud83c[\udde6\uddec\uddf2\uddf3\uddf8\uddfe\uddff]|\ud83c\uddfb\ud83c[\udde6\udde8\uddea\uddec\uddee\uddf3\uddfa]|\ud83c\uddfc\ud83c[\uddeb\uddf8]|\ud83c\uddfd\ud83c\uddf0|\ud83c\uddfe\ud83c[\uddea\uddf9]|\ud83c\uddff\ud83c[\udde6\uddf2\uddfc]|\ud83c[\udccf\udd8e\udd91-\udd9a\udde6-\uddff\ude01\ude32-\ude36\ude38-\ude3a\ude50\ude51\udf00-\udf20\udf2d-\udf35\udf37-\udf7c\udf7e-\udf84\udf86-\udf93\udfa0-\udfc1\udfc5\udfc6\udfc8\udfc9\udfcf-\udfd3\udfe0-\udff0\udff4\udff8-\udfff]|\ud83d[\udc00-\udc3e\udc40\udc44\udc45\udc51-\udc65\udc6a-\udc6d\udc6f\udc79-\udc7b\udc7d-\udc80\udc84\udc88-\udca9\udcab-\udcfc\udcff-\udd3d\udd4b-\udd4e\udd50-\udd67\udda4\uddfb-\ude44\ude48-\ude4a\ude80-\udea2\udea4-\udeb3\udeb7-\udebf\udec1-\udec5\uded0-\uded2\udeeb\udeec\udef4-\udef9]|\ud83e[\udd10-\udd17\udd1d\udd20-\udd25\udd27-\udd2f\udd3a\udd3c\udd40-\udd45\udd47-\udd70\udd73-\udd76\udd7a\udd7c-\udda2\uddb4\uddb7\uddc0-\uddc2\uddd0\uddde-\uddff]|[\u23e9-\u23ec\u23f0\u23f3\u267e\u26ce\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\ue50a])|\ufe0f/g,UFE0Fg=/\uFE0F/g,U200D=String.fromCharCode(8205),rescaper=/[&<>'"]/g,shouldntBeParsed=/^(?:iframe|noframes|noscript|script|select|style|textarea)$/,fromCharCode=String.fromCharCode;return twemoji;function createText(text,clean){return document.createTextNode(clean?text.replace(UFE0Fg,""):text)}function escapeHTML(s){return s.replace(rescaper,replacer)}function defaultImageSrcGenerator(icon,options){return"".concat(options.base,options.size,"/",icon,options.ext)}function grabAllTextNodes(node,allText){var childNodes=node.childNodes,length=childNodes.length,subnode,nodeType;while(length--){subnode=childNodes[length];nodeType=subnode.nodeType;if(nodeType===3){allText.push(subnode)}else if(nodeType===1&&!("ownerSVGElement"in subnode)&&!shouldntBeParsed.test(subnode.nodeName.toLowerCase())){grabAllTextNodes(subnode,allText)}}return allText}function grabTheRightIcon(rawText){return toCodePoint(rawText.indexOf(U200D)<0?rawText.replace(UFE0Fg,""):rawText)}function parseNode(node,options){var allText=grabAllTextNodes(node,[]),length=allText.length,attrib,attrname,modified,fragment,subnode,text,match,i,index,img,rawText,iconId,src;while(length--){modified=false;fragment=document.createDocumentFragment();subnode=allText[length];text=subnode.nodeValue;i=0;while(match=re.exec(text)){index=match.index;if(index!==i){fragment.appendChild(createText(text.slice(i,index),true))}rawText=match[0];iconId=grabTheRightIcon(rawText);i=index+rawText.length;src=options.callback(iconId,options);if(iconId&&src){img=new Image;img.onerror=options.onerror;img.setAttribute("draggable","false");attrib=options.attributes(rawText,iconId);for(attrname in attrib){if(attrib.hasOwnProperty(attrname)&&attrname.indexOf("on")!==0&&!img.hasAttribute(attrname)){img.setAttribute(attrname,attrib[attrname])}}img.className=options.className;img.alt=rawText;img.src=src;modified=true;fragment.appendChild(img)}if(!img)fragment.appendChild(createText(rawText,false));img=null}if(modified){if(i<text.length){fragment.appendChild(createText(text.slice(i),true))}subnode.parentNode.replaceChild(fragment,subnode)}}return node}function parseString(str,options){return replace(str,function(rawText){var ret=rawText,iconId=grabTheRightIcon(rawText),src=options.callback(iconId,options),attrib,attrname;if(iconId&&src){ret="<img ".concat('class="',options.className,'" ','draggable="false" ','alt="',rawText,'"',' src="',src,'"');attrib=options.attributes(rawText,iconId);for(attrname in attrib){if(attrib.hasOwnProperty(attrname)&&attrname.indexOf("on")!==0&&ret.indexOf(" "+attrname+"=")===-1){ret=ret.concat(" ",attrname,'="',escapeHTML(attrib[attrname]),'"')}}ret=ret.concat("/>")}return ret})}function replacer(m){return escaper[m]}function returnNull(){return null}function toSizeSquaredAsset(value){return typeof value==="number"?value+"x"+value:value}function fromCodePoint(codepoint){var code=typeof codepoint==="string"?parseInt(codepoint,16):codepoint;if(code<65536){return fromCharCode(code)}code-=65536;return fromCharCode(55296+(code>>10),56320+(code&1023))}function parse(what,how){if(!how||typeof how==="function"){how={callback:how}}return(typeof what==="string"?parseString:parseNode)(what,{callback:how.callback||defaultImageSrcGenerator,attributes:typeof how.attributes==="function"?how.attributes:returnNull,base:typeof how.base==="string"?how.base:twemoji.base,ext:how.ext||twemoji.ext,size:how.folder||toSizeSquaredAsset(how.size||twemoji.size),className:how.className||twemoji.className,onerror:how.onerror||twemoji.onerror})}function replace(text,callback){return String(text).replace(re,callback)}function test(text){re.lastIndex=0;var result=re.test(text);re.lastIndex=0;return result}function toCodePoint(unicodeSurrogates,sep){var r=[],c=0,p=0,i=0;while(i<unicodeSurrogates.length){c=unicodeSurrogates.charCodeAt(i++);if(p){r.push((65536+(p-55296<<10)+(c-56320)).toString(16));p=0}else if(55296<=c&&c<=56319){p=c}else{r.push(c.toString(16))}}return r.join(sep||"-")}}();
+/* harmony default export */ __webpack_exports__["default"] = (twemoji);
+
+
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"list-group-item list-group-item-action list-autocomplete linkable\" url=\"/app/edit/<?= this._id ?>\">\n  <span>\n    <span class=\"h6\"><?- this.name ?></span>\n    <? if (this.short) { ?>\n      <span class=\"px-1 text-muted\">-</span>\n      <span class=\"h6 text-muted\"><?= this.short ?></span>\n    <? } ?>\n\n  </span>\n  <button class=\"btn-link btn-sm btn\">Edit</button>\n</div>\n";
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var tw = __webpack_require__(159).default || __webpack_require__(159);
+
+var markdown = function markdown(paragraph) {
+  var prevent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  paragraph = paragraph.replace(/</g, '&lt;');
+  paragraph = paragraph.replace(/>/g, '&gt;');
+  console.log(prevent);
+  if (!prevent.lists && !prevent.everything) {
+    paragraph = paragraph.replace(/\n\n((\* | +\* )[^\n]+)/gm, '\n\n<ul class="pl-3 mb-0">\n$1');
+    paragraph = paragraph.replace(/(\*[^\n]+)\n *\n/gm, '$1\n</ul>\n\n');
+    paragraph = paragraph.replace(/\n\n((1\. | +1\. )[^\n]+)/gm, '\n\n<ol class="pl-3">\n$1');
+    paragraph = paragraph.replace(/([1-9]+\.[^\n]+)\n *\n/gm, '$1\n</ol>\n\n');
+  }
+  paragraph = paragraph.split('\n');
+  paragraph.forEach(function (l, line) {
+    paragraph[line] = l.trim();
+    if (!prevent.everything) {
+      if (!prevent.lists) paragraph[line] = paragraph[line].replace(/^([1-9]+\. |\* )(.+)/, '<li>$2</li>');
+
+      if (!prevent.bold) paragraph[line] = paragraph[line].replace(/\*\*([^*]+)\*\*/g, '<span class="font-weight-bold">$1</span>');
+      if (!prevent.italic) paragraph[line] = paragraph[line].replace(/\*([^*]+)\*/g, '<span class="font-italic">$1</span>');
+      if (!prevent.strike) paragraph[line] = paragraph[line].replace(/\~\~([^~]+)\~\~/g, '<s>$1</s>');
+
+      if (!prevent.headings) {
+        paragraph[line] = paragraph[line].replace(/^#{1}([^#]+)/, '<div class="h1">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^#{2}([^#]+)/, '<div class="h2">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^#{3}([^#]+)/, '<div class="h3">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^#{4}([^#]+)/, '<div class="h4">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^#{5}([^#]+)/, '<div class="h5">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^#{6}([^#]+)/, '<div class="h6">$1</div>');
+        paragraph[line] = paragraph[line].replace(/^-{3,}$/, '<hr />');
+        paragraph[line] = paragraph[line].replace(/^={3,}$/, '<hr style="border-width: 3px" />');
+      }
+      if (!prevent.images) paragraph[line] = paragraph[line].replace(/!\[([^\]]+)\]\(([^\)]+)\)/g, '<img src="$2" alt="$1" class="img-fluid"/>');
+      if (!prevent.links) paragraph[line] = paragraph[line].replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
+    }
+    paragraph[line] = paragraph[line].replace(/javascript:/g, '!!!!');
+    paragraph[line] = paragraph[line].replace(/vbscript:/g, '!!!!');
+    paragraph[line] = paragraph[line].replace(/data:/g, '!!!!');
+  });
+  paragraph = paragraph.join('\n');
+  paragraph = paragraph.replace(/(<\/ul>|<\/ol>)\n{2,}/gm, '$1</br>');
+  paragraph = paragraph.replace(/\n{2,}/gm, '</br></br>');
+  paragraph = tw.parse(paragraph);
+  return paragraph;
+};
+
+module.exports = markdown;
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function clamp(num, min, max) {
+  return Math.min(Math.max(num, min), max);
+}
+
+function strchunk(str, amount) {
+  return str.match(new RegExp('.{1,' + amount + '}', 'g'));
+}
+
+function hex(num) {
+  var pad = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
+  return num.toString(16).padStart(pad, 0);
+}
+
+function dehex(num) {
+  var amount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
+  return strchunk(num, amount).map(function (chunk) {
+    return parseInt(chunk, 16);
+  });
+}
+
+function percent(num) {
+  var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
+  return (num * 100).toFixed(decimals) + '%';
+}
+
+function RGBtoHEX(r, g, b) {
+  return '' + hex(r) + hex(g) + hex(b);
+}
+
+function HSBtoRGB(h, s, b) {
+  var toHex = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  var r, g, b, i, f, p, q, t;
+  if (arguments.length === 1) {
+    s = h.s, b = h.b, h = h.h;
+  }
+  i = Math.floor(h * 6);
+  f = h * 6 - i;
+  p = b * (1 - s);
+  q = b * (1 - f * s);
+  t = b * (1 - (1 - f) * s);
+  switch (i % 6) {
+    case 0:
+      r = b, g = t, b = p;break;
+    case 1:
+      r = q, g = b, b = p;break;
+    case 2:
+      r = p, g = b, b = t;break;
+    case 3:
+      r = p, g = q, b = b;break;
+    case 4:
+      r = t, g = p, b = b;break;
+    case 5:
+      r = b, g = p, b = q;break;
+  }
+  var v = function v(x) {
+    return Math.round(x * 255);
+  };
+  if (toHex) return '' + hex(v(r)) + hex(v(g)) + hex(v(b));
+  return [v(r), v(g), v(b)];
+}
+
+function RGBtoHSB(r, g, b) {
+  r /= 255;g /= 255;b /= 255;
+  var rr,
+      gg,
+      bb,
+      h,
+      s,
+      v = Math.max(r, g, b),
+      diff = v - Math.min(r, g, b),
+      diffc = function diffc(c) {
+    return (v - c) / 6 / diff + 1 / 2;
+  };
+
+  if (diff == 0) h = s = 0;else {
+    s = diff / v;
+    rr = diffc(r);
+    gg = diffc(g);
+    bb = diffc(b);
+
+    if (r === v) h = bb - gg;else if (g === v) h = 1 / 3 + rr - bb;else if (b === v) h = 2 / 3 + gg - rr;
+
+    if (h < 0) h++;else if (h > 1) h--;
+  }
+  return [h, s, v];
+}
+
+function html(html) {
+  var div = document.createElement('div');
+  div.innerHTML = html.trim();
+  return div.firstChild;
+}
+function style(id, css) {
+  var style = document.createElement('style');
+  style.id = id;
+  style.textContent = css.trim();
+  return style;
+}
+function setData(el, obj) {
+  Object.keys(obj).forEach(function (key) {
+    el.dataset[key] = obj[key];
+  });
+}
+
+function disableselect(e) {
+  e.preventDefault();
+}
+
+var ColorPicker = function () {
+  function ColorPicker() {
+    var _this = this;
+
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, ColorPicker);
+
+    this.$ = document.createElement('div');
+    this.$.className = 'color-picker';
+    this.$.appendChild(html('\n      <div class="color-picker-internals">\n        <div class="cp">\n          <div class="cpp"></div>\n        </div>\n        <div class="hp">\n          <div class="hpp"></div>\n        </div>\n      </div>\n\n    '));
+    this.$.options = {
+      width: parseInt(options.width || 100),
+      height: parseInt(options.height || 100),
+      unit: options.unit || 'px',
+      hex: options.hex || '#000000'
+    };
+    setData(this.$, options);
+    this.$data = {
+      changingHue: false,
+      h: 0,
+      s: 0,
+      b: 0
+    };
+    this.$cb = function () {
+      return null;
+    };
+    this.$.onColorChange = this.onColorChange.bind(this);
+    this.$.cp = this.$.querySelector('.cp');
+    this.$.pointer = this.$.querySelector('.cpp');
+    this.$.hp = this.$.querySelector('.hp');
+    this.$.hpp = this.$.querySelector('.hpp');
+    this.$el = this.$.cp;
+    if (!document.getElementById('color-picker-style')) this.addStyleSheet();
+    this.$.cp.addEventListener('mousedown', function (e) {
+      window.addEventListener('selectstart', disableselect);
+      _this.$.mouseIsDown = true;
+      _this.$el = _this.$.cp;
+      if (_this.mousedown) _this.mousedown(e);
+    });
+    this.$.hp.addEventListener('mousedown', function (e) {
+      window.addEventListener('selectstart', disableselect);
+      _this.$.mouseIsDown = true;
+      _this.$el = _this.$.hp;
+      if (_this.mousedown) _this.mousedown(e);
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!_this.$.mouseIsDown) return;
+      if (_this.mousemove) _this.mousemove(e);
+    });
+    window.addEventListener('mouseup', function (e) {
+      window.removeEventListener('selectstart', disableselect);
+      _this.$.mouseIsDown = false;
+      if (_this.mouseup) _this.mouseup(e);
+    });
+    this.setCoordsFromHex(this.$.options.hex);
+  }
+
+  _createClass(ColorPicker, [{
+    key: 'create',
+    value: function create() {
+      return this.$;
+    }
+  }, {
+    key: 'mousedown',
+    value: function mousedown(e) {
+      var _this2 = this;
+
+      this.$el.getMouseCoords = function (e) {
+        var coords = _this2.$el.getBoundingClientRect();
+        var doc = document.documentElement;
+        var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+        var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        return {
+          x: clamp(e.pageX - coords.x - left, 0, coords.width) / coords.width,
+          y: clamp(e.pageY - coords.y - top, 0, coords.height) / coords.height
+        };
+      };
+
+      this.$el.style.cursor = 'default';
+      if (this.$el.isSameNode(this.$.cp)) {
+        this.getHexFromCoords(this.$el.getMouseCoords(e).x, this.$el.getMouseCoords(e).y);
+      }
+      if (this.$el.isSameNode(this.$.hp)) {
+        this.getHueFromCoord(this.$el.getMouseCoords(e).x);
+      }
+    }
+  }, {
+    key: 'mousemove',
+    value: function mousemove(e) {
+      this.$el.style.cursor = 'pointer';
+      if (this.$el.isSameNode(this.$.cp)) {
+        this.$data.y = 1 - this.$el.getMouseCoords(e).y;
+        this.getHexFromCoords(this.$el.getMouseCoords(e).x, this.$el.getMouseCoords(e).y);
+      }
+      if (this.$el.isSameNode(this.$.hp)) {
+        this.getHueFromCoord(this.$el.getMouseCoords(e).x);
+      }
+    }
+  }, {
+    key: 'mouseup',
+    value: function mouseup(e) {
+      this.$el.style.cursor = 'default';
+      this.$data.changingHue = false;
+    }
+  }, {
+    key: 'getHexFromCoords',
+    value: function getHexFromCoords(x, y) {
+      var fireEvent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+      var coord = this.$data.changingHue ? 1 - y : y;
+      this.$data.b = this.$data.changingHue ? y : 1 - y;
+      this.$data.s = x;
+      this.$.pointer.style.left = percent(x);
+      this.$.pointer.style.top = percent(coord);
+      this.$.options.hex = HSBtoRGB(this.$data.h, this.$data.s, this.$data.b, true);
+      if (fireEvent) this.fire();
+    }
+  }, {
+    key: 'getHueFromCoord',
+    value: function getHueFromCoord(x) {
+      var fireEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      this.$data.changingHue = true;
+      this.$.hpp.style.left = percent(x);
+      this.$data.h = x;
+      this.$.cp.style.backgroundColor = '#' + HSBtoRGB(this.$data.h, 1, 1, true);
+      this.getHexFromCoords(this.$data.s, this.$data.b, fireEvent);
+      this.$data.changingHue = fireEvent;
+      // this.$.options.hex = HSBtoRGB(0, x, 1 - y, true)
+    }
+  }, {
+    key: 'setCoordsFromHex',
+    value: function setCoordsFromHex(hex) {
+      if (hex.startsWith('#')) hex = hex.slice(1);
+      if (hex.length === 3) hex = hex.split('').map(function (x) {
+        return x + x;
+      }).join('');
+      var hsb = RGBtoHSB.apply(undefined, _toConsumableArray(dehex(hex)));
+      this.$data.h = hsb[0];
+      this.$data.s = hsb[1];
+      this.$data.b = 1 - hsb[2];
+      this.getHexFromCoords(this.$data.s, this.$data.b, false);
+      this.getHueFromCoord(this.$data.h, false);
+      this.fire();
+    }
+  }, {
+    key: 'fire',
+    value: function fire() {
+      this.$cb(this.$);
+    }
+  }, {
+    key: 'onColorChange',
+    value: function onColorChange(cb) {
+      this.$cb = cb;
+    }
+  }, {
+    key: 'addStyleSheet',
+    value: function addStyleSheet() {
+      document.head.appendChild(style('color-picker-style', '\n      .color-picker {\n\n      }\n      .color-picker-internals {\n        height: ' + (this.$.options.height + this.$.options.height / 10 + this.$.options.height / 20) + this.$.options.unit + ';\n        width: ' + this.$.options.width + this.$.options.unit + ';\n        display: block;\n        position: relative;\n      }\n      .cp {\n        width: ' + this.$.options.width + this.$.options.unit + ';\n        height: ' + this.$.options.height + this.$.options.unit + ';\n        cursor: default;\n        float: left;\n        background-color: red;\n        position: relative;\n        background-image: -moz-linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);\n        background-image: -webkit-linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);\n        background-image: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);\n      }\n      .cp:after {\n        content: "";\n        display: block;\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background-image: -moz-linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);\n        background-image: -webkit-linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);\n        background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);\n      }\n\n      .cpp {\n        width: ' + Math.min(this.$.options.height, this.$.options.width) / 20 + this.$.options.unit + ';\n        height: ' + Math.min(this.$.options.height, this.$.options.width) / 20 + this.$.options.unit + ';\n        border: 1px solid #fff;\n        border-radius: 50%;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        box-shadow: 0px 0px 0px 1px black;\n        z-index: 1;\n      }\n      .hp {\n        height: ' + this.$.options.height / 10 + this.$.options.unit + ';\n        width: ' + this.$.options.width + this.$.options.unit + ';\n        position: absolute;\n        bottom: 0;\n        cursor: default;\n        background: -moz-linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 17%, rgba(0,255,0,1) 33%, rgba(0,255,255,1) 50%, rgba(0,0,255,1) 66%, rgba(255,0,255,1) 83%, rgba(255,0,0,1) 100%);\n        background: -webkit-linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 17%, rgba(0,255,0,1) 33%, rgba(0,255,255,1) 50%, rgba(0,0,255,1) 66%, rgba(255,0,255,1) 83%, rgba(255,0,0,1) 100%);\n        background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 17%, rgba(0,255,0,1) 33%, rgba(0,255,255,1) 50%, rgba(0,0,255,1) 66%, rgba(255,0,255,1) 83%, rgba(255,0,0,1) 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff0000",endColorstr="#ff0000",GradientType=1);\n      }\n      .hpp {\n        position: absolute;\n        width: ' + this.$.options.height / 35 + this.$.options.unit + ';\n        height: 110%;\n        display: block;\n        border: 2px solid white;\n        box-shadow: 0px 0px 0px 2px black;\n        border-radius: 30px;\n        top: 50%;\n        left: 76%;\n        transform: translate(-50%, -50%);\n      }\n    '));
+    }
+  }]);
+
+  return ColorPicker;
+}();
+
+(function () {
+  document.querySelectorAll('.color-picker').forEach(function (node) {
+    var c = node.className;
+    var colorpicker = new ColorPicker(node.dataset).create();
+    node.parentNode.replaceChild(colorpicker, node);
+    colorpicker.className = node.className;
+    // r.className = c
+  });
+})();
 
 /***/ })
 /******/ ]);

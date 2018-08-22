@@ -7,36 +7,49 @@ function render(path, data={}) {
   })
 }
 
-function autocomplete(obj) {
-  return {
-    highlightMatches: true,
-    source: obj.source,
-    asLocal: true,
-    customLabel: 'name',
-    template: render(obj.template),
-    hint: true,
-    empty: false,
-    limit: 5,
-    callback: obj.callback
-  }
-}
+// function autocomplete(obj) {
+//   console.log($(this), this);
+//   return {
+//     highlightMatches: true,
+//     source: obj.source,
+//     asLocal: true,
+//     customLabel: 'name',
+//     template: render(obj.template),
+//     hint: true,
+//     empty: false,
+//     limit: 5,
+//     callback: obj.callback
+//   }
+// }
 
-$(document).ready(function () {
-  $('.auto-download').autocompleter(autocomplete({
-      source: '/download/json',
-      template: 'autocomplete-download',
-      callback(value, index, selected) {
-        console.log(value, index, selected);
-        var el = $(this).parent().find('input')
-        if (selected && el.attr('id') === 'ipa-redirect') {
-          window.location.href = "/download/edit/" + selected._id
-        }
-        else if (selected && el.attr('id') === 'add-ipa-version') {
-          $('#app-ipas').append(render('addipaversion', selected))
-          el.val('')
-        }
-      }
-  }))
+// $(document).ready(function () {
+//   $('.auto-download').autocompleter(autocomplete({
+//       source: '/download/json',
+//       template: 'autocomplete-download',
+//       callback(value, index, selected) {
+//         console.log(value, index, selected);
+//         var el = $(this).parent().find('input')
+//         if (selected && el.attr('id') === 'ipa-redirect') {
+//           window.location.href = "/download/edit/" + selected._id
+//         }
+//         else if (selected && el.attr('id') === 'add-ipa-version') {
+//           $('#app-ipas').append(render('addipaversion', selected))
+//           el.val('')
+//         }
+//       }
+//   }))
+// })
+
+$('.autocomplete').each(function () {
+  console.log($(this).find('.autocomplete-results')[0], $(this));
+  new Autocomplete($(this)[0])
+      .settings({
+        results: $(this).find('.autocomplete-results')[0],
+        input: $(this).find('input')[0],
+      })
+      .match((item, query) => item[$(this).data('search')].toLowerCase().includes(query.toLowerCase()))
+      .template(require('../templates/' + $(this).data('template') + '.html'), {delimiter: '?'})
+      .init()
 })
 
 $(window).scroll(function (e) {
@@ -105,6 +118,7 @@ $('#ipa-form').on('submit', function (e) {
 
 var pullToRefresh = false
 $(document).on('touchmove', function (e) {
+  if ($('body').hasClass('modal-open')) return
   if (document.body.scrollTop < 10) {
     $('#refresher').css({
       'margin-top': `${parseInt(document.body.scrollTop)}px`,
@@ -136,3 +150,11 @@ $(document).on('touchend', function (e) {
   })
   if (pullToRefresh) window.location.reload()
 })
+
+
+grecaptcha.ready(function() {
+  grecaptcha.execute('6LcrSWsUAAAAAH9-Cioqf2RB5fpD3lX8DDm2oRHq', {action: 'action_name'})
+  .then(function(token) {
+    console.log(token);
+  });
+});

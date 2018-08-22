@@ -6,4 +6,5 @@ module.exports = {
   Ipa: mongoose.model('Ipa', require('./ipa')),
   Reaction: mongoose.model('Reaction', require('./reaction')),
   Comment: mongoose.model('Comment', require('./comment')),
+  Article: mongoose.model('Article', require('./article')),
 }

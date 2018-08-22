@@ -17,38 +17,38 @@
          method="post"
          params='{"value": "😍", "id": "<?= id ?>"}'
          redirect>
-      <span class="h5 m-0"><i class="emoji smile-heart"></i></span>
-      <div class="text-muted small"><?= $reactions['😍'].count ?></div>
+      <?- tw('😍') ?>
+      <div class="text-muted small ml-1"><?= $reactions['😍'].count ?></div>
     </div>
   <!-- </div> -->
   <!-- <div class="col-3 px-1"> -->
-    <div class="ml-2 rating rounded linkable <?= $reactions['🙂'].selected ?>"
+    <div class="ml-1 rating rounded linkable <?= $reactions['🙂'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
          params='{"value": "🙂", "id": "<?= id ?>"}'
          redirect>
-      <span class="h5 m-0"><i class="emoji smile-slight"></i></span>
-      <div class="text-muted small"><?= $reactions['🙂'].count ?></div>
+      <?- tw('🙂') ?>
+      <div class="text-muted small ml-1"><?= $reactions['🙂'].count ?></div>
     </div>
   <!-- </div> -->
   <!-- <div class="col-3 px-1"> -->
-    <div class="ml-2 rating rounded linkable <?= $reactions['😕'].selected ?>"
+    <div class="ml-1 rating rounded linkable <?= $reactions['😕'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
          params='{"value": "😕", "id": "<?= id ?>"}'
          redirect>
-      <span class="h5 m-0"><i class="emoji confused"></i></span>
-      <div class="text-muted small"><?= $reactions['😕'].count ?></div>
+      <?- tw('😕') ?>
+      <div class="text-muted small ml-1"><?= $reactions['😕'].count ?></div>
     </div>
   <!-- </div> -->
   <!-- <div class="col-3 px-1"> -->
-    <div class="ml-2 rating rounded linkable <?= $reactions['😡'].selected ?>"
+    <div class="ml-1 rating rounded linkable <?= $reactions['😡'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
          params='{"value": "😡", "id": "<?= id ?>"}'
          redirect>
-      <span class="h5 m-0"><i class="emoji pouting"></i></span>
-      <div class="text-muted small"><?= $reactions['😡'].count ?></div>
+      <?- tw('😡') ?>
+      <div class="text-muted small ml-1"><?= $reactions['😡'].count ?></div>
     </div>
   <!-- </div> -->
 

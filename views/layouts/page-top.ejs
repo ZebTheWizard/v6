@@ -1,6 +1,6 @@
 <?- include('header') ?>
 <body>
-  
+
 <div id="loading" class="page-hidden">
   <i class="fal fa-spinner fa-pulse"></i>
   <div class="ml-2">Loading...</div>
@@ -29,6 +29,9 @@
       <div class="label">Search</div>
     </div>
   </div>
-  <div id="pages">
-    <div id="page-login" class="push-up popover"></div>
-  </div>
+
+  <? if (!user) { ?>
+    <div id="pages">
+      <div id="page-login" class="push-up popover"></div>
+    </div>
+  <? } ?>

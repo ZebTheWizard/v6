@@ -1,0 +1,11 @@
+<div class="list-group-item list-group-item-action list-autocomplete linkable" url="/app/edit/<?= this._id ?>">
+  <span>
+    <span class="h6"><?- this.name ?></span>
+    <? if (this.short) { ?>
+      <span class="px-1 text-muted">-</span>
+      <span class="h6 text-muted"><?= this.short ?></span>
+    <? } ?>
+
+  </span>
+  <button class="btn-link btn-sm btn">Edit</button>
+</div>

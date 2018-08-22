@@ -8,22 +8,40 @@
 
   <div class="row">
     <? for (i=0; i < 6; i++) { ?>
-      <div class="col-md-4 p-2">
-        <div class="article-closed">
-          <img height="450" src="https://images.unsplash.com/photo-1527168027773-0cc890c4f42e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0dded43cb34de5723402e844260fab81&auto=format&fit=crop&w=1650&q=80" alt="">
-          <div class="article-content">
-            <div class="p-3 darken-drop">
-              <div class="h5 text-white" style="opacity: 0.8;">Behind The Scenes</div>
-              <div class="h3 text-white m-0 font-weight-bold">A Handmade Tale</div>
-            </div>
-            <div class="p-3 darken-drop">
-              <div class=" h6 text-white">Turning physical craft into digital play.</div>
-            </div>
+      <?- include('../layouts/article-thumbnail', {
+        image: 'https://images.unsplash.com/photo-1527168027773-0cc890c4f42e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0dded43cb34de5723402e844260fab81&auto=format&fit=crop&w=1650&q=80',
+        title: 'A Handmade Tale',
+        title2: 'Behind The Scenes',
+        subtitle: 'Turning physical craft into digital play.'
+      }) ?>
+    <? } ?>
+  </div>
 
+  <div class="modal p-0" id="article-modal" tabindex="-1" role="dialog">
+    <div class="mx-auto col-12 p-0 bg-white">
+      <button type="button" class="article-close" data-modal-close="article-modal" aria-label="Close">
+          <i class="fal fa-times fa-lg"></i>
+      </button>
+      <div class="article-open float-lg-left m-lg-3">
+        <img height="400" src="https://images.unsplash.com/photo-1527168027773-0cc890c4f42e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0dded43cb34de5723402e844260fab81&auto=format&fit=crop&w=1650&q=80" alt="">
+        <div class="article-header">
+          <div class="p-3 darken-drop">
+            <div class="h5 text-white" style="opacity: 0.8;">Behind The Scenes</div>
+            <div class="h3 text-white m-0 font-weight-bold">A Handmade Tale</div>
+          </div>
+          <div class="p-3 darken-drop">
+            <div class=" h6 text-white">Turning physical craft into digital play.</div>
           </div>
         </div>
       </div>
-    <? } ?>
+      <div class="article-body p-3">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Senectus et netus et malesuada fames. Faucibus nisl tincidunt eget nullam non nisi. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis. Eget nullam non nisi est sit amet. Vel eros donec ac odio tempor orci dapibus. Posuere ac ut consequat semper. Euismod quis viverra nibh cras pulvinar mattis. Ipsum a arcu cursus vitae congue. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Ac turpis egestas integer eget aliquet. Nisl nisi scelerisque eu ultrices vitae auctor eu. In hac habitasse platea dictumst quisque. Sed turpis tincidunt id aliquet risus feugiat in ante metus. Vitae et leo duis ut diam quam. Tortor at risus viverra adipiscing at in tellus. Et magnis dis parturient montes nascetur ridiculus mus mauris vitae.
+
+        Donec ultrices tincidunt arcu non sodales. Cursus metus aliquam eleifend mi in nulla posuere. Imperdiet dui accumsan sit amet nulla facilisi morbi tempus. Purus ut faucibus pulvinar elementum integer enim neque volutpat. Vitae aliquet nec ullamcorper sit amet risus nullam. Sapien pellentesque habitant morbi tristique. Sodales ut eu sem integer vitae justo eget magna. Molestie at elementum eu facilisis sed odio morbi. Lorem ipsum dolor sit amet consectetur. Faucibus a pellentesque sit amet. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Risus ultricies tristique nulla aliquet enim tortor. Diam quam nulla porttitor massa id neque. Laoreet non curabitur gravida arcu. Non curabitur gravida arcu ac tortor dignissim. Id consectetur purus ut faucibus pulvinar elementum. Lectus sit amet est placerat in egestas. Aliquam id diam maecenas ultricies mi eget mauris. Porttitor massa id neque aliquam vestibulum morbi blandit cursus risus. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit amet.
+
+        Pharetra sit amet aliquam id diam maecenas. Eget lorem dolor sed viverra ipsum nunc. Quis viverra nibh cras pulvinar. Massa tincidunt dui ut ornare lectus sit amet est. Pellentesque nec nam aliquam sem et tortor consequat. Eu tincidunt tortor aliquam nulla facilisi. Diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. A lacus vestibulum sed arcu non odio euismod lacinia. Suspendisse faucibus interdum posuere lorem ipsum dolor. Ac tincidunt vitae semper quis lectus nulla at volutpat. Facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Lorem sed risus ultricies tristique nulla aliquet enim tortor at. Ac odio tempor orci dapibus ultrices in. Massa placerat duis ultricies lacus sed turpis tincidunt id. Sapien pellentesque habitant morbi tristique senectus et netus et. Amet purus gravida quis blandit. Purus in massa tempor nec feugiat nisl pretium fusce id.
+      </div>
+    </div>
   </div>
 
 
