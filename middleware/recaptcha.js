@@ -5,6 +5,7 @@ var config = require('../config')
 
 
 router.use(function(req, res, next) {
+  if(config.get('env') === 'development') return next()
   var queryString = params => Object.keys(params).map(key => key + '=' + params[key]).join('&')
   var data = {
     secret: config.get('recaptcha.secret'),

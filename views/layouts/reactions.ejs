@@ -10,8 +10,9 @@
   }
 ?>
 
+<!-- TODO: make reactions use ajax -->
+
 <div class="mt-3 d-flex">
-  <!-- <div class="col-3 px-1"> -->
     <div class="rating rounded linkable <?= $reactions['😍'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
@@ -20,8 +21,6 @@
       <?- tw('😍') ?>
       <div class="text-muted small ml-1"><?= $reactions['😍'].count ?></div>
     </div>
-  <!-- </div> -->
-  <!-- <div class="col-3 px-1"> -->
     <div class="ml-1 rating rounded linkable <?= $reactions['🙂'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
@@ -30,8 +29,6 @@
       <?- tw('🙂') ?>
       <div class="text-muted small ml-1"><?= $reactions['🙂'].count ?></div>
     </div>
-  <!-- </div> -->
-  <!-- <div class="col-3 px-1"> -->
     <div class="ml-1 rating rounded linkable <?= $reactions['😕'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
@@ -40,8 +37,6 @@
       <?- tw('😕') ?>
       <div class="text-muted small ml-1"><?= $reactions['😕'].count ?></div>
     </div>
-  <!-- </div> -->
-  <!-- <div class="col-3 px-1"> -->
     <div class="ml-1 rating rounded linkable <?= $reactions['😡'].selected ?>"
          url="/react/<?= type ?>"
          method="post"
@@ -50,49 +45,4 @@
       <?- tw('😡') ?>
       <div class="text-muted small ml-1"><?= $reactions['😡'].count ?></div>
     </div>
-  <!-- </div> -->
-
 </div>
-
-<!-- <div class="card rating w-100 d-none" style="max-width: 18rem;" id="rating-select">
-  <div class="card-header small bg-white px-2 py-2 d-flex justify-content-between align-items-center">
-    What do you think?
-    <button class="btn-close"><span>×</span></button>
-  </div>
-
-  <div class="card-body px-4 py-2 d-flex justify-content-center rating-selected">
-    <div class="p-2 text-center emoji-wrapper selected">
-      <div class="h1 m-0">
-        <i class="emoji hover-increase-size smile-heart"></i>
-      </div>
-      <div class="small text-muted">Love!</div>
-    </div>
-
-    <div class="p-2 text-center emoji-wrapper">
-      <div class="h1 m-0">
-        <i class="emoji hover-increase-size smile-slight"></i>
-      </div>
-      <div class="small text-muted">Like.</div>
-    </div>
-
-    <div class="p-2 text-center emoji-wrapper">
-      <div class="h1 m-0">
-        <i class="emoji hover-increase-size confused"></i>
-      </div>
-      <div class="small text-muted">Disike.</div>
-    </div>
-
-    <div class="p-2 text-center emoji-wrapper">
-      <div class="h1 m-0">
-        <i class="emoji hover-increase-size angry"></i>
-      </div>
-      <div class="small text-muted">Hate!</div>
-    </div>
-
-
-  </div>
-  <div class="card-footer small bg-white px-2 py-2">
-    ⚡️ by IOS Haven
-  </div>
-</div>
--->

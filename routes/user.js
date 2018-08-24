@@ -3,7 +3,6 @@ var router = express.Router();
 var auth = require('../auth/middleware');
 var argon2 = require('argon2')
 
-/* GET users listing. */
 router.use(auth)
 
 router.get('/', function(req, res) {
@@ -19,7 +18,6 @@ router.post('/update/username', function (req, res) {
 
 router.post('/update/password', async function (req, res) {
   var match = await argon2.verify(req.user.password, req.body['current-password'])
-  // console.log(match);
   if (match && req.body.password === req.body['confirm-password']) {
     var hash = await argon2.hash(req.body.password)
   } else {

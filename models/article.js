@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const traits = require('../lib/mongoose-traits')
+const { traits, types } = require('../lib/mongoose')
 
 const Model = new Schema({
   "title": String,
   "title2": String,
   "subtitle": String,
   "content": String,
+  "published": Object,
+  "published_at": types.date(false),
   "image": {
     "thumbnail": String,
     "original": String,
@@ -30,12 +32,11 @@ const Model = new Schema({
     ref: 'User'
   },
 
-  "created_at": traits.date()
+  "created_at": types.date()
 }, { toJSON: { virtuals: true }})
 
 
-
-
+traits.isPublishable(Model)
 traits.hasReactions(Model, 'Article')
 traits.hasComments(Model, mongoose)
 // traits.hasDates(Model, mongoose)

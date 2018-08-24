@@ -1,17 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport')
 var Model = require('../models')
-var { App, Ipa, Reaction, User } = Model
-var dsession = require('../lib/download-uuid')
+var { App, Article } = Model
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('pages/landing', {title: ''});
 });
 
-router.get('/today', function(req, res, next) {
-  res.render('pages/today', {title: 'Today'});
+router.get('/today', async function(req, res, next) {
+  var articles = await Article.find({ published: { $exists: true}}).populate('reactions').exec()
+  return res.render('pages/today', {
+    title: 'Today',
+    articles
+  });
 });
 
 router.get('/games', function(req, res, next) {
@@ -36,18 +38,6 @@ router.get('/updates', function(req, res, next) {
 router.get('/search', function(req, res, next) {
   res.render('pages/search', {title: 'Search'});
 });
-
-// router.post('/react/app', async function (req, res) {
-//   var app = await App.findById(req.body.id).exec()
-//   var reaction = await Reaction.add({
-//     user: req.user,
-//     model: app,
-//     emoji: req.body.value
-//   })
-//   return res.redirect('back')
-// })
-
-
 
 
 module.exports = router;

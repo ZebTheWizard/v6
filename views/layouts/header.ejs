@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><?= config.get('title') ?>
-      <? if (typeof title !== 'undefined') { ?>
+      <? if (typeof title !== 'undefined' && title) { ?>
         | <?= title ?>
       <? } ?>
     </title>

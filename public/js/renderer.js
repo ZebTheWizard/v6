@@ -60,30 +60,401 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 99);
+/******/ 	return __webpack_require__(__webpack_require__.s = 114);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 100:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(115);
 
-window.cookie = __webpack_require__(148);
-window.Time = __webpack_require__(149);
-window.Size = __webpack_require__(150);
-window.Autocomplete = __webpack_require__(152);
-
-window.getDate = function () {
-  var d = new Date();
-  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate();
-};
 
 /***/ }),
 
-/***/ 138:
+/***/ 115:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+window.cookie = __webpack_require__(116);
+window.Time = __webpack_require__(117);
+window.Size = __webpack_require__(118);
+window.Autocomplete = __webpack_require__(119);
+
+/***/ }),
+
+/***/ 116:
+/***/ (function(module, exports) {
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Cookie = function () {
+  function Cookie() {
+    var _this = this;
+
+    _classCallCheck(this, Cookie);
+
+    var cookies = document.cookie.split(';');
+    this.cookies = this.cookies || new Object();
+    cookies.forEach(function (cookie) {
+      var _cookie$split = cookie.split('='),
+          _cookie$split2 = _slicedToArray(_cookie$split, 2),
+          key = _cookie$split2[0],
+          value = _cookie$split2[1];
+
+      _this.cookies[key] = value;
+    });
+  }
+
+  _createClass(Cookie, [{
+    key: 'get',
+    value: function get(key) {
+      return this.cookies[key];
+    }
+  }]);
+
+  return Cookie;
+}();
+
+module.exports = new Cookie();
+
+/***/ }),
+
+/***/ 117:
+/***/ (function(module, exports) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Time = function () {
+  var $$ = new WeakMap();
+
+  var Time = function (_Date) {
+    _inherits(Time, _Date);
+
+    function Time() {
+      _classCallCheck(this, Time);
+
+      var _this = _possibleConstructorReturn(this, (Time.__proto__ || Object.getPrototypeOf(Time)).call(this));
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      $$.set(_this, {
+        date: new (Function.prototype.bind.apply(Date, [null].concat(args)))()
+      });
+      return _this;
+    }
+
+    _createClass(Time, [{
+      key: "date",
+      value: function date() {
+        return $$.get(this).date;
+      }
+    }, {
+      key: "ago",
+      value: function ago() {
+        return Time.msToAgo(Time.now() - this.date());
+      }
+    }], [{
+      key: "format",
+      value: function format($date, string) {
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var date = $date.getDate();
+        var day = $date.getDay();
+        var month = $date.getMonth();
+        var year = $date.getFullYear();
+        /* 
+        var string = string.split('d').join(date.padStart(2, '0'))
+        var string = string.split('D').join(days[day].substring(0,3)) 
+        */
+        var string = string.split('$j').join(date);
+        var string = string.split('$l').join(days[day]);
+        var string = string.split('$F').join(months[month]);
+        /*
+        var string = string.split('N').join(() => day ? day : 7)
+        var string = string.split('S').join(() => {
+          var d = date < 4 ? date : 4
+          var ord = ['st', 'nd', 'rd', 'th']
+          return ord[d-1]
+        })
+        var string = string.split('w').join(day)
+        */
+        var string = string.split('$M').join(months[month].substring(0, 3));
+        var string = string.split('$Y').join(year);
+        return string;
+      }
+    }, {
+      key: "msToAgo",
+      value: function msToAgo(ms) {
+        var _ = function _(a, b) {
+          return Math.floor(a / b);
+        };
+        var t = { year: 31104000000, month: 2592000000, week: 604800000, day: 86400000, hour: 3600000, minute: 60000, second: 1000 };
+        if (ms < t.second) return this.config.now;
+        if (ms < t.minute) return _(ms, t.second) + this.config.s;
+        if (ms < t.hour) return _(ms, t.minute) + this.config.m;
+        if (ms < t.day) return _(ms, t.hour) + this.config.h;
+        if (ms < t.week) return _(ms, t.day) + this.config.d;
+        if (ms < t.month) return _(ms, t.week) + this.config.w;
+        if (ms < t.year) return this.format(new Date(this.now() - ms), this.config.month);
+        return this.format(new Date(this.now() - ms), this.config.year);
+      }
+    }]);
+
+    return Time;
+  }(Date);
+
+  Time.config = {
+    now: "just now",
+    s: "s",
+    m: "m",
+    h: "h",
+    d: "d",
+    w: "w",
+    month: "M j",
+    year: "j M Y"
+  };
+
+  return Time;
+}();
+
+module.exports = Time;
+
+/***/ }),
+
+/***/ 118:
+/***/ (function(module, exports) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// TODO: add method for integers
+
+var Size = function () {
+  var $$ = new WeakMap();
+
+  var Size = function () {
+    function Size(int) {
+      _classCallCheck(this, Size);
+
+      $$.set(this, {
+        int: int
+      });
+    }
+
+    _createClass(Size, [{
+      key: 'toInt',
+      value: function toInt() {
+        return $$.get(this).int;
+      }
+    }, {
+      key: 'toString',
+      value: function toString() {
+        var decimals = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+        var i = this.toInt();
+        var s = Size.config.sizes;
+        var a = Size.config.abbr;
+        var t = function t(num, abbr) {
+          return num.toFixed(decimals) + ' ' + abbr.toUpperCase();
+        };
+        if (i < s.kb) return t(i, a.b);
+        if (i < s.mb) return t(i / s.kb, a.kb);
+        if (i < s.gb) return t(i / s.mb, a.mb);
+        if (i < s.tb) return t(i / s.gb, a.gb);
+        if (i < s.pb) return t(i / s.tb, a.tb);
+        return t(i / s.pb, a.pb);
+      }
+    }]);
+
+    return Size;
+  }();
+
+  Size.config = {
+    sizes: {
+      b: 1,
+      kb: 1000,
+      mb: 1000000,
+      gb: 1000000000,
+      tb: 1000000000000,
+      pb: 1000000000000000
+    },
+    abbr: {
+      b: 'b',
+      kb: 'kb',
+      mb: 'mb',
+      gb: 'gb',
+      tb: 'tb',
+      pb: 'pb'
+    }
+
+  };
+
+  return Size;
+}();
+
+module.exports = Size;
+
+/***/ }),
+
+/***/ 119:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ejs = __webpack_require__(14);
+
+var Autocomplete = function () {
+  var $$ = new WeakMap();
+  var $n = function $n(el, where, html) {
+    el.insertAdjacentHTML(where, html);
+    if (where === 'beforeend') return el.previousSibling;
+    if (where === 'afterbegin') return el.firstElementChild;
+    if (where === 'beforeend') return el.lastElementChild;
+    if (where === 'afterend') return el.nextSibling;
+    return null;
+  };
+
+  var Autocomplete = function () {
+    function Autocomplete(el) {
+      _classCallCheck(this, Autocomplete);
+
+      this.$el = el;
+      this.$options = Object.assign(new Object(), el.dataset);
+      this.$options.insert = this.$options.insert || 'beforeend';
+      this.$options.search = this.$options.search || 'name';
+      this.$options.limit = this.$options.limit || 10;
+      this.$options.results = el.querySelector('.autocomplete-results');
+      this.$options.input = el.querySelector('input');
+      this.$options.data = function (data) {
+        return data;
+      };
+      this.$data = {};
+      this.$results = {};
+      this.$match = function () {
+        return true;
+      };
+    }
+
+    _createClass(Autocomplete, [{
+      key: 'init',
+      value: function init() {
+        var _this = this;
+
+        return new Promise(function (resolve, reject) {
+          console.log(_this.$options);
+          _this.fetchSource().then(function (data) {
+            _this.$data = _this.$options.data(data);
+            if (!_this.$options.input) {
+              _this.$options.input = $n(_this.$el, 'afterbegin', '<input type="text" />');
+            }
+            if (!_this.$options.results) {
+              _this.$options.results = $n(_this.$el, _this.$options.insert, '<div class="autocomplete-results"></div>');
+            }
+            _this.watch();
+            resolve(_this);
+          });
+        });
+      }
+    }, {
+      key: 'watch',
+      value: function watch() {
+        this.$el.oninput = this.change.bind(this);
+      }
+    }, {
+      key: 'change',
+      value: function change(e) {
+        var _this2 = this;
+
+        var query = this.$options.input.value;
+        if (!query) {
+          this.$options.results.innerHTML = '';
+          return;
+        }
+        this.$results = JSON.parse(JSON.stringify(this.$data.filter(function (item) {
+          return _this2.$match(item, query);
+        }).slice(0, this.$options.limit)));
+
+        this.$options.results.innerHTML = '';
+        console.log(this.$results);
+        this.$results.forEach(function (item) {
+          var obj = item;
+          var props = _this2.$options.search.split('.');
+          var prop = props.pop();
+          props.forEach(function (p) {
+            item[p] = item[p] || {};
+            obj = item[p];
+          });
+          obj[prop] = obj[prop].split(new RegExp(query, 'i')).join('<span class="autocomplete-match">' + query + '</span>');
+          // console.log(item);
+          _this2.$options.results.insertAdjacentHTML('beforeend', ejs.render(_this2.$template, item, Object.assign({
+            context: item
+          }, _this2.$templateOptions)));
+        });
+      }
+    }, {
+      key: 'template',
+      value: function template(val, options) {
+        this.$template = val;
+        this.$templateOptions = options;
+        return this;
+      }
+    }, {
+      key: 'match',
+      value: function match(cb) {
+        this.$match = cb;
+        return this;
+      }
+    }, {
+      key: 'settings',
+      value: function settings(val) {
+        this.$options = Object.assign(this.$options, val);
+        return this;
+      }
+    }, {
+      key: 'fetchSource',
+      value: function fetchSource() {
+        var _this3 = this;
+
+        return new Promise(function (resolve, reject) {
+          fetch(_this3.$options.source).then(function (res) {
+            return res.json();
+          }).then(function (json) {
+            return resolve(json);
+          }).catch(function (err) {
+            return reject(err);
+          });
+        });
+      }
+    }]);
+
+    return Autocomplete;
+  }();
+
+  return Autocomplete;
+}();
+
+module.exports = Autocomplete;
+
+/***/ }),
+
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -550,377 +921,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       module.exports = { name: "ejs", description: "Embedded JavaScript templates", keywords: ["template", "engine", "ejs"], version: "2.5.7", author: "Matthew Eernisse <mde@fleegix.org> (http://fleegix.org)", contributors: ["Timothy Gu <timothygu99@gmail.com> (https://timothygu.github.io)"], license: "Apache-2.0", main: "./lib/ejs.js", repository: { type: "git", url: "git://github.com/mde/ejs.git" }, bugs: "https://github.com/mde/ejs/issues", homepage: "https://github.com/mde/ejs", dependencies: {}, devDependencies: { browserify: "^13.0.1", eslint: "^4.14.0", "git-directory-deploy": "^1.5.1", istanbul: "~0.4.3", jake: "^8.0.0", jsdoc: "^3.4.0", "lru-cache": "^4.0.1", mocha: "^3.0.2", "uglify-js": "^2.6.2" }, engines: { node: ">=0.10.0" }, scripts: { test: "jake test", lint: 'eslint "**/*.js" Jakefile', coverage: "istanbul cover node_modules/mocha/bin/_mocha", doc: "jake doc", devdoc: "jake doc[dev]" } };
     }, {}] }, {}, [1])(1);
 });
-
-/***/ }),
-
-/***/ 148:
-/***/ (function(module, exports) {
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Cookie = function () {
-  function Cookie() {
-    var _this = this;
-
-    _classCallCheck(this, Cookie);
-
-    var cookies = document.cookie.split(';');
-    this.cookies = this.cookies || new Object();
-    cookies.forEach(function (cookie) {
-      var _cookie$split = cookie.split('='),
-          _cookie$split2 = _slicedToArray(_cookie$split, 2),
-          key = _cookie$split2[0],
-          value = _cookie$split2[1];
-
-      _this.cookies[key] = value;
-    });
-  }
-
-  _createClass(Cookie, [{
-    key: 'get',
-    value: function get(key) {
-      return this.cookies[key];
-    }
-  }]);
-
-  return Cookie;
-}();
-
-module.exports = new Cookie();
-
-/***/ }),
-
-/***/ 149:
-/***/ (function(module, exports) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Time = function () {
-  var $$ = new WeakMap();
-
-  var Time = function (_Date) {
-    _inherits(Time, _Date);
-
-    function Time() {
-      _classCallCheck(this, Time);
-
-      var _this = _possibleConstructorReturn(this, (Time.__proto__ || Object.getPrototypeOf(Time)).call(this));
-
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      $$.set(_this, {
-        date: new (Function.prototype.bind.apply(Date, [null].concat(args)))()
-      });
-      return _this;
-    }
-
-    _createClass(Time, [{
-      key: "date",
-      value: function date() {
-        return $$.get(this).date;
-      }
-    }, {
-      key: "ago",
-      value: function ago() {
-        return Time.msToAgo(Time.now() - this.date());
-      }
-    }], [{
-      key: "format",
-      value: function format($date, string) {
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var date = $date.getDate();
-        var day = $date.getDay();
-        var month = $date.getMonth();
-        var year = $date.getFullYear();
-        // var string = string.split('d').join(date.padStart(2, '0'))
-        // var string = string.split('D').join(days[day].substring(0,3))
-        var string = string.split('j').join(date);
-        // var string = string.split('l').join(days[day])
-        // var string = string.split('N').join(() => day ? day : 7)
-        // var string = string.split('S').join(() => {
-        //   var d = date < 4 ? date : 4
-        //   var ord = ['st', 'nd', 'rd', 'th']
-        //   return ord[d-1]
-        // })
-        // var string = string.split('w').join(day)
-        var string = string.split('M').join(months[month].substring(0, 3));
-        var string = string.split('Y').join(year);
-        return string;
-      }
-    }, {
-      key: "msToAgo",
-      value: function msToAgo(ms) {
-        var _ = function _(a, b) {
-          return Math.floor(a / b);
-        };
-        var t = { year: 31104000000, month: 2592000000, week: 604800000, day: 86400000, hour: 3600000, minute: 60000, second: 1000 };
-        if (ms < t.second) return this.config.now;
-        if (ms < t.minute) return _(ms, t.second) + this.config.s;
-        if (ms < t.hour) return _(ms, t.minute) + this.config.m;
-        if (ms < t.day) return _(ms, t.hour) + this.config.h;
-        if (ms < t.week) return _(ms, t.day) + this.config.d;
-        if (ms < t.month) return _(ms, t.week) + this.config.w;
-        if (ms < t.year) return this.format(new Date(this.now() - ms), this.config.month);
-        return this.format(new Date(this.now() - ms), this.config.year);
-      }
-    }]);
-
-    return Time;
-  }(Date);
-
-  Time.config = {
-    now: "just now",
-    s: "s",
-    m: "m",
-    h: "h",
-    d: "d",
-    w: "w",
-    month: "M j",
-    year: "j M Y"
-  };
-
-  return Time;
-}();
-
-module.exports = Time;
-
-/***/ }),
-
-/***/ 150:
-/***/ (function(module, exports) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Size = function () {
-  var $$ = new WeakMap();
-
-  var Size = function () {
-    function Size(int) {
-      _classCallCheck(this, Size);
-
-      $$.set(this, {
-        int: int
-      });
-    }
-
-    _createClass(Size, [{
-      key: 'toInt',
-      value: function toInt() {
-        return $$.get(this).int;
-      }
-    }, {
-      key: 'toString',
-      value: function toString() {
-        var decimals = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-        var i = this.toInt();
-        var s = Size.config.sizes;
-        var a = Size.config.abbr;
-        var t = function t(num, abbr) {
-          return num.toFixed(decimals) + ' ' + abbr.toUpperCase();
-        };
-        if (i < s.kb) return t(i, a.b);
-        if (i < s.mb) return t(i / s.kb, a.kb);
-        if (i < s.gb) return t(i / s.mb, a.mb);
-        if (i < s.tb) return t(i / s.gb, a.gb);
-        if (i < s.pb) return t(i / s.tb, a.tb);
-        return t(i / s.pb, a.pb);
-      }
-    }]);
-
-    return Size;
-  }();
-
-  Size.config = {
-    sizes: {
-      b: 1,
-      kb: 1000,
-      mb: 1000000,
-      gb: 1000000000,
-      tb: 1000000000000,
-      pb: 1000000000000000
-    },
-    abbr: {
-      b: 'b',
-      kb: 'kb',
-      mb: 'mb',
-      gb: 'gb',
-      tb: 'tb',
-      pb: 'pb'
-    }
-
-  };
-
-  return Size;
-}();
-
-module.exports = Size;
-
-/***/ }),
-
-/***/ 152:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ejs = __webpack_require__(138);
-
-var Autocomplete = function () {
-  var $$ = new WeakMap();
-  var $n = function $n(el, where, html) {
-    el.insertAdjacentHTML(where, html);
-    if (where === 'beforeend') return el.previousSibling;
-    if (where === 'afterbegin') return el.firstElementChild;
-    if (where === 'beforeend') return el.lastElementChild;
-    if (where === 'afterend') return el.nextSibling;
-    return null;
-  };
-
-  var Autocomplete = function () {
-    function Autocomplete(el) {
-      _classCallCheck(this, Autocomplete);
-
-      this.$el = el;
-      this.$options = Object.assign(new Object(), el.dataset);
-      this.$options.insert = this.$options.insert || 'beforeend';
-      this.$options.search = this.$options.search || 'name';
-      this.$options.limit = this.$options.limit || 10;
-      this.$options.results = el.querySelector('.autocomplete-results');
-      this.$options.input = el.querySelector('input');
-      this.$options.data = function (data) {
-        return data;
-      };
-      this.$data = {};
-      this.$results = {};
-      this.$match = function () {
-        return true;
-      };
-    }
-
-    _createClass(Autocomplete, [{
-      key: 'init',
-      value: function init() {
-        var _this = this;
-
-        return new Promise(function (resolve, reject) {
-          console.log(_this.$options);
-          _this.fetchSource().then(function (data) {
-            _this.$data = _this.$options.data(data);
-            if (!_this.$options.input) {
-              _this.$options.input = $n(_this.$el, 'afterbegin', '<input type="text" />');
-            }
-            if (!_this.$options.results) {
-              _this.$options.results = $n(_this.$el, _this.$options.insert, '<div class="autocomplete-results"></div>');
-            }
-            _this.watch();
-            resolve(_this);
-          });
-        });
-      }
-    }, {
-      key: 'watch',
-      value: function watch() {
-        this.$el.oninput = this.change.bind(this);
-      }
-    }, {
-      key: 'change',
-      value: function change(e) {
-        var _this2 = this;
-
-        var query = this.$options.input.value;
-        if (!query) {
-          this.$options.results.innerHTML = '';
-          return;
-        }
-        this.$results = JSON.parse(JSON.stringify(this.$data.filter(function (item) {
-          return _this2.$match(item, query);
-        }).slice(0, this.$options.limit)));
-
-        this.$options.results.innerHTML = '';
-        console.log(this.$results);
-        this.$results.forEach(function (item) {
-          var obj = item;
-          var props = _this2.$options.search.split('.');
-          var prop = props.pop();
-          props.forEach(function (p) {
-            item[p] = item[p] || {};
-            obj = item[p];
-          });
-          obj[prop] = obj[prop].split(new RegExp(query, 'i')).join('<span class="autocomplete-match">' + query + '</span>');
-          // console.log(item);
-          _this2.$options.results.insertAdjacentHTML('beforeend', ejs.render(_this2.$template, item, Object.assign({
-            context: item
-          }, _this2.$templateOptions)));
-        });
-      }
-    }, {
-      key: 'template',
-      value: function template(val, options) {
-        this.$template = val;
-        this.$templateOptions = options;
-        return this;
-      }
-    }, {
-      key: 'match',
-      value: function match(cb) {
-        this.$match = cb;
-        return this;
-      }
-    }, {
-      key: 'settings',
-      value: function settings(val) {
-        this.$options = Object.assign(this.$options, val);
-        return this;
-      }
-    }, {
-      key: 'fetchSource',
-      value: function fetchSource() {
-        var _this3 = this;
-
-        return new Promise(function (resolve, reject) {
-          fetch(_this3.$options.source).then(function (res) {
-            return res.json();
-          }).then(function (json) {
-            return resolve(json);
-          }).catch(function (err) {
-            return reject(err);
-          });
-        });
-      }
-    }]);
-
-    return Autocomplete;
-  }();
-
-  return Autocomplete;
-}();
-
-module.exports = Autocomplete;
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(100);
-
 
 /***/ })
 

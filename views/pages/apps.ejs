@@ -13,7 +13,6 @@
       var app = apps[i]?>
       <? if (i % 3 == 0) { ?>
         <div class="item-grouping col-12 col-md-6 col-lg-4 px-1">
-        <!-- <div class="item-grouping col-12 col-md-6 col-lg-4"> -->
       <? } ?>
       <div class="item app linkable" url="/app/<?= app.id ?>">
         <div class="item-media"><img src="<?= app.ipas[0].iconUrl ?>" alt="app icon"></div>
@@ -30,11 +29,11 @@
         </div>
       </div>
       <? if (i % 3 == 2) { ?>
-        </div> <!-- closing item grouping -->
+        </div> 
       <? } ?>
     <? } ?>
     <? if (20 % 3 != 0) { ?>
-      </div> <!-- closing item grouping -->
+      </div>
     <? } ?>
   </div>
 

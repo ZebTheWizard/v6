@@ -11,6 +11,3 @@ router(function (router, queue) {
   ]
 })
 
-// preload(function (loadPage) {
-//   loadPage('login', '/spa/login')
-// })

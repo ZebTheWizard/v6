@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const traits = require('../lib/mongoose-traits')
+const { traits, types } = require('../lib/mongoose')
 
 const Model = new Schema({
   "name": String,
@@ -30,13 +30,12 @@ const Model = new Schema({
     "screenshots": [String],
     "languages": [String]
   },
-  "created_at": traits.date()
+  "created_at": types.date()
 }, { toJSON: { virtuals: true }})
 
 
 traits.hasReactions(Model, 'App')
 traits.hasComments(Model, mongoose)
-// traits.hasDates(Model, mongoose)
 
 
 module.exports = Model

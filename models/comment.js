@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const traits = require('../lib/mongoose-traits')
+const { traits, types } = require('../lib/mongoose')
 
 const Model = new Schema({
   "content": String,
@@ -14,7 +14,7 @@ const Model = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  "created_at": traits.date()
+  "created_at": types.date()
 })
 
 traits.hasReactions(Model, 'Comment')

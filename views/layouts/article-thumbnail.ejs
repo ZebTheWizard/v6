@@ -1,13 +1,14 @@
-<div class="col-md-4 p-2" data-modal="article-modal">
+<div class="col-md-4 p-2" 
+     data-modal="article-modal-<?= _id ?>" >
   <div class="article-closed">
-    <img height="400" src="<?= image ?>" alt="">
+    <img height="400" src="<?= image.thumbnail ?>" alt="">
     <div class="article-header">
-      <div class="p-3 darken-drop">
-        <div class="h5 text-white" style="opacity: 0.8;"><?= title2 ?></div>
-        <div class="h3 text-white m-0 font-weight-bold"><?= title ?></div>
+      <div class="p-3">
+        <div class="h5" style="opacity: 0.8; color: #<?= colors.title2 ?>"><?= title2 ?></div>
+        <div class="h3 m-0 font-weight-bold" style="color: #<?= colors.title ?>"><?= title ?></div>
       </div>
-      <div class="p-3 darken-drop">
-        <div class=" h6 text-white"><?= subtitle ?></div>
+      <div class="p-3">
+        <div class=" h6" style="color: #<?= colors.subtitle ?>"><?= subtitle ?></div>
       </div>
     </div>
   </div>

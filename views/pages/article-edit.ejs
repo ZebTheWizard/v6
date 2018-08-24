@@ -14,7 +14,7 @@
       <div class="mx-auto mt-4 col-12 col-md-6">
         <div class="card p-2 bg-gradient-light" >
           <div class="card-body">
-            <form action="/article/update" method="post">
+            <form action="/article/update" method="post" enctype="multipart/form-data">
               <input type="hidden" name="id" value="<?= article.id ?>">
               <h4>Modify App Data</h4>
 
@@ -62,7 +62,7 @@
 
               <div class="form-group">
                 <label for="upload">Upload Image</label>
-                <input type="file" class="form-control-file" id="upload" name="upload">
+                <input type="file" class="form-control-file" id="article-upload" name="upload">
               </div>
 
               <div class="form-group">
@@ -70,6 +70,7 @@
                 <textarea class="form-control" id="content" name="content"><?= article.content ?></textarea>
               </div>
               <div class="g-recaptcha" data-sitekey="6LezP2sUAAAAAD_-1WnpwZhsq_F5dR_giaM4fo00"></div>
+              <button type="button" class="btn btn-outline-primary mt-3" data-modal="publishConfirmation">Publish <i class="far fa-save"></i></button>
               <button type="submit" class="btn btn-primary mt-3 shadow-sm">Save <i class="fas fa-check"></i></button>
             </form>
           </div>
@@ -77,19 +78,48 @@
       </div>
 
       <div class="mx-auto mt-4 col-12 col-md-6">
-        <div class="card p-2 bg-gradient-light">
-            <div class="article-closed">
-              <img height="400" src="<?= article.image.thumbnail || '/images/article-thumbnail.png' ?>" style="min-height: 400px" alt="">
-              <div class="article-header">
-                <div class="p-3">
-                  <div class="h5" style="opacity: 0.8;" data-bind="#title2" data-bind-color="#title2-color-input" ></div>
-                  <div class="h3 m-0 font-weight-bold" data-bind="#title" data-bind-color="#title-color-input"></div>
-                </div>
-                <div class="p-3">
-                  <div class=" h6" data-bind="#subtitle" data-bind-color="#subtitle-color-input"></div>
+        <div class="card bg-gradient-light">
+            <div class="card-body">
+              <div class="article-closed mx-auto">
+                <span class="img-helper"></span>
+                <img id="article-preview-image" class="w-100" src="<?= article.image.thumbnail || '/images/article-thumbnail.png' ?>"  alt="">
+                <div class="article-header">
+                  <div class="p-3">
+                    <div class="h5" style="opacity: 0.8;" data-bind="#title2" data-bind-color="#title2-color-input" ></div>
+                    <div class="h3 m-0 font-weight-bold" data-bind="#title" data-bind-color="#title-color-input"></div>
+                  </div>
+                  <div class="p-3">
+                    <div class=" h6" data-bind="#subtitle" data-bind-color="#subtitle-color-input"></div>
+                  </div>
                 </div>
               </div>
+              <div data-bind="#content" data-options="{}" class="mt-4"></div>
             </div>
+
+        </div>
+      </div>
+
+      <div class="modal fade" id="publishConfirmation" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Continue Publishing?</h5>
+              <button type="button" class="close" data-modal-close="publishConfirmation" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to publish? Once you click publish the action cannot be undone and any unsaved changes will be lost.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-modal-close="publishConfirmation">No</button>
+              <form action="/article/publish" method="post">
+                <input type="hidden" name="id" value="<?= article.id ?>">
+                <button type="submit" class="btn btn-primary">Yes, Publish!</button>
+              </form>
+              
+            </div>
+          </div>
         </div>
       </div>
 

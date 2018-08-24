@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth/middleware');
-var { App, Ipa, Rating } = require('../models')
-var multer = require('multer')()
-var Socket = require('../lib/sockets')
+var { App, Ipa } = require('../models')
 var uuid = require('uuid/v4')
 var axios = require('axios');
 var dsession = require('../lib/download-uuid')
@@ -11,9 +9,6 @@ var Dropbox = require('../config/dropbox')
 var plist = require('simple-plist')
 var s3 = require('../config/s3')
 var config = require('../config')
-// var axios = require('axios-jsonp-pro')
-
-// router.use(auth)
 
 router.post('/new', auth, function(req, res) {
   var app = new App()
@@ -61,7 +56,7 @@ router.post('/update', auth, async function(req, res) {
     }
 
   }
-  // return res.json(req.body)
+
   if (data.resultCount > 0) {
     var itunes = data.results[0]
     var app = await App.findByIdAndUpdate(req.body.id, {
@@ -82,7 +77,7 @@ router.post('/update', auth, async function(req, res) {
       }
     }, {new: true}).exec()
   } else {
-    var app = await App.findByIdAndUpdate(req.body.id, {
+    await App.findByIdAndUpdate(req.body.id, {
       $set: {
         name: req.body.name,
         ipas: req.body.ipas,

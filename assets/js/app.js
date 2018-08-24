@@ -7,41 +7,7 @@ function render(path, data={}) {
   })
 }
 
-// function autocomplete(obj) {
-//   console.log($(this), this);
-//   return {
-//     highlightMatches: true,
-//     source: obj.source,
-//     asLocal: true,
-//     customLabel: 'name',
-//     template: render(obj.template),
-//     hint: true,
-//     empty: false,
-//     limit: 5,
-//     callback: obj.callback
-//   }
-// }
-
-// $(document).ready(function () {
-//   $('.auto-download').autocompleter(autocomplete({
-//       source: '/download/json',
-//       template: 'autocomplete-download',
-//       callback(value, index, selected) {
-//         console.log(value, index, selected);
-//         var el = $(this).parent().find('input')
-//         if (selected && el.attr('id') === 'ipa-redirect') {
-//           window.location.href = "/download/edit/" + selected._id
-//         }
-//         else if (selected && el.attr('id') === 'add-ipa-version') {
-//           $('#app-ipas').append(render('addipaversion', selected))
-//           el.val('')
-//         }
-//       }
-//   }))
-// })
-
 $('.autocomplete').each(function () {
-  console.log($(this).find('.autocomplete-results')[0], $(this));
   new Autocomplete($(this)[0])
       .settings({
         results: $(this).find('.autocomplete-results')[0],
@@ -151,10 +117,16 @@ $(document).on('touchend', function (e) {
   if (pullToRefresh) window.location.reload()
 })
 
+function readImage(input, cb) {
+  if (!input.files || !input.files[0]) return
+  var reader = new FileReader()
+  reader.onload = cb
+  reader.readAsDataURL(input.files[0])
+}
 
-grecaptcha.ready(function() {
-  grecaptcha.execute('6LcrSWsUAAAAAH9-Cioqf2RB5fpD3lX8DDm2oRHq', {action: 'action_name'})
-  .then(function(token) {
-    console.log(token);
-  });
-});
+$('#article-upload').change(function (e) {
+  readImage(this, function (e) {
+    $('#article-preview-image').attr('src', e.target.result)
+  })
+})
+

@@ -7,15 +7,10 @@ require('isomorphic-fetch');
 var Dropbox = require('../config/dropbox')
 var s3 = require('../config/s3')
 var uuid = require('uuid/v4')
-// var mime = require('mime')
-var fs = require('mz/fs')
 var config = require('../config')
 var extract = require('../extract')
 var Socket = require('../lib/sockets')
 var socket = new Socket
-var dsession = require('../lib/download-uuid')
-
-// var www = require('../bin/www')
 
 
 router.use(auth)
@@ -35,12 +30,12 @@ function bufferToStream(buffer, size) {
 }
 
 function setProgress (data) {
-  return new Promise( async (resolve, reject) => {
+  return new Promise( async resolve => {
     var id = data.id
     delete data.id
     if (data.status === 'done') var query = { $unset: { progress: 1}}
     else var query = { $set: { progress: data}}
-    var ipa = await Ipa.findByIdAndUpdate(id, query, {new: true}).exec()
+    await Ipa.findByIdAndUpdate(id, query, {new: true}).exec()
     await socket.room(`/download/edit/${id}`).message(data).of('ipa-progress-message').send()
     resolve()
   });
@@ -64,10 +59,10 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
-  // return res.json([req.body, req.file])
+  return res.json([req.body, req.file])
   await setProgress({ status: 'validating data', amount: 100, id: req.body.id })
 
-  var download = await Ipa.findByIdAndUpdate(req.body.id, {
+  await Ipa.findByIdAndUpdate(req.body.id, {
     $set: {
       name: req.body.name,
     }
@@ -83,16 +78,10 @@ router.post('/update', multer.single('upload'), async function(req, res) {
       }
 
       try {
-        var { iconBinary, iconExtension, plist, ipapath } = await extract(req.file.buffer)
+        var { iconBinary, iconExtension, plist } = await extract(req.file.buffer)
       } catch (e) {
         return res.json(e)
       }
-
-      // console.log(plist);
-      // setTimeout(() => {
-      //   setProgress({ status: 'done', amount: 100, id: req.body.id,  reload: true })
-      // },2000)
-      // return
 
       var ipa = await Dropbox.uploadSession({
         stream: bufferToStream(req.file.buffer, 1 * 1000 * 1000), // 8mb chunks
@@ -113,7 +102,7 @@ router.post('/update', multer.single('upload'), async function(req, res) {
 
       try {
         await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })
-        var download = await Ipa.findByIdAndUpdate(req.body.id, {
+        await Ipa.findByIdAndUpdate(req.body.id, {
           $set: {
             displayName: plist.CFBundleDisplayName || plist.CFBundleName,
             version: plist.CFBundleShortVersionString || plist.CFBundleVersion || 'n/a',

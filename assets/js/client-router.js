@@ -1,6 +1,7 @@
 Route = require('route-parser')
 window.Mustache = require('mustache')
-// console.log(a);
+
+
 function route($route, cb) {
   var r = new Route($route)
   return new Promise(function(resolve, reject) {
@@ -38,15 +39,6 @@ function view(page) {
   $('#page-' + page).addClass('page-visible').removeClass('page-hidden')
   window.$hash = location.hash
 }
-
-// function checkPreload() {
-//   if (window.$pagesLoaded === window.$pagesToLoad) {
-//     window.$preloading = false
-//     $(window).trigger('hashchange')
-//     // $('#app').removeClass('page-hidden')
-//     // $('#loading').addClass('page-hidden')
-//   }
-// }
 
 backgroundLoad = function(name, url, data={}) {
   window.$pages = window.$pages || new Object

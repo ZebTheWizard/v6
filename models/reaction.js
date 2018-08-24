@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const traits = require('../lib/mongoose-traits')
+const { traits, types } = require('../lib/mongoose')
 
 const Model = new Schema({
   "user": {
@@ -10,7 +10,7 @@ const Model = new Schema({
   "for": String,
   "model": String,
   "emoji": String,
-  "created_at": traits.date()
+  "created_at": types.date()
 })
 
 Model.statics.validate = function (emoji) {

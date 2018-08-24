@@ -6,6 +6,25 @@
     </button>
   </div>
   <div class="card-body">
-    <div>Coming Soon...</div>
+    <?- include('../layouts/autocomplete', {
+      source: '/article/json',
+      template: 'autocomplete-app',
+      search: 'name',
+      limit: 5,
+      placeholder: 'Search Apps...'
+    }) ?>
+    <? if (articles.length > 0) { ?>
+      <div class="mt-4 mb-1">Recently Created</div>
+      <ul class="list-group">
+        <? articles.forEach(article => { ?>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>
+              <span class="h6"><?= article.title ?></span>
+            </span>
+            <a href="/article/edit/<?= article.id ?>">Edit</a>
+          </li>
+        <? }) ?>
+      </ul>
+    <? } ?>
   </div>
 </div>

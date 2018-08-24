@@ -1,3 +1,5 @@
+// TODO: add to npm
+
 function Sniddl(query) {
   var elements = document.querySelectorAll(query);
   var list = [];
@@ -45,8 +47,6 @@ Sniddl.set = function(query, key, value, init=false) {
     el.$sniddl.$data = el.$sniddl.$data || {}
     var old = el.$sniddl.$data;
     el.$sniddl.$data[key] = value
-    // if (el.$sniddl.onmount && init) window[el.$sniddl.onmount](el.$sniddl, el.$sniddl.$data, old)
-    // else if (el.$sniddl.onbind && !init) window[el.$sniddl.onbind](el.$sniddl, el.$sniddl.$data, old)
   }
 }
 
@@ -54,7 +54,6 @@ var alreadyWatchingDom = false
 
 Sniddl.init = function(query, options={}) {
   if (options.addCss) Sniddl.addCss(query);
-  // document.addEventListener('DOMContentLoaded', function () {
   var elements = document.querySelectorAll(query);
   if (!alreadyWatchingDom) {
     live('click', query, Sniddl.click)
@@ -98,7 +97,6 @@ Sniddl.click = function(e, s) {
     window.location = e.target.href
     return false
   }
-  // var s = this.$sniddl;
   if (!s.method) {
     console.log('trying to link url');
     if (s.blank) return window.open(s.url, '_blank')
@@ -129,7 +127,6 @@ function SniddlComponent(el, options) {
   this.removeAttributes('url data-url params data-params method data-method onerror data-onerror onsuccess data-onsuccess redirect data-redirect blank data-blank');
   if (this.params) this.params = JSON.parse(this.params);
   this.params = Object.assign(this.params || {}, this.data);
-  // this.el.onclick = this.click;
 }
 
 SniddlComponent.prototype.make = function() {

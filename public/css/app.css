@@ -19755,12 +19755,23 @@ body {
   z-index: 100;
 }
 
-.modal-open {
-  position: fixed;
+.has-modal-page {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
-.modal {
-  -webkit-overflow-scrolling: touch;
+.modal-open {
+  overflow: auto !important;
+  padding: 0 !important;
+}
+
+.modal .offset-title {
+  margin-top: 50px;
+}
+
+.modal.modal-page {
+  display: none;
+  position: static;
 }
 
 .h-100v {
@@ -20355,10 +20366,18 @@ a:hover {
   overflow: hidden;
   position: relative;
   max-width: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .article-closed {
   border-radius: 1rem;
+  max-width: 380px;
+  max-height: 400px;
 }
 
 .article-header {
