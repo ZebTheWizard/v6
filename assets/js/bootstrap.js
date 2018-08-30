@@ -24,7 +24,10 @@ try {
 
 $(document).ready(function () {
   scrollSnapPolyfill()
+  var scrolls = JSON.parse(sessionStorage.getItem('scroll-positions') || '{}')
+  $(window).scrollTop(scrolls[window.location.href] || 0)
 })
+
 
 $(window).on('hashchange load', function () {
   Sniddl.init('.linkable', {
@@ -42,4 +45,10 @@ $(document).on('click', 'a', function (e) {
   e.stopPropagation()
   window.location = $(this).attr('href')
   return false
+})
+
+$(window).on('pagehide unload', function (e) {
+  var scrolls = JSON.parse(sessionStorage.getItem('scroll-positions') || '{}')
+  scrolls[window.location.href] = $(window).scrollTop()
+  sessionStorage.setItem('scroll-positions', JSON.stringify(scrolls))
 })

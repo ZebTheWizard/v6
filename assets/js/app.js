@@ -136,7 +136,3 @@ $(document).on('click', '#add-ipa-to-app-trigger', function () {
   $('#app-ipas').append(render('addipaversion', $(this).data()))
   $('#add-ipa-to-app').val('').change()
 })
-
-window.reacted = function () {
-  console.log('reacted.....');
-}

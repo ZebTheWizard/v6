@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/json', async function(req, res) {
-  var [user] = await User.find({_id: req.user.id}).select('-password -__v -incompleteSignup').exec()
+  var [user] = await User.find({_id: req.user.id}).select('-__v -incompleteSignup').exec()
   return res.json(user)
 });
 

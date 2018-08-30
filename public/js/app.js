@@ -18273,10 +18273,6 @@ $(document).on('click', '#add-ipa-to-app-trigger', function () {
   $('#add-ipa-to-app').val('').change();
 });
 
-window.reacted = function () {
-  console.log('reacted.....');
-};
-
 /***/ }),
 /* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18309,6 +18305,8 @@ try {
 
 $(document).ready(function () {
   __WEBPACK_IMPORTED_MODULE_0_css_scroll_snap_polyfill___default()();
+  var scrolls = JSON.parse(sessionStorage.getItem('scroll-positions') || '{}');
+  $(window).scrollTop(scrolls[window.location.href] || 0);
 });
 
 $(window).on('hashchange load', function () {
@@ -18325,6 +18323,12 @@ $(document).on('click', 'a', function (e) {
   e.stopPropagation();
   window.location = $(this).attr('href');
   return false;
+});
+
+$(window).on('pagehide unload', function (e) {
+  var scrolls = JSON.parse(sessionStorage.getItem('scroll-positions') || '{}');
+  scrolls[window.location.href] = $(window).scrollTop();
+  sessionStorage.setItem('scroll-positions', JSON.stringify(scrolls));
 });
 
 /***/ }),
@@ -19324,13 +19328,11 @@ Sniddl.click = function (e, s) {
   e.stopPropagation();
 
   if (e.target.href) {
-    console.log('trying to link href');
     if (e.target.href) return window.open(e.target.href, e.target.target);
     window.location = e.target.href;
     return false;
   }
   if (!s.method) {
-    console.log('trying to link url');
     if (s.blank) return window.open(s.url, '_blank');
     window.location = s.url;
     return false;

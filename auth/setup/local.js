@@ -14,7 +14,7 @@ module.exports = new Strategy({
       done((new Error('Passwords do not match')))
     }
     console.log(typeof req.user.password);
-    var user = await User.findOne({ username }).exec()
+    var user = await User.findOne({ username }).select('+password').exec()
 
     if (user && typeof req.user.password !== 'undefined') { // user exists after 3rd party
       console.log('user exists after 3rd party');

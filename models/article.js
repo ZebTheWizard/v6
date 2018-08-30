@@ -38,7 +38,7 @@ const Model = new Schema({
 
 traits.isPublishable(Model)
 traits.hasReactions(Model, 'Article')
-traits.hasComments(Model, mongoose)
+traits.hasComments(Model, 'Article')
 // traits.hasDates(Model, mongoose)
 
 

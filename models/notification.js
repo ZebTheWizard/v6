@@ -21,7 +21,7 @@ const Model = new Schema({
     ref: 'User'
   },
   "created_at": types.date()
-})
+}, { toJSON: { virtuals: true }})
 
 Model.statics.validate = function (emoji) {
   var exceptedRatings = ['😍', '🙂', '😕', '😡']

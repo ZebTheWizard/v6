@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/today', async function(req, res, next) {
-  var articles = await Article.find({ published: { $exists: true}}).populate('reactions').exec()
+  var articles = await Article.find({ published: { $exists: true}}).exec()
   return res.render('pages/today', {
     title: 'Today',
     articles

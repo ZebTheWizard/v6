@@ -607,7 +607,7 @@ a:hover {
   }
 }
 
-button.article-close {
+.article-close {
     position: fixed;
     right: 2rem;
     top: 1rem;
@@ -619,6 +619,12 @@ button.article-close {
     align-items: center;
     justify-content: center;
     z-index: 100;
+    text-decoration: none;
+    color: black;
+    &:hover {
+      text-decoration: none;
+      color: black;
+    }
 }
 
 .well {

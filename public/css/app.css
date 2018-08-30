@@ -20442,7 +20442,7 @@ a:hover {
   opacity: 0;
 }
 
-button.article-close {
+.article-close {
   position: fixed;
   right: 2rem;
   top: 1rem;
@@ -20460,6 +20460,13 @@ button.article-close {
       -ms-flex-pack: center;
           justify-content: center;
   z-index: 100;
+  text-decoration: none;
+  color: black;
+}
+
+.article-close:hover {
+  text-decoration: none;
+  color: black;
 }
 
 .well {

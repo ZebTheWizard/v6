@@ -35,7 +35,7 @@ const Model = new Schema({
 
 
 traits.hasReactions(Model, 'App')
-traits.hasComments(Model, mongoose)
+traits.hasComments(Model, 'App')
 
 
 module.exports = Model

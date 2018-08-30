@@ -1,0 +1,38 @@
+<?- include('../layouts/header') ?>
+<div class="p-0 bg-white">
+  <div class="mx-auto col-12 p-0">
+    <a href="/today" class="article-close">
+      <i class="fal fa-times fa-lg"></i>
+    </a>
+    <div class="float-lg-left m-lg-3">
+      <div class="article-open d-flex d-sm-inline-block justify-content-center">
+        <img height="400" src="<?= article.image.thumbnail ?>" alt="">
+        <div class="article-header">
+          <div class="p-3">
+            <div class="h5" style="opacity: 0.8; color: #<?= article.colors.title2 ?>"><?= article.title2 ?></div>
+            <div class="h3 m-0 font-weight-bold" style="color: #<?= article.colors.title ?>"><?= article.title ?></div>
+          </div>
+          <div class="p-3">
+            <div class="h6" style="color: #<?= article.colors.subtitle ?>"><?= article.subtitle ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="article-body px-3 px-md-0 py-2 p-lg-3">
+      <div class="mb-2">
+        <?- include('../layouts/reactions', { type: 'article', id: article._id, reactions: article.reactions}) ?>
+      </div>
+      <div>
+        <?- markdown(article.content) ?>
+      </div>
+      <div>
+        <?- include('../layouts/comments', {
+          id: article._id,
+          type: 'article',
+          comments: article.comments
+        }) ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?- include('../layouts/footer') ?>

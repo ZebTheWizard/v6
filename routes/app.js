@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth/middleware');
-var { App, Ipa } = require('../models')
+var { App, Ipa, Comment } = require('../models')
 var uuid = require('uuid/v4')
 var axios = require('axios');
 var dsession = require('../lib/download-uuid')
@@ -119,9 +119,11 @@ router.get('/signed/:id', async function(req, res) {
 });
 
 router.get('/:id', async function (req, res) {
-  var app = await App.findById(req.params.id).populate({ path: 'ipas', options: {sort: {'version': -1}}}).populate('reactions').exec()
-  app.comments = await app.getComments().populate('user').populate('reactions').exec()
-
+  var app = await App.findById(req.params.id)
+    .populate({ path: 'ipas', options: {sort: {'version': -1}}})
+    .populate('reactions')
+    .populate({ path: 'comments', populate: ['user', 'reactions'] })
+    .exec()
   return res.render('pages/app-view', {
     title: app.name,
     app

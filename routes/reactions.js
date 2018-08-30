@@ -29,7 +29,7 @@ router.post('/comment', async function (req, res) {
     model: comment,
     emoji: req.body.value
   })
-  if (!exists && comment.user !== req.user._id) {
+  if (!exists && JSON.stringify(comment.user) !== JSON.stringify(req.user._id)) {
     await Notification.send(comment.user, {
       title: req.user.username + ' reacted to your comment ',
       invoker: req.user,
@@ -43,12 +43,21 @@ router.post('/comment', async function (req, res) {
 
 router.post('/article', async function (req, res) {
   var article = await Article.findById(req.body.id).exec()
-  await Reaction.add({
+  var [reaction, exists] = await Reaction.add({
     user: req.user,
     model: article,
     emoji: req.body.value
   })
-  return res.redirect('back')
+  if (!exists && JSON.stringify(article.user) !== JSON.stringify(req.user._id)) {
+    await Notification.send(article.user, {
+      title: req.user.username + ' reacted to your article ',
+      invoker: req.user,
+      link: `/article/${article._id}`,
+      body: `${article.content.substring(0,31)}${article.content.length > 30 ? '...' : ''} ${reaction.emoji}`,
+    })
+  }
+  var reactions = await Reaction.getReactionsForModel(req, reaction.for, reaction.model)
+  return res.json(reactions)
 })
 
 

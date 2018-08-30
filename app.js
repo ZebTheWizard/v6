@@ -62,7 +62,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(async function(id, done) {
-  var [user] = await User.find({_id: id}).select('-password -__v -incompleteSignup').exec()
+  var [user] = await User.find({_id: id}).exec()
   done(null, user)
   // User.findById(id, (err, user) => {
   //   done(err, user);

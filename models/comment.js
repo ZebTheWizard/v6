@@ -15,10 +15,10 @@ const Model = new Schema({
     ref: 'User'
   },
   "created_at": types.date()
-})
+}, { toJSON: { virtuals: true }})
 
 traits.hasReactions(Model, 'Comment')
-traits.hasComments(Model, mongoose)
+// traits.hasComments(Model, mongoose)
 // traits.hasDates(Model, mongoose)
 
 Model.statics.add = function (obj) { // {user, model, emoji}

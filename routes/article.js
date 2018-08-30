@@ -73,6 +73,16 @@ router.get('/json', async function(req, res) {
   res.json(articles)
 })
 
+router.get('/:id', auth, async function(req, res) {
+  var article = await Article.findById(req.params.id)
+    .populate('reactions')
+    .populate({ path: 'comments', populate: ['user', 'reactions'] })
+    .exec()
+  return res.render('pages/article-view', {
+    article
+  });
+});
+
 
 
 module.exports = router

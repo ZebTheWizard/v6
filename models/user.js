@@ -4,7 +4,10 @@ const { traits, types } = require('../lib/mongoose')
 
 const Model = new Schema({
   "username": String,
-  "password": String,
+  "password": {
+    type: String,
+    select: false,
+  },
   "avatar": String,
   "ratings": [{
     type: Schema.Types.ObjectId,

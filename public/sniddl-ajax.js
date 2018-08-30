@@ -92,13 +92,11 @@ Sniddl.click = function(e, s) {
   e.stopPropagation();
 
   if(e.target.href) {
-    console.log('trying to link href');
     if (e.target.href) return window.open(e.target.href, e.target.target)
     window.location = e.target.href
     return false
   }
   if (!s.method) {
-    console.log('trying to link url');
     if (s.blank) return window.open(s.url, '_blank')
     window.location = s.url
     return false
