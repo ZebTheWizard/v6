@@ -6,10 +6,10 @@ window.axios = require('axios');
 window.Sniddl = require('../../public/sniddl-ajax')
 window.$history = window.$history || []
 window.markdown = require('../../lib/markdown')
-var Socket = require('../../lib/sockets-client')
+window.SocketClient = require('../../lib/sockets-client')
 require('../../lib/colorpicker')
 
-window.socket = new Socket()
+window.socket = new SocketClient()
 socket.room(location.pathname).subscribe()
 
 try {
@@ -37,6 +37,7 @@ $(window).on('hashchange load', function () {
 
 
 $(document).on('click', 'a', function (e) {
+  if (!navigator.platform.match(/iPhone|iPod|iPad/)) return
   e.preventDefault()
   e.stopPropagation()
   window.location = $(this).attr('href')

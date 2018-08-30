@@ -61,10 +61,12 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  })
+passport.deserializeUser(async function(id, done) {
+  var [user] = await User.find({_id: id}).select('-password -__v -incompleteSignup').exec()
+  done(null, user)
+  // User.findById(id, (err, user) => {
+  //   done(err, user);
+  // })
 });
 // console.log(config.get('twitter.key'));
 

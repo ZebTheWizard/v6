@@ -44,9 +44,14 @@
 
               <div class="form-group">
                 <label for="name">Add IPA Version</label>
-                <div class="position-relative w-100">
-                  <input type="text" class="form-control auto-download" placeholder="Search IPAs..." id="add-ipa-version">
-                </div>
+                <?- include('../layouts/autocomplete', {
+                  source: '/download/json',
+                  template: 'autocomplete-add-ipa-to-app',
+                  search: 'name',
+                  limit: 5,
+                  placeholder: 'Search IPAs...',
+                  id: 'add-ipa-to-app'
+                }) ?>
                 <ul id="app-ipas" class="list-group mt-3">
                   <? app.ipas.forEach(download => { ?>
                     <li class="list-group-item list-group-item-light d-flex align-items-center justify-content-between" id="download-<?= download.id ?>">

@@ -1,0 +1,26 @@
+<?- include('../layouts/page-top', {tab: ''}) ?>
+<div class="container has-toolbar-bottom mb-5">
+  <?- include('../layouts/page-title', {fixed: true}) ?>
+
+  <div class="row">
+      <div class="mx-auto mt-4 col-12 d-flex">
+        <ul class="list-group w-100">
+          <? notifications.forEach(n => { ?>
+            <a class="list-group-item-action list-group-item d-flex align-items-center justify-content-between <?= n.unread ? 'list-group-item-primary' : '' ?>"
+                href="<?= n.link ?>">
+              <span>
+                <img class="rounded-circle" src="<?= n.invoker.avatar ?>" alt="" width="30" height="30">
+                <span class="ml-1 font-weight-bold"><?= n.title ?></span>
+                <span><?- tw(n.body) ?></span>
+              </span>
+
+              <span><?= n.created_at.ago() ?></span>
+            </a>
+          <? }) ?>
+        </ul>
+      </div>
+  </div>
+
+
+</div>
+<?- include('../layouts/page-bot') ?>

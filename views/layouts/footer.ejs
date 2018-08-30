@@ -6,5 +6,40 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script src="/js/app.js" charset="utf-8"></script>
 
+
+<? if (user) { ?>
+  <script>
+
+    (function() {
+      if ('Notification' in window) {
+        Notification.requestPermission()
+      }
+
+      var n = new SocketClient()
+      axios.post("/me/json")
+      .then(res => {
+        n.room('/notification/' + res.data._id).subscribe()
+        n.onMessage('notification', function (msg) {
+          if ('Notification' in window) {
+            var notification = new Notification(msg.data.title, { body: msg.data.body, icon: msg.data.invoker.avatar })
+            notification.onclick = function (e) {
+              e.preventDefault()
+              window.open('/me/notifications', '_blank')
+            }
+          }
+          var count = parseInt($('#notification-count').html()) || 0
+          $('#notification-count').html(count + 1)
+        })
+        return axios.get('/me/notifications/count')
+      })
+      .then(res => {
+        if (res.data < 1) return
+        $('#notification-count').html(res.data)
+      })
+    })()
+
+  </script>
+<? } ?>
+
 </body>
 </html>

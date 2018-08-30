@@ -12,37 +12,33 @@
 
 <!-- TODO: make reactions use ajax -->
 
-<div class="mt-3 d-flex">
-    <div class="rating rounded linkable <?= $reactions['😍'].selected ?>"
-         url="/react/<?= type ?>"
-         method="post"
-         params='{"value": "😍", "id": "<?= id ?>"}'
-         redirect>
+<div class="d-flex">
+    <div class="rating rounded <?= $reactions['😍'].selected ?>"
+         data-url="/react/<?= type ?>"
+         data-rating="😍"
+         data-id="<?= id ?>">
       <?- tw('😍') ?>
-      <div class="text-muted small ml-1"><?= $reactions['😍'].count ?></div>
+      <div class="text-muted small ml-1 rating-heart"><?= $reactions['😍'].count ?></div>
     </div>
-    <div class="ml-1 rating rounded linkable <?= $reactions['🙂'].selected ?>"
-         url="/react/<?= type ?>"
-         method="post"
-         params='{"value": "🙂", "id": "<?= id ?>"}'
-         redirect>
+    <div class="ml-1 rating rounded <?= $reactions['🙂'].selected ?>"
+         data-url="/react/<?= type ?>"
+         data-rating="🙂"
+         data-id="<?= id ?>">
       <?- tw('🙂') ?>
-      <div class="text-muted small ml-1"><?= $reactions['🙂'].count ?></div>
+      <div class="text-muted small ml-1 rating-smile"><?= $reactions['🙂'].count ?></div>
     </div>
-    <div class="ml-1 rating rounded linkable <?= $reactions['😕'].selected ?>"
-         url="/react/<?= type ?>"
-         method="post"
-         params='{"value": "😕", "id": "<?= id ?>"}'
-         redirect>
+    <div class="ml-1 rating rounded <?= $reactions['😕'].selected ?>"
+         data-url="/react/<?= type ?>"
+         data-rating="😕"
+         data-id="<?= id ?>">
       <?- tw('😕') ?>
-      <div class="text-muted small ml-1"><?= $reactions['😕'].count ?></div>
+      <div class="text-muted small ml-1 rating-frown"><?= $reactions['😕'].count ?></div>
     </div>
-    <div class="ml-1 rating rounded linkable <?= $reactions['😡'].selected ?>"
-         url="/react/<?= type ?>"
-         method="post"
-         params='{"value": "😡", "id": "<?= id ?>"}'
-         redirect>
+    <div class="ml-1 rating rounded <?= $reactions['😡'].selected ?>"
+         data-url="/react/<?= type ?>"
+         data-rating="😡"
+         data-id="<?= id ?>">
       <?- tw('😡') ?>
-      <div class="text-muted small ml-1"><?= $reactions['😡'].count ?></div>
+      <div class="text-muted small ml-1 rating-angry"><?= $reactions['😡'].count ?></div>
     </div>
 </div>

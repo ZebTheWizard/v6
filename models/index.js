@@ -7,4 +7,5 @@ module.exports = {
   Reaction: mongoose.model('Reaction', require('./reaction')),
   Comment: mongoose.model('Comment', require('./comment')),
   Article: mongoose.model('Article', require('./article')),
+  Notification: mongoose.model('Notification', require('./notification')),
 }

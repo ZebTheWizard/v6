@@ -76,7 +76,7 @@ module.exports = __webpack_require__(115);
 /***/ 115:
 /***/ (function(module, exports, __webpack_require__) {
 
-
+// require('@fortawesome/fontawesome-pro/js/all')
 window.cookie = __webpack_require__(116);
 window.Time = __webpack_require__(117);
 window.Size = __webpack_require__(118);
@@ -358,7 +358,7 @@ var Autocomplete = function () {
         var _this = this;
 
         return new Promise(function (resolve, reject) {
-          console.log(_this.$options);
+          // console.log(this.$options);
           _this.fetchSource().then(function (data) {
             _this.$data = _this.$options.data(data);
             if (!_this.$options.input) {
@@ -376,12 +376,14 @@ var Autocomplete = function () {
       key: 'watch',
       value: function watch() {
         this.$el.oninput = this.change.bind(this);
+        this.$el.onchange = this.change.bind(this);
       }
     }, {
       key: 'change',
       value: function change(e) {
         var _this2 = this;
 
+        // console.log('change autocomplete')
         var query = this.$options.input.value;
         if (!query) {
           this.$options.results.innerHTML = '';
@@ -392,7 +394,7 @@ var Autocomplete = function () {
         }).slice(0, this.$options.limit)));
 
         this.$options.results.innerHTML = '';
-        console.log(this.$results);
+        // console.log(this.$results);
         this.$results.forEach(function (item) {
           var obj = item;
           var props = _this2.$options.search.split('.');
@@ -401,9 +403,10 @@ var Autocomplete = function () {
             item[p] = item[p] || {};
             obj = item[p];
           });
+          obj._data = Object.assign({}, obj);
           obj[prop] = obj[prop].split(new RegExp(query, 'i')).join('<span class="autocomplete-match">' + query + '</span>');
           // console.log(item);
-          _this2.$options.results.insertAdjacentHTML('beforeend', ejs.render(_this2.$template, item, Object.assign({
+          _this2.$options.results.insertAdjacentHTML('beforeend', ejs.render(_this2.$template, obj, Object.assign({
             context: item
           }, _this2.$templateOptions)));
         });

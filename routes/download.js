@@ -59,7 +59,7 @@ router.get('/get/:id', async function (req, res) {
 })
 
 router.post('/update', multer.single('upload'), async function(req, res) {
-  return res.json([req.body, req.file])
+  // return res.json([req.body, req.file])
   await setProgress({ status: 'validating data', amount: 100, id: req.body.id })
 
   await Ipa.findByIdAndUpdate(req.body.id, {
@@ -99,6 +99,8 @@ router.post('/update', multer.single('upload'), async function(req, res) {
       }, function (data) {
         setProgress({ status: 'distributing images', amount: data.loaded / data.total * 100, id: req.body.id })
       })
+
+      console.log(icon)
 
       try {
         await setProgress({ status: 'finalizing', amount: 100, id: req.body.id })

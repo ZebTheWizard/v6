@@ -30,6 +30,13 @@ body {
   }
 }
 
+@include media-breakpoint-down(sm) {
+  .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
 .autocomplete-match {
   font-weight: bold;
   color: $primary;
@@ -108,6 +115,7 @@ i {
   background: white;
   margin-top: -50px;
   padding-top: 50px;
+  overflow-x: hidden;
 }
 
 .flex-wrap {
@@ -447,10 +455,11 @@ a:hover {
 }
 
 .avatar {
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   border-radius: 50%;
   overflow: hidden;
+  margin-top: -3px;
   img {
     height: 100%;
     width: 100%;
@@ -555,13 +564,17 @@ a:hover {
     overflow: hidden;
     position: relative;
     max-width: 600px;
-    display: flex;
-    justify-content: center;
+    display: inline-block;
 }
 .article-closed {
   border-radius: 1rem;
   max-width: 380px;
   max-height: 400px;
+  display: flex;
+  justify-content: center;
+  @include media-breakpoint-down(sm) {
+    border-radius: 0rem;
+  }
 }
 .article-header {
   position: absolute;
@@ -628,4 +641,20 @@ button.article-close {
 
 .grecaptcha-badge {
     bottom: 60px !important;
+}
+
+.has-icon-counter {
+  position: relative;
+}
+
+.icon-counter {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.4em;
+  background: $primary;
+  border-radius: 50px;
+  padding: 0 0.3em;
+  color: $white;
+  transform: translate(15%, 15%);
 }

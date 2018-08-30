@@ -33,13 +33,30 @@ Model.statics.add = function (obj) { // {user, model, emoji}
     }, query)
 
     var reaction = await this.findOne(query).exec()
+    var alreadyExists = false
     if (reaction) {
+      alreadyExists = true
       reaction = await Object.assign(reaction, data).save()
     } else {
       reaction = new this
       reaction = await Object.assign(reaction, data).save()
     }
-    resolve(reaction)
+    resolve([reaction, alreadyExists])
+  });
+}
+
+Model.statics.getReactionsForModel = function(req, name, id) {
+  return new Promise(async (resolve, reject) => {
+    var reactions = await this.find({for: name, model: id}).exec()
+    var $reactions = { '😍': {count:0, selected:''}, '🙂': {count:0, selected:''}, '😕': {count:0, selected:''}, '😡': {count:0, selected:''}}
+    for (var i = 0; i < reactions.length; i++) {
+      var reaction = reactions[i]
+      $reactions[reaction.emoji].count ++
+      if (req.user) {
+        if (reaction.user.toString() === req.user.id) $reactions[reaction.emoji].selected = 'selected'
+      }
+    }
+    resolve($reactions)
   });
 }
 

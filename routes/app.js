@@ -14,6 +14,7 @@ router.post('/new', auth, function(req, res) {
   var app = new App()
   app.name = uuid()
   app.ipas = []
+  app.user = req.user
   app.save()
   return res.redirect(`/app/edit/${ app.id }`);
 });

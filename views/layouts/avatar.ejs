@@ -1,12 +1,13 @@
-<span class="d-inline-flex">
+<span class="d-inline-flex align-items-center">
 
   <? if (user) {?>
-    <span class="linkable mr-3 text-primary" url="/dashboard"><i class="fal fa-sliders-h"></i></span>
+    <span class="linkable mr-2 mr-md-3 text-black" url="/dashboard"><i class="fal fa-sliders-h"></i></span>
+    <span class="linkable mr-2 mr-md-3 text-black has-icon-counter" url="/me/notifications">
+      <i class="fal fa-bell"></i>
+      <span class="icon-counter" id="notification-count"></span>
+    </span>
     <span class="avatar linkable" url="/me"><img src="<?= user.avatar ?>" alt="profile-image"></span>
   <? } else { ?>
-    <a href="#/login" class="mr-3">
-      <i class="fal fa-sliders-h"></i>
-    </a>
     <a href="#/login">
       <i class="fal fa-user-circle"></i>
     </a>

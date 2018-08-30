@@ -130,3 +130,13 @@ $('#article-upload').change(function (e) {
   })
 })
 
+
+$(document).on('click', '#add-ipa-to-app-trigger', function () {
+  console.log('shoould be changing')
+  $('#app-ipas').append(render('addipaversion', $(this).data()))
+  $('#add-ipa-to-app').val('').change()
+})
+
+window.reacted = function () {
+  console.log('reacted.....');
+}
