@@ -11,6 +11,7 @@
     "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+    "ajv": "^6.5.3",
     "argon2": "^0.19.3",
     "aws-sdk": "^2.279.1",
     "axios": "^0.18.0",
@@ -56,7 +57,8 @@
     "socket.io-client": "^2.1.1",
     "tmp": "0.0.33",
     "twemoji": "^11.0.1",
-    "unzip": "^0.1.11"
+    "unzip": "^0.1.11",
+    "url-parse": "^1.4.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.1.0"
