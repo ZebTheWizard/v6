@@ -1,8 +1,31 @@
 module.exports = {
+  "env": process.env.NODE_ENV,
+  "recaptcha": {
+    "key": "",
+    "secret": "",
+  },
   "twitter": {
     "key": "",
-    "secret": ""
+    "secret": "",
+    "callback": ""
   },
-  "MONGODB_URI": "mongodb://localhost:27017/v6",
-  "title": "IOS Haven"
+  "github": {
+    "key": "",
+    "secret": "",
+    "callback": ""
+  },
+  "dropbox": {
+    "key": "",
+    "secret": "",
+    "oauth": ""
+  },
+  "s3": {
+    "key": "",
+    "secret": "",
+    "region": "",
+    "bucket": ""
+  },
+  "SESSION_KEY": "",
+  "MONGODB_URI": "",
+  "title": ""
 }

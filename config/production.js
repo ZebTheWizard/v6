@@ -26,5 +26,6 @@ module.exports = {
     "bucket": process.env.S3_BUCKET
   },
   "MONGODB_URI": process.env.MONGO_URL || process.env.MONGODB_URI,
+  "SESSION_KEY": process.env.SESSION_KEY,
   "title": process.env.APP_TITLE || "IOS Haven"
 }

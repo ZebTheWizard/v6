@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(require('body-parser').urlencoded({ limit: '2gb', extended: true }));
 app.use(session({
-  secret: 'string that needs to be changed',
+  secret: config.get('SESSION_KEY'),
   resave: false,
   saveUninitialized: true,
   cookie: {
