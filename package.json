@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "early": "NODE_ENV=production node ./createCode.js",
     "start": "NODE_ENV=production node ./bin/www",
     "test": "NODE_ENV=development nodemon --inspect ./bin/www",
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
