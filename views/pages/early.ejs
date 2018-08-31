@@ -1,0 +1,54 @@
+<?- include('../layouts/header') ?>
+
+<body class="bg-memphis">
+  <div class="container text-center">
+    <div class="mt-3 mt-md-5">
+      <h1 class="text-white font-weight-bold text-uppercase">IOS Haven</h1>
+      <img class="my-4" src="https://s3.us-east-2.amazonaws.com/ioshavenco/logos/color-ios-transparent.png" height="100">
+    </div>
+    <div class="text-white h4 px-3">
+      Welcome to early access! Insert your code.
+    </div>
+    <form class="col-12 col-md-5 mx-auto mt-4" id="a" autocomplete="off">
+      <div class="d-flex">
+        <div class="form-group m-0 w-100">
+          <input id="code" type="text" class="form-control py-4 px-3 bg-dark text-white border-0" placeholder="Insert access code...">
+        </div>
+        <button class="btn btn-dark ml-3 px-4" style="width: 84px; max-width: 84px;">
+          <i id="icon" class="fas fa-arrow-alt-right fa-2x"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" charset="utf-8"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+    crossorigin="anonymous">
+  </script>
+  <script>
+    $('#code').on('input', function () {
+      $('#icon').removeClass('fa-spinner-third fa-spin fa-check fa-times').addClass('fa-arrow-alt-right')
+    })
+    $('#a').on('submit', function (e) {
+      e.preventDefault()
+      $('#icon').removeClass('fa-arrow-alt-right fa-check fa-times').addClass('fa-spinner-third fa-spin')
+      setTimeout(() => {
+        axios.post('/early', {
+          code: $('#code').val()
+        })
+        .then(res => {
+          console.log(res);
+          $('#icon').removeClass('fa-spinner-third fa-spin').addClass('fa-check')
+          setTimeout(() => window.location.href="/", 500)
+        })
+        .catch(err => {
+          console.log(err);
+          $('#icon').removeClass('fa-spinner-third fa-spin').addClass('fa-times')
+        })
+      }, 1000)
+    })
+  </script>
+</body>
+</html>

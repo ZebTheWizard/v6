@@ -64,12 +64,9 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(async function(id, done) {
   var [user] = await User.find({_id: id}).exec()
   done(null, user)
-  // User.findById(id, (err, user) => {
-  //   done(err, user);
-  // })
 });
-// console.log(config.get('twitter.key'));
 
+app.use(require('./middleware/early-access'))
 app.use('/', require('./auth/routes'))
 app.use('/', require('./routes/index'));
 app.use('/me', require('./routes/user'));
